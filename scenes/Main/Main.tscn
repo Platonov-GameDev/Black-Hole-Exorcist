@@ -35,7 +35,7 @@ size = Vector2(7680, 3000)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p16jf"]
 shader = ExtResource("8_jy67s")
-shader_parameter/scroll_speed = 0.5
+shader_parameter/scroll_speed = 0.75
 shader_parameter/zoom = 0.5
 shader_parameter/player_x = null
 shader_parameter/noise = SubResource("NoiseTexture2D_mwmor")
