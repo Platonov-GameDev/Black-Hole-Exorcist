@@ -9,7 +9,7 @@ var chunk_scene := load("res://scenes/GroundChunkCrooked/GroundChunkCrooked.tscn
 @onready var collision_polygon_2d = $CollisionPolygon2D
 
 var WIDTH := 6000
-var HEIGHT := 500
+var HEIGHT := 400
 var RESOLUTION := 100.0
 var CAVITY_DEPTH = 300
 

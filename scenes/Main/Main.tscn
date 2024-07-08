@@ -71,7 +71,7 @@ process_callback = 0
 position_smoothing_enabled = true
 
 [node name="KillboxArea2D" type="Area2D" parent="Camera2D"]
-position = Vector2(-969, -1299)
+position = Vector2(-1040, -1299)
 rotation = -0.523598
 collision_layer = 0
 collision_mask = 2

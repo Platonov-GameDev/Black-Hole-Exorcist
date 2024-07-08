@@ -65,17 +65,13 @@ func _process(delta):
 			hookshot.expired.connect(_on_hookshot_expired)
 			hookshot.grappled.connect(_on_hookshot_grappled)
 			
-			var camera_smoothing_offset = camera_2d.get_target_position() - camera_2d.position
-			
 			var mouse_screen_position = Vector2(get_tree().root.get_mouse_position())
 			
 			var player_screen_position = player_rigid_body_2d.get_global_transform_with_canvas().get_origin()
-			#player_screen_position += camera_smoothing_offset
 			player_screen_position.x -= 2880
 			player_screen_position.y -= 540
 			player_screen_position.y /= pow(player_screen_position.x / 1920.0, .2)
 			player_screen_position.y += 540
-			print(player_screen_position)
 			
 			var hookshot_direction = (mouse_screen_position - player_screen_position).normalized()
 			hookshot.direction = hookshot_direction
