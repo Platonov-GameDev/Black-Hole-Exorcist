@@ -1,0 +1,66 @@
+[gd_scene load_steps=12 format=3 uid="uid://c45wo45yjj7gb"]
+
+[ext_resource type="Script" path="res://scenes/GroundChunkCrooked/GroundChunkCrooked.gd" id="1_kbjce"]
+[ext_resource type="Shader" path="res://shaders/AccretionRoad.gdshader" id="2_w4ebk"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_iwft2"]
+friction = 0.5
+bounce = 0.3
+absorbent = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_c5u6a"]
+noise_type = 0
+frequency = 0.0001
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_t6adw"]
+seed = 256
+frequency = 0.05
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_fxw88"]
+width = 50
+height = 400
+seamless = true
+seamless_blend_skirt = 1.0
+noise = SubResource("FastNoiseLite_t6adw")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pwj3h"]
+frequency = 0.03
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_rp5gf"]
+width = 50
+height = 500
+seamless = true
+seamless_blend_skirt = 1.0
+noise = SubResource("FastNoiseLite_pwj3h")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fd25u"]
+shader = ExtResource("2_w4ebk")
+shader_parameter/white_streaks_noise = SubResource("NoiseTexture3D_rp5gf")
+shader_parameter/orange_streaks_noise = SubResource("NoiseTexture3D_fxw88")
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_rm3s7"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_fpxbd"]
+
+[node name="GroundChunkCrooked" type="StaticBody2D" groups=["ground"]]
+physics_material_override = SubResource("PhysicsMaterial_iwft2")
+script = ExtResource("1_kbjce")
+noise = SubResource("FastNoiseLite_c5u6a")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+build_mode = 1
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_fd25u")
+texture = SubResource("PlaceholderTexture2D_rm3s7")
+polygon = PackedVector2Array(3000, 300, -3000, 300, -3000, -300, 3000, -300)
+uv = PackedVector2Array(1, 1, 0, 1, 0, 0, 1, 0)
+
+[node name="ChunkSpawnTriggerArea2D" type="Area2D" parent="."]
+position = Vector2(-12387, 0)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSpawnTriggerArea2D"]
+rotation = -1.57079
+shape = SubResource("WorldBoundaryShape2D_fpxbd")
