@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dlnxeiedujq2i"]
+
+[ext_resource type="Script" path="res://scenes/HookGrapple/HookGrapple.gd" id="1_3ubqj"]
+[ext_resource type="Texture2D" uid="uid://bmn1hwx7g851s" path="res://assets/chain.png" id="1_tomlp"]
+[ext_resource type="Texture2D" uid="uid://b58eu6hlb30jy" path="res://assets/Grappling-Hook-Transparent-Background.png" id="2_yutte"]
+
+[node name="HookGrapple" type="Node2D"]
+script = ExtResource("1_3ubqj")
+
+[node name="DampedSpringJoint2D" type="DampedSpringJoint2D" parent="."]
+disable_collision = false
+length = 855.0
+rest_length = 15.0
+
+[node name="ChainLine2D" type="Line2D" parent="."]
+texture_repeat = 2
+points = PackedVector2Array(0, 0, -300, 0)
+width = 9.715
+texture = ExtResource("1_tomlp")
+texture_mode = 1
+
+[node name="GrappleNode2D" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="GrappleNode2D"]
+position = Vector2(-10, -2)
+scale = Vector2(0.118399, 0.118399)
+texture = ExtResource("2_yutte")

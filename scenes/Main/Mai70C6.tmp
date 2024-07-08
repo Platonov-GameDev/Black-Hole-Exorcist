@@ -1,0 +1,157 @@
+[gd_scene load_steps=15 format=3 uid="uid://lt2c1fj1u46e"]
+
+[ext_resource type="Script" path="res://scenes/Main/Main.gd" id="1_ynw3k"]
+[ext_resource type="Texture2D" uid="uid://dtyxasxhkt721" path="res://assets/snow_texture.jpg" id="2_d04dq"]
+[ext_resource type="PackedScene" uid="uid://gjffxjrj6ecx" path="res://scenes/MountainChunkFlat/MountainChunkFlat.tscn" id="2_g77xo"]
+[ext_resource type="Texture2D" uid="uid://devxgvuv5hwmw" path="res://assets/Runner_stickman.png" id="3_r6wya"]
+[ext_resource type="Script" path="res://scenes/Main/PlayerRigidBody2D.gd" id="6_jnmjh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tmlxn"]
+size = Vector2(1245.5, 60)
+
+[sub_resource type="Gradient" id="Gradient_6fmeg"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ma1nr"]
+gradient = SubResource("Gradient_6fmeg")
+width = 579
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_6lumo"]
+friction = 0.4
+bounce = 0.5
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bagol"]
+radius = 38.145
+height = 76.29
+
+[sub_resource type="Gradient" id="Gradient_u4bqo"]
+colors = PackedColorArray(0, 0.447059, 0.627451, 1, 0.803922, 0.976471, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8gsi8"]
+gradient = SubResource("Gradient_u4bqo")
+width = 1920
+height = 1080
+fill_from = Vector2(1, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_djo4m"]
+size = Vector2(20, 2000)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7sy1y"]
+font_size = 32
+
+[node name="main" type="Node"]
+script = ExtResource("1_ynw3k")
+
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="StartPlatformStaticBody2D" type="StaticBody2D" parent="Objects" groups=["ground"]]
+position = Vector2(958, 813)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/StartPlatformStaticBody2D"]
+position = Vector2(-335.25, 0)
+shape = SubResource("RectangleShape2D_tmlxn")
+
+[node name="Polygon2D" type="Polygon2D" parent="Objects/StartPlatformStaticBody2D"]
+texture_repeat = 2
+position = Vector2(-710, 76)
+scale = Vector2(2.15458, 0.96875)
+texture = ExtResource("2_d04dq")
+texture_scale = Vector2(1.515, 0.955)
+texture_rotation = 1.31772
+polygon = PackedVector2Array(575.983, 338.581, -118.353, 359.226, -115.104, -111.484, 574.127, -111.484)
+uv = PackedVector2Array(225, 225, 0, 225, 0, 0, 225, 0)
+polygons = [PackedInt32Array(0, 1, 2, 3)]
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Objects" groups=["ground"]]
+position = Vector2(30, 491)
+rotation = 1.57079
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/StaticBody2D2"]
+position = Vector2(-335.25, 0)
+shape = SubResource("RectangleShape2D_tmlxn")
+
+[node name="Sprite2D" type="Sprite2D" parent="Objects/StaticBody2D2"]
+position = Vector2(-334.25, -1)
+scale = Vector2(2.15458, 0.96875)
+texture = SubResource("GradientTexture2D_ma1nr")
+
+[node name="Mountain" type="Node2D" parent="Objects"]
+position = Vector2(2364, 714)
+rotation = -0.523598
+
+[node name="MountainChunkFlat" parent="Objects/Mountain" instance=ExtResource("2_g77xo")]
+
+[node name="PlayerFollowingSlider" type="Node2D" parent="Objects/Mountain"]
+
+[node name="PlayerRigidBody2D" type="RigidBody2D" parent="Objects" groups=["player"]]
+position = Vector2(576, 698)
+collision_layer = 2
+collision_mask = 5
+physics_material_override = SubResource("PhysicsMaterial_6lumo")
+max_contacts_reported = 100
+contact_monitor = true
+script = ExtResource("6_jnmjh")
+
+[node name="PlayerCollisionShape2D" type="CollisionShape2D" parent="Objects/PlayerRigidBody2D"]
+shape = SubResource("CapsuleShape2D_bagol")
+
+[node name="PlayerSprite2D" type="Sprite2D" parent="Objects/PlayerRigidBody2D"]
+position = Vector2(-4, 0)
+scale = Vector2(0.057, 0.057)
+texture = ExtResource("3_r6wya")
+
+[node name="JumpCooldownTimer" type="Timer" parent="Objects/PlayerRigidBody2D"]
+wait_time = 0.1
+one_shot = true
+
+[node name="Camera2D" type="Camera2D" parent="Objects"]
+position = Vector2(960, 540)
+position_smoothing_enabled = true
+
+[node name="SkySprite2D2" type="Sprite2D" parent="Objects/Camera2D"]
+z_index = -1
+position = Vector2(0, -6.10352e-05)
+texture = SubResource("GradientTexture2D_8gsi8")
+
+[node name="KillboxArea2D" type="Area2D" parent="Objects/Camera2D"]
+position = Vector2(-969, -1299)
+rotation = -0.523598
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Camera2D/KillboxArea2D"]
+position = Vector2(-731.451, 1116.91)
+rotation = 0.523599
+shape = SubResource("RectangleShape2D_djo4m")
+
+[node name="ObstacleSpawner" type="Marker2D" parent="Objects/Camera2D"]
+position = Vector2(1390, -1369)
+gizmo_extents = 92.6
+
+[node name="SpawnTimer" type="Timer" parent="Objects/Camera2D/ObstacleSpawner"]
+autostart = true
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="MaxHeightReachedLabel" type="Label" parent="UI"]
+layout_mode = 1
+offset_left = 30.0
+offset_top = 31.0
+offset_right = 99.0
+offset_bottom = 54.0
+text = "Current: 0"
+label_settings = SubResource("LabelSettings_7sy1y")
+
+[node name="RecordHeightReachedLabel2" type="Label" parent="UI"]
+layout_mode = 1
+offset_left = 30.0
+offset_top = 93.0
+offset_right = 99.0
+offset_bottom = 116.0
+text = "Record: 0"
+label_settings = SubResource("LabelSettings_7sy1y")

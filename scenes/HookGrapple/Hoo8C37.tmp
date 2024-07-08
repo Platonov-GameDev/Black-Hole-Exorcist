@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://dlnxeiedujq2i"]
+
+[ext_resource type="Script" path="res://scenes/HookGrapple/HookGrapple.gd" id="1_3ubqj"]
+[ext_resource type="Texture2D" uid="uid://bmn1hwx7g851s" path="res://assets/chain.png" id="1_tomlp"]
+[ext_resource type="Texture2D" uid="uid://b58eu6hlb30jy" path="res://assets/Grappling-Hook-Transparent-Background.png" id="2_yutte"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5mdqx"]
+
+[node name="HookGrapple" type="Node2D"]
+script = ExtResource("1_3ubqj")
+
+[node name="DampedSpringJoint2D" type="DampedSpringJoint2D" parent="."]
+length = 855.0
+rest_length = 15.0
+
+[node name="PinJoint2D" type="PinJoint2D" parent="."]
+angular_limit_enabled = true
+
+[node name="ChainLine2D" type="Line2D" parent="."]
+texture_repeat = 2
+points = PackedVector2Array(0, 0, -300, 0)
+width = 9.715
+texture = ExtResource("1_tomlp")
+texture_mode = 1
+
+[node name="GrappleRigidBody2D" type="RigidBody2D" parent="."]
+collision_layer = 0
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="GrappleRigidBody2D"]
+position = Vector2(-10, -2)
+scale = Vector2(0.118399, 0.118399)
+texture = ExtResource("2_yutte")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrappleRigidBody2D"]
+shape = SubResource("CircleShape2D_5mdqx")
