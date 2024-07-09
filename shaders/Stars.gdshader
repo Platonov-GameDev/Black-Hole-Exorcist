@@ -12,7 +12,7 @@ void fragment() {
 	
 	vec2 uv = UV;
 	uv.x += player_x * scroll_speed * 0.1;
-	uv /= zoom;
+	uv /= zoom / 2.0;
 	
 	vec4 noise_color = texture(noise, uv / 300.0);
 	final_color = vec4(1.0);
