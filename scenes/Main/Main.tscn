@@ -86,6 +86,7 @@ position = Vector2(5485, -541)
 gizmo_extents = 92.6
 
 [node name="SpawnTimer" type="Timer" parent="Camera2D/ObstacleSpawner"]
+wait_time = 2.0
 autostart = true
 
 [node name="BlackHoleSprite2D" type="Sprite2D" parent="Camera2D"]
