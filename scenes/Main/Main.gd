@@ -13,6 +13,7 @@ extends Node2D
 @onready var black_hole_sprite_2d = $Camera2D/BlackHoleSprite2D
 @onready var close_stars_sprite_2d = $Camera2D/Background/CloseStarsSprite2D
 @onready var far_stars_sprite_2d = $Camera2D/Background/FarStarsSprite2D
+@onready var black_hole_arm = $Camera2D/BlackHoleArm
 
 var MOVE_SPEED := 70000
 var FLOOR_MOVE_MULTIPLIER := 3000
@@ -88,6 +89,9 @@ func _process(delta):
 		# Scroll background
 		close_stars_sprite_2d.material.set_shader_parameter("player_x", player_rigid_body_2d.position.x)
 		far_stars_sprite_2d.material.set_shader_parameter("player_x", player_rigid_body_2d.position.x)
+		
+		# Align black hole with cam height
+		black_hole_arm.global_position.y = camera_2d.get_screen_center_position().y
 
 
 func _physics_process(delta):

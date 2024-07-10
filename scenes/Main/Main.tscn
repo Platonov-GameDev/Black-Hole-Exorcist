@@ -1,9 +1,10 @@
-[gd_scene load_steps=22 format=3 uid="uid://2s6aljemt4da"]
+[gd_scene load_steps=25 format=3 uid="uid://2s6aljemt4da"]
 
 [ext_resource type="Script" path="res://scenes/Main/Main.gd" id="1_ynw3k"]
 [ext_resource type="PackedScene" uid="uid://dde0d7jiv30my" path="res://scenes/HookShot/HookShot.tscn" id="3_qclwk"]
 [ext_resource type="PackedScene" uid="uid://cpx0x2gu43o4s" path="res://scenes/Obstacle_SmoothBoulder/Obstacle_SmoothBoulder.tscn" id="5_pqu4f"]
 [ext_resource type="Texture2D" uid="uid://ciqxfqv1smg0x" path="res://assets/—Pngtree—yellow black hole_4491995.png" id="5_q3dxc"]
+[ext_resource type="Shader" path="res://shaders/BlackHole.gdshader" id="5_temnx"]
 [ext_resource type="Texture2D" uid="uid://dy556iy5114tb" path="res://assets/Runner_stickman_white.png" id="7_5s4oh"]
 [ext_resource type="PackedScene" uid="uid://cesfu4jt84pph" path="res://components/SuckComponent/SuckComponent.tscn" id="8_55a36"]
 [ext_resource type="Shader" path="res://shaders/Stars.gdshader" id="8_jy67s"]
@@ -43,14 +44,24 @@ shader_parameter/noise = SubResource("NoiseTexture2D_mwmor")
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_l4nni"]
 size = Vector2(7680, 3000)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tmlxn"]
-size = Vector2(1492, 60)
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_lginu"]
+frequency = 0.0075
 
-[sub_resource type="Gradient" id="Gradient_h7xkq"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_i86hd"]
+noise = SubResource("FastNoiseLite_lginu")
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_ma1nr"]
-gradient = SubResource("Gradient_h7xkq")
-width = 579
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_68mvg"]
+shader = ExtResource("5_temnx")
+shader_parameter/noise = SubResource("NoiseTexture2D_i86hd")
+
+[sub_resource type="Gradient" id="Gradient_vu2x8"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_884i6"]
+gradient = SubResource("Gradient_vu2x8")
+width = 1500
+height = 1500
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_6lumo"]
 friction = 0.4
@@ -90,6 +101,7 @@ wait_time = 2.0
 autostart = true
 
 [node name="BlackHoleSprite2D" type="Sprite2D" parent="Camera2D"]
+visible = false
 modulate = Color(1, 1, 1, 0.784314)
 z_index = 1
 material = SubResource("CanvasItemMaterial_mauxj")
@@ -113,19 +125,13 @@ self_modulate = Color(0, 0, 0, 1)
 z_index = -2
 texture = SubResource("PlaceholderTexture2D_l4nni")
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="." groups=["ground"]]
-position = Vector2(30, 491)
-rotation = 1.57079
-collision_mask = 0
+[node name="BlackHoleArm" type="Node2D" parent="Camera2D"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
-position = Vector2(-335.25, 0)
-shape = SubResource("RectangleShape2D_tmlxn")
-
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2"]
-position = Vector2(-334.25, -1)
-scale = Vector2(2.15458, 0.96875)
-texture = SubResource("GradientTexture2D_ma1nr")
+[node name="BlackHoleShaderSprite2D" type="Sprite2D" parent="Camera2D/BlackHoleArm"]
+z_index = 1
+material = SubResource("ShaderMaterial_68mvg")
+position = Vector2(-1392, 0)
+texture = SubResource("GradientTexture2D_884i6")
 
 [node name="Ground" type="Node2D" parent="."]
 position = Vector2(2485, 1281)
