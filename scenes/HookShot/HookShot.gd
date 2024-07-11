@@ -19,6 +19,7 @@ func _ready():
 
 
 func _process(delta):
+	
 	chain_line_2d.set_point_position(1, player_body.position - position)
 	
 	var player_to_hook_vector = position - player_body.position

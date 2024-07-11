@@ -1,11 +1,15 @@
 extends Node2D
 
 
-@onready var chain_line_2d = $ChainLine2D
 @onready var grapple_rigid_body_2d = $GrappleRigidBody2D
 @onready var pin_joint_2d = $PinJoint2D
+@onready var rope_handle = $RopeHandle
+@onready var rope = $Rope
+@onready var rope_renderer_line_2d = $Rope/RopeRendererLine2D
+
 var CHAIN_STIFFNESS = 1
 var GRAPPLE_FORCE = 3
+
 var player_body: RigidBody2D
 var obstacle: RigidBody2D
 var collision_point: Vector2
@@ -27,11 +31,24 @@ func _ready():
 	var grapple_pull_force = chain_vector * GRAPPLE_FORCE
 	player_body.apply_central_impulse(grapple_pull_force)
 	grapple_rigid_body_2d.apply_central_impulse(-grapple_pull_force)
+	
+	# Initialize rope
+	rope.global_position = grapple_rigid_body_2d.global_position
+	rope_handle.global_position = player_body.global_position
+	
+	rope.rope_length = chain_vector.length() * 0.5
+	rope.num_segments = int(rope.rope_length / 5.0);
+	rope.update_segments()
+	
+	var num_points = rope.get_num_points()
+	var point_offset = chain_vector / num_points
+	for i in range(num_points):
+		rope.set_point(i, rope.global_position - point_offset * i)
 
 func _physics_process(_delta):
 	# Chain visuals
-	chain_line_2d.set_point_position(0, player_body.global_position - position)
-	chain_line_2d.set_point_position(1, grapple_rigid_body_2d.global_position - position)
+	rope.global_position = grapple_rigid_body_2d.global_position
+	rope_handle.global_position = player_body.global_position
 	
 	# Chain physics
 	# Chain pull on max length reached
