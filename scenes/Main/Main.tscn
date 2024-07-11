@@ -64,12 +64,11 @@ width = 1500
 height = 1500
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_6lumo"]
-friction = 0.4
+friction = 0.1
 bounce = 0.5
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bagol"]
-radius = 38.145
-height = 76.29
+[sub_resource type="CircleShape2D" id="CircleShape2D_8fhev"]
+radius = 40.0
 
 [node name="main" type="Node2D"]
 script = ExtResource("1_ynw3k")
@@ -144,12 +143,12 @@ position = Vector2(576, 698)
 collision_layer = 2
 collision_mask = 5
 physics_material_override = SubResource("PhysicsMaterial_6lumo")
-continuous_cd = 1
+continuous_cd = 2
 max_contacts_reported = 100
 contact_monitor = true
 
 [node name="PlayerCollisionShape2D" type="CollisionShape2D" parent="PlayerRigidBody2D"]
-shape = SubResource("CapsuleShape2D_bagol")
+shape = SubResource("CircleShape2D_8fhev")
 
 [node name="PlayerSprite2D" type="Sprite2D" parent="PlayerRigidBody2D"]
 z_index = 1

@@ -5,7 +5,7 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_iwft2"]
 friction = 0.5
-bounce = 0.3
+bounce = 1.0
 absorbent = true
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_c5u6a"]
@@ -48,7 +48,6 @@ script = ExtResource("1_kbjce")
 noise = SubResource("FastNoiseLite_c5u6a")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-build_mode = 1
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_fd25u")

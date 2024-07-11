@@ -16,8 +16,11 @@ extends Node2D
 @onready var black_hole_arm = $Camera2D/BlackHoleArm
 
 var MOVE_SPEED := 70000
+var TORQUE_SPEED := 1000000
+var FALL_SPEED := 70000
+var HOVER_SPEED := 40000
 var FLOOR_MOVE_MULTIPLIER := 3000
-var JUMP_SPEED := 1000
+var JUMP_SPEED := 800
 var CAM_Y_OFFSET := 0
 var CAM_X_OFFSET := 600
 var SCORE_COEFFICIENT := 0.1
@@ -57,6 +60,40 @@ func _process(delta):
 		if current_distance > max_distance_reached:
 			update_max_distance_reached(current_distance)
 		
+		# Scroll background
+		close_stars_sprite_2d.material.set_shader_parameter("player_x", player_rigid_body_2d.position.x)
+		far_stars_sprite_2d.material.set_shader_parameter("player_x", player_rigid_body_2d.position.x)
+		
+		# Align black hole with cam height
+		black_hole_arm.global_position.y = camera_2d.get_screen_center_position().y
+
+
+func _physics_process(delta):
+	if not is_player_dead:
+		# Apply player movement forces
+		var movement_input := 0.0
+		if Input.is_action_pressed("Left"):
+			movement_input -= 1.0
+		if Input.is_action_pressed("Right"):
+			movement_input += 1.0
+		player_rigid_body_2d.apply_force(Vector2.RIGHT * movement_input * MOVE_SPEED * delta)
+		player_rigid_body_2d.apply_torque(movement_input * TORQUE_SPEED * delta)
+		
+		if Input.is_action_pressed("Fall"):
+			player_rigid_body_2d.apply_force(Vector2.DOWN * FALL_SPEED * delta)
+		
+		var is_player_on_floor := false
+		for body in player_rigid_body_2d.get_colliding_bodies():
+			if body.is_in_group("ground"):
+				is_player_on_floor = true
+				break
+		
+		if Input.is_action_pressed("Jump"):
+			player_rigid_body_2d.apply_force(Vector2.UP * HOVER_SPEED * delta)
+			if is_player_on_floor and jump_cooldown_timer.is_stopped():
+				player_rigid_body_2d.apply_central_impulse(Vector2.UP * JUMP_SPEED)
+				jump_cooldown_timer.start()
+		
 		# Fire and release hook shot
 		if Input.is_action_just_pressed("Shoot") and not is_hookshot_already_fired:
 			is_hookshot_already_fired = true
@@ -85,34 +122,6 @@ func _process(delta):
 			elif hookgrapple:
 				hookgrapple.queue_free()
 				hookgrapple = null
-		
-		# Scroll background
-		close_stars_sprite_2d.material.set_shader_parameter("player_x", player_rigid_body_2d.position.x)
-		far_stars_sprite_2d.material.set_shader_parameter("player_x", player_rigid_body_2d.position.x)
-		
-		# Align black hole with cam height
-		black_hole_arm.global_position.y = camera_2d.get_screen_center_position().y
-
-
-func _physics_process(delta):
-	if not is_player_dead:
-		# Apply player movement forces
-		var movement_input := 0.0
-		if Input.is_action_pressed("Left"):
-			movement_input -= 1.0
-		if Input.is_action_pressed("Right"):
-			movement_input += 1.0
-		player_rigid_body_2d.apply_force(Vector2.RIGHT * movement_input * MOVE_SPEED * delta)
-		
-		var is_player_on_floor := false
-		for body in player_rigid_body_2d.get_colliding_bodies():
-			if body.is_in_group("ground"):
-				is_player_on_floor = true
-				break
-		
-		if Input.is_action_pressed("Jump") and is_player_on_floor and jump_cooldown_timer.is_stopped():
-			player_rigid_body_2d.apply_central_impulse(Vector2.UP * JUMP_SPEED)
-			jump_cooldown_timer.start()
 	elif is_player_dead:
 		if Input.is_action_just_pressed("Reload"):
 			get_tree().call_deferred("reload_current_scene")

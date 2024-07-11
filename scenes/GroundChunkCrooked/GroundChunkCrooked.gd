@@ -11,7 +11,7 @@ var chunk_scene := load("res://scenes/GroundChunkCrooked/GroundChunkCrooked.tscn
 var WIDTH := 6000
 var HEIGHT := 400
 var RESOLUTION := 100.0
-var CAVITY_DEPTH = 300
+var CAVITY_DEPTH = 300.0
 
 var did_spawn_next_chunk := false
 
@@ -34,11 +34,7 @@ func _ready():
 	polygon_2d.polygon = new_point_array
 	polygon_2d.uv = uv_array
 	
-	var doubled_points_array := PackedVector2Array()
-	for i in range(new_point_array.size() - 1):
-		doubled_points_array.append(new_point_array[i])
-		doubled_points_array.append(new_point_array[i + 1])
-	collision_polygon_2d.polygon = doubled_points_array
+	collision_polygon_2d.polygon = new_point_array
 
 
 func _on_chunk_spawn_trigger_area_2d_body_entered(_body):
