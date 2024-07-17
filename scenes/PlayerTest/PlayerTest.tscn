@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=3 uid="uid://ceujd7rccwyc6"]
+
+[ext_resource type="Script" path="res://scenes/PlayerTest/PlayerTest.gd" id="1_p6tbb"]
+[ext_resource type="Texture2D" uid="uid://fe3k568v6hjc" path="res://assets/player/player_body.png" id="2_0hdf1"]
+[ext_resource type="PackedScene" uid="uid://dde0d7jiv30my" path="res://scenes/HookShot/HookShot.tscn" id="2_1mfh8"]
+[ext_resource type="PackedScene" uid="uid://cesfu4jt84pph" path="res://components/SuckComponent/SuckComponent.tscn" id="3_rn7u2"]
+[ext_resource type="PackedScene" uid="uid://cpx0x2gu43o4s" path="res://scenes/Obstacle_SmoothBoulder/Obstacle_SmoothBoulder.tscn" id="4_u10eb"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_emdhj"]
+friction = 0.1
+bounce = 0.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2hlnu"]
+radius = 40.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_bfttx"]
+
+[node name="PlayerTest" type="Node2D"]
+script = ExtResource("1_p6tbb")
+hookshot_scene = ExtResource("2_1mfh8")
+
+[node name="PlayerRigidBody2D" type="RigidBody2D" parent="." groups=["player"]]
+position = Vector2(576, 698)
+collision_layer = 2
+collision_mask = 5
+physics_material_override = SubResource("PhysicsMaterial_emdhj")
+continuous_cd = 2
+max_contacts_reported = 100
+contact_monitor = true
+
+[node name="PlayerCollisionShape2D" type="CollisionShape2D" parent="PlayerRigidBody2D"]
+shape = SubResource("CircleShape2D_2hlnu")
+
+[node name="PlayerSprite2D" type="Sprite2D" parent="PlayerRigidBody2D"]
+z_index = 1
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("2_0hdf1")
+
+[node name="JumpCooldownTimer" type="Timer" parent="PlayerRigidBody2D"]
+wait_time = 0.1
+one_shot = true
+
+[node name="SuckComponent" parent="PlayerRigidBody2D" instance=ExtResource("3_rn7u2")]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["ground"]]
+position = Vector2(913, 961)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("WorldBoundaryShape2D_bfttx")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(59, 507)
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+shape = SubResource("WorldBoundaryShape2D_bfttx")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(1728, 507)
+rotation = -1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+shape = SubResource("WorldBoundaryShape2D_bfttx")
+
+[node name="Obstacle_SmoothBoulder" parent="." instance=ExtResource("4_u10eb")]
+position = Vector2(1310, 501)

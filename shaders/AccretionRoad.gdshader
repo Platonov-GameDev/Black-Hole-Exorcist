@@ -1,5 +1,4 @@
 shader_type canvas_item;
-render_mode blend_mix;
 
 uniform sampler3D white_streaks_noise: repeat_enable;
 uniform sampler3D orange_streaks_noise: repeat_enable;

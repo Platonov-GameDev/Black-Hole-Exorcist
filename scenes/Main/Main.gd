@@ -4,8 +4,6 @@ extends Node2D
 @export var obstacle_scene: PackedScene
 @export var hookshot_scene: PackedScene
 
-@onready var player_rigid_body_2d = $PlayerRigidBody2D
-@onready var jump_cooldown_timer = $PlayerRigidBody2D/JumpCooldownTimer
 @onready var killbox_area_2d = $Camera2D/KillboxArea2D
 @onready var obstacle_spawner = $Camera2D/ObstacleSpawner
 @onready var spawn_timer = $Camera2D/ObstacleSpawner/SpawnTimer
@@ -14,6 +12,12 @@ extends Node2D
 @onready var close_stars_sprite_2d = $Camera2D/Background/CloseStarsSprite2D
 @onready var far_stars_sprite_2d = $Camera2D/Background/FarStarsSprite2D
 @onready var black_hole_arm = $Camera2D/BlackHoleArm
+@onready var player_body = $PlayerBody
+@onready var jump_cooldown_timer = $PlayerBody/JumpCooldownTimer
+@onready var eyehole_animated_sprite_2d = $PlayerBody/Eyehole/EyeholeAnimatedSprite2D
+@onready var pupil_base = $PlayerBody/Eyehole/PupilBase
+@onready var pupil_sprite_2d = $PlayerBody/Eyehole/PupilBase/PupilSprite2D
+@onready var blink_timer = $PlayerBody/Eyehole/BlinkTimer
 
 var MOVE_SPEED := 70000
 var TORQUE_SPEED := 1000000
@@ -26,6 +30,7 @@ var CAM_X_OFFSET := 600
 var SCORE_COEFFICIENT := 0.1
 var KILLBOX_MOVE_SPEED := 100
 var OBSTACLE_SPAWN_OFFSET := 50
+var MAX_PUPIL_OFFSET := 12.0
 
 var is_player_dead := false
 var player_starting_distance: float
@@ -40,8 +45,10 @@ signal max_distance_changed(new_max_distance)
 func _ready():
 	killbox_area_2d.body_entered.connect(_on_killbox_area_2d_body_entered)
 	spawn_timer.timeout.connect(_on_spawn_timer_timeout)
+	blink_timer.timeout.connect(_on_blink_timer_timeout)
+	eyehole_animated_sprite_2d.animation_finished.connect(_on_eyehole_animated_sprite_2d_animation_finished)
 	
-	player_starting_distance = player_rigid_body_2d.position.x
+	player_starting_distance = player_body.position.x
 	update_max_distance_reached(0.0)
 
 
@@ -50,22 +57,35 @@ func _process(delta):
 	
 	if not is_player_dead:
 		# Move camera
-		if player_rigid_body_2d.position.x + CAM_X_OFFSET > camera_2d.position.x:
-			camera_2d.position.x = player_rigid_body_2d.position.x + CAM_X_OFFSET
+		if player_body.position.x + CAM_X_OFFSET > camera_2d.position.x:
+			camera_2d.position.x = player_body.position.x + CAM_X_OFFSET
 		camera_2d.position.x += KILLBOX_MOVE_SPEED * delta
-		camera_2d.position.y = player_rigid_body_2d.position.y + CAM_Y_OFFSET
+		camera_2d.position.y = player_body.position.y + CAM_Y_OFFSET
 		
 		# Update max height if needed
-		var current_distance = snapped((player_rigid_body_2d.position.x - player_starting_distance) * SCORE_COEFFICIENT, 1)
+		var current_distance = snapped((player_body.position.x - player_starting_distance) * SCORE_COEFFICIENT, 1)
 		if current_distance > max_distance_reached:
 			update_max_distance_reached(current_distance)
 		
 		# Scroll background
-		close_stars_sprite_2d.material.set_shader_parameter("player_x", player_rigid_body_2d.position.x)
-		far_stars_sprite_2d.material.set_shader_parameter("player_x", player_rigid_body_2d.position.x)
+		close_stars_sprite_2d.material.set_shader_parameter("player_x", player_body.position.x)
+		far_stars_sprite_2d.material.set_shader_parameter("player_x", player_body.position.x)
 		
 		# Align black hole with cam height
 		black_hole_arm.global_position.y = camera_2d.get_screen_center_position().y
+		
+		# Move pupil
+		var mouse_screen_position = Vector2(get_tree().root.get_mouse_position())
+		
+		var player_screen_position = player_body.get_global_transform_with_canvas().get_origin()
+		player_screen_position.x -= 2880
+		player_screen_position.y -= 540
+		player_screen_position.y /= pow(player_screen_position.x / 1920.0, .2)
+		player_screen_position.y += 540
+		
+		var mouse_vector = mouse_screen_position - player_screen_position
+		
+		pupil_sprite_2d.global_position = pupil_base.global_position + (mouse_vector / 15.0).limit_length(MAX_PUPIL_OFFSET)
 
 
 func _physics_process(delta):
@@ -76,36 +96,36 @@ func _physics_process(delta):
 			movement_input -= 1.0
 		if Input.is_action_pressed("Right"):
 			movement_input += 1.0
-		player_rigid_body_2d.apply_force(Vector2.RIGHT * movement_input * MOVE_SPEED * delta)
-		player_rigid_body_2d.apply_torque(movement_input * TORQUE_SPEED * delta)
+		player_body.apply_force(Vector2.RIGHT * movement_input * MOVE_SPEED * delta)
+		player_body.apply_torque(movement_input * TORQUE_SPEED * delta)
 		
 		if Input.is_action_pressed("Fall"):
-			player_rigid_body_2d.apply_force(Vector2.DOWN * FALL_SPEED * delta)
+			player_body.apply_force(Vector2.DOWN * FALL_SPEED * delta)
 		
 		var is_player_on_floor := false
-		for body in player_rigid_body_2d.get_colliding_bodies():
+		for body in player_body.get_colliding_bodies():
 			if body.is_in_group("ground"):
 				is_player_on_floor = true
 				break
 		
 		if Input.is_action_pressed("Jump"):
-			player_rigid_body_2d.apply_force(Vector2.UP * HOVER_SPEED * delta)
+			player_body.apply_force(Vector2.UP * HOVER_SPEED * delta)
 			if is_player_on_floor and jump_cooldown_timer.is_stopped():
-				player_rigid_body_2d.apply_central_impulse(Vector2.UP * JUMP_SPEED)
+				player_body.apply_central_impulse(Vector2.UP * JUMP_SPEED)
 				jump_cooldown_timer.start()
 		
 		# Fire and release hook shot
 		if Input.is_action_just_pressed("Shoot") and not is_hookshot_already_fired:
 			is_hookshot_already_fired = true
 			hookshot = hookshot_scene.instantiate()
-			hookshot.position = player_rigid_body_2d.position
-			hookshot.player_body = player_rigid_body_2d
+			hookshot.position = player_body.position
+			hookshot.player_body = player_body
 			hookshot.expired.connect(_on_hookshot_expired)
 			hookshot.grappled.connect(_on_hookshot_grappled)
 			
 			var mouse_screen_position = Vector2(get_tree().root.get_mouse_position())
 			
-			var player_screen_position = player_rigid_body_2d.get_global_transform_with_canvas().get_origin()
+			var player_screen_position = player_body.get_global_transform_with_canvas().get_origin()
 			player_screen_position.x -= 2880
 			player_screen_position.y -= 540
 			player_screen_position.y /= pow(player_screen_position.x / 1920.0, .2)
@@ -130,7 +150,7 @@ func _physics_process(delta):
 func _on_killbox_area_2d_body_entered(_body):
 	if is_player_dead: return
 	
-	player_rigid_body_2d.call_deferred("queue_free")
+	player_body.call_deferred("queue_free")
 	if hookshot:
 		hookshot.call_deferred("queue_free")
 	if hookgrapple:
@@ -159,3 +179,16 @@ func _on_hookshot_expired():
 func _on_hookshot_grappled(new_hookgrapple):
 	hookgrapple = new_hookgrapple
 	add_child(hookgrapple)
+
+
+func _on_blink_timer_timeout():
+	eyehole_animated_sprite_2d.play("blink")
+	eyehole_animated_sprite_2d.play
+	
+	blink_timer.wait_time = randf_range(1.0, 4.0)
+	blink_timer.start()
+
+
+func _on_eyehole_animated_sprite_2d_animation_finished():
+	if eyehole_animated_sprite_2d.animation == "blink":
+		eyehole_animated_sprite_2d.play("idle")

@@ -3,9 +3,11 @@ extends CharacterBody2D
 
 @export var hookgrapple_scene: PackedScene
 @onready var chain_line_2d = $ChainLine2D
-@onready var sprite_2d = $Sprite2D
+@onready var rotatable = $Rotatable
+
 var SPEED = 3000
 var MAX_DISTANCE = 500
+
 var player_body: RigidBody2D
 var direction: Vector2
 
@@ -23,7 +25,7 @@ func _process(delta):
 	chain_line_2d.set_point_position(1, player_body.position - position)
 	
 	var player_to_hook_vector = position - player_body.position
-	sprite_2d.look_at(player_body.position + player_to_hook_vector + player_to_hook_vector)
+	rotatable.look_at(player_body.position + player_to_hook_vector + player_to_hook_vector)
 	
 	var collision = move_and_collide(velocity * delta)
 	if collision:
