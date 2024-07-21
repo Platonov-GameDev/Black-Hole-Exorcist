@@ -290,7 +290,7 @@ texture = SubResource("PlaceholderTexture2D_l4nni")
 
 [node name="BlackHoleShaderSprite2D" type="Sprite2D" parent="Camera2D/BlackHoleArm"]
 material = SubResource("ShaderMaterial_68mvg")
-position = Vector2(-1392, 0)
+position = Vector2(-1630, 0)
 texture = SubResource("GradientTexture2D_884i6")
 
 [node name="Ground" type="Node2D" parent="."]
