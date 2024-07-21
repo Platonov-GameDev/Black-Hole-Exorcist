@@ -26,8 +26,8 @@ extends Node2D
 
 var MOVE_SPEED := 70000
 var TORQUE_SPEED := 1000000
-var FALL_SPEED := 70000
-var HOVER_SPEED := 60000
+var FALL_SPEED := 80000
+var HOVER_SPEED := 80000
 var FLOOR_MOVE_MULTIPLIER := 3000
 var JUMP_SPEED := 800
 var CAM_Y_OFFSET := 0
@@ -218,7 +218,7 @@ func _on_blink_timer_timeout():
 	eyehole_animated_sprite_2d.play("blink")
 	eyehole_animated_sprite_2d.play
 	
-	blink_timer.wait_time = randf_range(1.0, 4.0)
+	blink_timer.wait_time = randf_range(3.0, 6.0)
 	blink_timer.start()
 
 
