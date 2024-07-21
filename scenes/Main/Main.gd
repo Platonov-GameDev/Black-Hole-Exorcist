@@ -38,14 +38,14 @@ var OBSTACLE_SPAWN_OFFSET := 50
 var MAX_PUPIL_OFFSET := 12.0
 
 var is_player_dead := false
-var player_starting_distance: float
-var max_distance_reached: float
+var score: float
 var is_hookshot_already_fired := false
 var hookshot: CharacterBody2D
 var hookgrapple: Node2D
 var thruster_process_material: ParticleProcessMaterial
+var previous_player_distance: float
 
-signal max_distance_changed(new_max_distance)
+signal score_changed(new_max_score)
 
 
 func _ready():
@@ -54,8 +54,8 @@ func _ready():
 	blink_timer.timeout.connect(_on_blink_timer_timeout)
 	eyehole_animated_sprite_2d.animation_finished.connect(_on_eyehole_animated_sprite_2d_animation_finished)
 	
-	player_starting_distance = player_body.position.x
-	update_max_distance_reached(0.0)
+	previous_player_distance = player_body.position.x
+	update_score(0.0)
 	
 	thruster_process_material = right_thruster_gpu_particles_2d.process_material
 
@@ -71,9 +71,14 @@ func _process(delta):
 		camera_2d.position.y = player_body.position.y + CAM_Y_OFFSET
 		
 		# Update max height if needed
-		var current_distance = snapped((player_body.position.x - player_starting_distance) * SCORE_COEFFICIENT, 1)
-		if current_distance > max_distance_reached:
-			update_max_distance_reached(current_distance)
+		var current_player_distance = player_body.position.x
+		if current_player_distance > previous_player_distance:
+			var score_delta = snapped(
+				(current_player_distance - previous_player_distance) / (delta * 100000),
+				1
+			)
+			update_score(score + score_delta)
+		previous_player_distance = current_player_distance
 		
 		# Scroll background
 		close_stars_sprite_2d.material.set_shader_parameter("player_x", player_body.position.x)
@@ -191,9 +196,9 @@ func _on_killbox_area_2d_body_entered(_body):
 	is_player_dead = true
 
 
-func update_max_distance_reached(new_max_distance):
-	max_distance_reached = new_max_distance
-	max_distance_changed.emit(new_max_distance)
+func update_score(new_score):
+	score = new_score
+	score_changed.emit(new_score)
 
 
 func _on_spawn_timer_timeout():

@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://b4wn1mdi4xfvv"]
+[gd_scene load_steps=8 format=3 uid="uid://b4wn1mdi4xfvv"]
 
 [ext_resource type="Shader" path="res://shaders/Screen.gdshader" id="1_6nnqt"]
 [ext_resource type="Script" path="res://scenes/OffcreenSpaceView/OffscreenSpaceView.gd" id="1_pj3lu"]
 [ext_resource type="PackedScene" uid="uid://2s6aljemt4da" path="res://scenes/Main/Main.tscn" id="3_hpbmy"]
+[ext_resource type="FontFile" uid="uid://bba1jy5y6cy75" path="res://assets/PentagramsStregherria/PentagramsStregherriaRegular-A9a2.ttf" id="4_i8tvh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ac4ue"]
 resource_local_to_scene = true
@@ -11,6 +12,7 @@ shader = ExtResource("1_6nnqt")
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_cy8jo"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1rldg"]
+font = ExtResource("4_i8tvh")
 font_size = 32
 
 [node name="OffscreenSpaceView" type="Control"]
@@ -36,15 +38,16 @@ size = Vector2i(7680, 1080)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="MaxReachedLabel" type="Label" parent="UI"]
+[node name="ScoreLabel" type="Label" parent="UI"]
 offset_left = 30.0
 offset_top = 31.0
 offset_right = 99.0
 offset_bottom = 54.0
-text = "Current: 0"
+text = "Insight: 0"
 label_settings = SubResource("LabelSettings_1rldg")
 
-[node name="RecordReachedLabel" type="Label" parent="UI"]
+[node name="RecordLabel" type="Label" parent="UI"]
+visible = false
 offset_left = 30.0
 offset_top = 93.0
 offset_right = 99.0
