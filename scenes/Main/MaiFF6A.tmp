@@ -1,14 +1,12 @@
-[gd_scene load_steps=47 format=3 uid="uid://2s6aljemt4da"]
+[gd_scene load_steps=40 format=3 uid="uid://2s6aljemt4da"]
 
 [ext_resource type="Script" path="res://scenes/Main/Main.gd" id="1_ynw3k"]
 [ext_resource type="PackedScene" uid="uid://dde0d7jiv30my" path="res://scenes/HookShot/HookShot.tscn" id="3_qclwk"]
 [ext_resource type="PackedScene" uid="uid://cpx0x2gu43o4s" path="res://scenes/Obstacle_SmoothBoulder/Obstacle_SmoothBoulder.tscn" id="5_pqu4f"]
 [ext_resource type="Texture2D" uid="uid://ciqxfqv1smg0x" path="res://assets/—Pngtree—yellow black hole_4491995.png" id="5_q3dxc"]
 [ext_resource type="Shader" path="res://shaders/BlackHole.gdshader" id="5_temnx"]
-[ext_resource type="PackedScene" uid="uid://mnmolx7ch3l7" path="res://scenes/ThrusterGPUParticles2D/ThrusterGPUParticles2D.tscn" id="8_3luf2"]
 [ext_resource type="PackedScene" uid="uid://cesfu4jt84pph" path="res://components/SuckComponent/SuckComponent.tscn" id="8_55a36"]
 [ext_resource type="Shader" path="res://shaders/Stars.gdshader" id="8_jy67s"]
-[ext_resource type="Script" path="res://scenes/Main/ThrusterEmitters.gd" id="8_lfdc1"]
 [ext_resource type="Texture2D" uid="uid://fe3k568v6hjc" path="res://assets/player/player_body.png" id="9_uny2i"]
 [ext_resource type="Texture2D" uid="uid://desrac4t6cmro" path="res://assets/player/player_eyehole_background.png" id="10_gfx7d"]
 [ext_resource type="PackedScene" uid="uid://c45wo45yjj7gb" path="res://scenes/GroundChunkCrooked/GroundChunkCrooked.tscn" id="10_y2yad"]
@@ -69,85 +67,19 @@ gradient = SubResource("Gradient_vu2x8")
 width = 1500
 height = 1500
 
-[sub_resource type="Curve" id="Curve_d7p3f"]
-max_value = 3.0
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 3), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_3klk1"]
-curve = SubResource("Curve_d7p3f")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wv1c7"]
-resource_local_to_scene = true
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_n5cu8"]
 lifetime_randomness = 1.0
 particle_flag_disable_z = true
 emission_shape = 1
-emission_sphere_radius = 8.0
-initial_velocity_min = 800.0
-initial_velocity_max = 800.0
-gravity = Vector3(0, 0, 0)
+emission_sphere_radius = 35.0
+initial_velocity_min = 100.0
+initial_velocity_max = 100.0
+linear_accel_min = -100.0
 damping_min = 100.0
 damping_max = 100.0
-scale_min = 0.1
-scale_max = 2.0
+scale_min = 0.9
+scale_max = 3.5
 scale_over_velocity_max = 1000.0
-scale_over_velocity_curve = SubResource("CurveTexture_3klk1")
-turbulence_enabled = true
-turbulence_noise_speed = Vector3(1.465, 0, 0)
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_iworn"]
-resource_local_to_scene = true
-lifetime_randomness = 1.0
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 8.0
-initial_velocity_min = 800.0
-initial_velocity_max = 800.0
-gravity = Vector3(0, 0, 0)
-damping_min = 100.0
-damping_max = 100.0
-scale_min = 0.1
-scale_max = 2.0
-scale_over_velocity_max = 1000.0
-scale_over_velocity_curve = SubResource("CurveTexture_3klk1")
-turbulence_enabled = true
-turbulence_noise_speed = Vector3(1.465, 0, 0)
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xhnhc"]
-resource_local_to_scene = true
-lifetime_randomness = 1.0
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 8.0
-initial_velocity_min = 800.0
-initial_velocity_max = 800.0
-gravity = Vector3(0, 0, 0)
-damping_min = 100.0
-damping_max = 100.0
-scale_min = 0.1
-scale_max = 2.0
-scale_over_velocity_max = 1000.0
-scale_over_velocity_curve = SubResource("CurveTexture_3klk1")
-turbulence_enabled = true
-turbulence_noise_speed = Vector3(1.465, 0, 0)
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yy2c1"]
-resource_local_to_scene = true
-lifetime_randomness = 1.0
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 8.0
-initial_velocity_min = 800.0
-initial_velocity_max = 800.0
-gravity = Vector3(0, 0, 0)
-damping_min = 100.0
-damping_max = 100.0
-scale_min = 0.1
-scale_max = 2.0
-scale_over_velocity_max = 1000.0
-scale_over_velocity_curve = SubResource("CurveTexture_3klk1")
-turbulence_enabled = true
-turbulence_noise_speed = Vector3(1.465, 0, 0)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jicdx"]
 friction = 0.1
@@ -301,22 +233,30 @@ position = Vector2(176, 0)
 
 [node name="ThrusterEmitters" type="Node2D" parent="."]
 position = Vector2(959, 543)
-script = ExtResource("8_lfdc1")
 
-[node name="RightThrusterGPUParticles2D" parent="ThrusterEmitters" instance=ExtResource("8_3luf2")]
-process_material = SubResource("ParticleProcessMaterial_wv1c7")
+[node name="RightThrusterGPUParticles2D" type="GPUParticles2D" parent="ThrusterEmitters"]
+emitting = false
+amount = 1000
+process_material = SubResource("ParticleProcessMaterial_n5cu8")
 
-[node name="LeftThrusterGPUParticles2D" parent="ThrusterEmitters" instance=ExtResource("8_3luf2")]
-process_material = SubResource("ParticleProcessMaterial_iworn")
-direction = Vector3(-1, 0, 0)
+[node name="LeftThrusterGPUParticles2D" type="GPUParticles2D" parent="ThrusterEmitters"]
+rotation = -3.14159
+emitting = false
+amount = 1000
+process_material = SubResource("ParticleProcessMaterial_n5cu8")
 
-[node name="UpThrusterGPUParticles2D" parent="ThrusterEmitters" instance=ExtResource("8_3luf2")]
-process_material = SubResource("ParticleProcessMaterial_xhnhc")
-direction = Vector3(0, -1, 0)
+[node name="UpThrusterGPUParticles2D" type="GPUParticles2D" parent="ThrusterEmitters"]
+rotation = -1.57079
+emitting = false
+amount = 1000
+process_material = SubResource("ParticleProcessMaterial_n5cu8")
 
-[node name="DownThrusterGPUParticles2D" parent="ThrusterEmitters" instance=ExtResource("8_3luf2")]
-process_material = SubResource("ParticleProcessMaterial_yy2c1")
-direction = Vector3(0, 1, 0)
+[node name="DownThrusterGPUParticles2D" type="GPUParticles2D" parent="ThrusterEmitters"]
+position = Vector2(0, -2)
+rotation = 1.57079
+emitting = false
+amount = 1000
+process_material = SubResource("ParticleProcessMaterial_n5cu8")
 
 [node name="PlayerBody" type="RigidBody2D" parent="." groups=["player"]]
 position = Vector2(959, 543)

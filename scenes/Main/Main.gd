@@ -18,6 +18,11 @@ extends Node2D
 @onready var pupil_base = $PlayerBody/Eyehole/PupilBase
 @onready var pupil_sprite_2d = $PlayerBody/Eyehole/PupilBase/PupilSprite2D
 @onready var blink_timer = $PlayerBody/Eyehole/BlinkTimer
+@onready var thruster_emitters = $ThrusterEmitters
+@onready var right_thruster_gpu_particles_2d = $ThrusterEmitters/RightThrusterGPUParticles2D
+@onready var left_thruster_gpu_particles_2d = $ThrusterEmitters/LeftThrusterGPUParticles2D
+@onready var up_thruster_gpu_particles_2d = $ThrusterEmitters/UpThrusterGPUParticles2D
+@onready var down_thruster_gpu_particles_2d = $ThrusterEmitters/DownThrusterGPUParticles2D
 
 var MOVE_SPEED := 70000
 var TORQUE_SPEED := 1000000
@@ -38,6 +43,7 @@ var max_distance_reached: float
 var is_hookshot_already_fired := false
 var hookshot: CharacterBody2D
 var hookgrapple: Node2D
+var thruster_process_material: ParticleProcessMaterial
 
 signal max_distance_changed(new_max_distance)
 
@@ -50,6 +56,8 @@ func _ready():
 	
 	player_starting_distance = player_body.position.x
 	update_max_distance_reached(0.0)
+	
+	thruster_process_material = right_thruster_gpu_particles_2d.process_material
 
 
 func _process(delta):
@@ -94,13 +102,22 @@ func _physics_process(delta):
 		var movement_input := 0.0
 		if Input.is_action_pressed("Left"):
 			movement_input -= 1.0
+			right_thruster_gpu_particles_2d.emitting = true
+		else:
+			right_thruster_gpu_particles_2d.emitting = false
 		if Input.is_action_pressed("Right"):
 			movement_input += 1.0
+			left_thruster_gpu_particles_2d.emitting = true
+		else:
+			left_thruster_gpu_particles_2d.emitting = false
 		player_body.apply_force(Vector2.RIGHT * movement_input * MOVE_SPEED * delta)
 		player_body.apply_torque(movement_input * TORQUE_SPEED * delta)
 		
 		if Input.is_action_pressed("Fall"):
 			player_body.apply_force(Vector2.DOWN * FALL_SPEED * delta)
+			up_thruster_gpu_particles_2d.emitting = true
+		else:
+			up_thruster_gpu_particles_2d.emitting = false
 		
 		var is_player_on_floor := false
 		for body in player_body.get_colliding_bodies():
@@ -113,6 +130,9 @@ func _physics_process(delta):
 			if is_player_on_floor and jump_cooldown_timer.is_stopped():
 				player_body.apply_central_impulse(Vector2.UP * JUMP_SPEED)
 				jump_cooldown_timer.start()
+			down_thruster_gpu_particles_2d.emitting = true
+		else:
+			down_thruster_gpu_particles_2d.emitting = false
 		
 		# Fire and release hook shot
 		if Input.is_action_just_pressed("Shoot") and not is_hookshot_already_fired:
@@ -142,9 +162,22 @@ func _physics_process(delta):
 			elif hookgrapple:
 				hookgrapple.queue_free()
 				hookgrapple = null
+		
+		# Thruster visuals
+		thruster_emitters.position = player_body.position
+		thruster_emitters.change_velocity_min_max(
+			player_body.linear_velocity.length() * 0.8 + 400,
+			player_body.linear_velocity.length() * 0.8 + 425
+		)
+		thruster_emitters.change_gravity(-player_body.linear_velocity * 3)
 	elif is_player_dead:
 		if Input.is_action_just_pressed("Reload"):
 			get_tree().call_deferred("reload_current_scene")
+		
+		right_thruster_gpu_particles_2d.emitting = false
+		left_thruster_gpu_particles_2d.emitting = false
+		up_thruster_gpu_particles_2d.emitting = false
+		down_thruster_gpu_particles_2d.emitting = false
 
 
 func _on_killbox_area_2d_body_entered(_body):
