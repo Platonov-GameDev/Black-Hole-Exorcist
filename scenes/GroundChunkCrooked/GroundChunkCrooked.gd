@@ -11,7 +11,7 @@ var chunk_scene := load("res://scenes/GroundChunkCrooked/GroundChunkCrooked.tscn
 var WIDTH := 6000
 var HEIGHT := 400
 var RESOLUTION := 100.0
-var CAVITY_DEPTH = 300.0
+var CAVITY_DEPTH = 150.0
 
 var did_spawn_next_chunk := false
 
