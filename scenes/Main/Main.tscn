@@ -1,20 +1,12 @@
-[gd_scene load_steps=47 format=3 uid="uid://2s6aljemt4da"]
+[gd_scene load_steps=21 format=3 uid="uid://2s6aljemt4da"]
 
 [ext_resource type="Script" path="res://scenes/Main/Main.gd" id="1_ynw3k"]
-[ext_resource type="PackedScene" uid="uid://dde0d7jiv30my" path="res://scenes/HookShot/HookShot.tscn" id="3_qclwk"]
 [ext_resource type="PackedScene" uid="uid://cpx0x2gu43o4s" path="res://scenes/Obstacle_SmoothBoulder/Obstacle_SmoothBoulder.tscn" id="5_pqu4f"]
 [ext_resource type="Texture2D" uid="uid://ciqxfqv1smg0x" path="res://assets/—Pngtree—yellow black hole_4491995.png" id="5_q3dxc"]
 [ext_resource type="Shader" path="res://shaders/BlackHole.gdshader" id="5_temnx"]
-[ext_resource type="PackedScene" uid="uid://mnmolx7ch3l7" path="res://scenes/ThrusterGPUParticles2D/ThrusterGPUParticles2D.tscn" id="8_3luf2"]
-[ext_resource type="PackedScene" uid="uid://cesfu4jt84pph" path="res://components/SuckComponent/SuckComponent.tscn" id="8_55a36"]
 [ext_resource type="Shader" path="res://shaders/Stars.gdshader" id="8_jy67s"]
-[ext_resource type="Script" path="res://scenes/Main/ThrusterEmitters.gd" id="8_lfdc1"]
-[ext_resource type="Texture2D" uid="uid://fe3k568v6hjc" path="res://assets/player/player_body.png" id="9_uny2i"]
-[ext_resource type="Texture2D" uid="uid://desrac4t6cmro" path="res://assets/player/player_eyehole_background.png" id="10_gfx7d"]
 [ext_resource type="PackedScene" uid="uid://c45wo45yjj7gb" path="res://scenes/GroundChunkCrooked/GroundChunkCrooked.tscn" id="10_y2yad"]
-[ext_resource type="Texture2D" uid="uid://xd7gw7pgqpx3" path="res://assets/player/player_eyehole_idle-Sheet.png" id="11_xerof"]
-[ext_resource type="Texture2D" uid="uid://dytlpqek1gkr1" path="res://assets/player/player_eyehole_blink-Sheet.png" id="12_5le38"]
-[ext_resource type="Texture2D" uid="uid://ccuf011rimth" path="res://assets/player/player_pupil.png" id="13_6v7i5"]
+[ext_resource type="PackedScene" uid="uid://de4xi8lb2qi2q" path="res://scenes/PlayerBody/PlayerBody.tscn" id="10_y746t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_djo4m"]
 size = Vector2(20, 2000)
@@ -69,173 +61,9 @@ gradient = SubResource("Gradient_vu2x8")
 width = 1500
 height = 1500
 
-[sub_resource type="Curve" id="Curve_d7p3f"]
-max_value = 3.0
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 3), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_3klk1"]
-curve = SubResource("Curve_d7p3f")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wv1c7"]
-resource_local_to_scene = true
-lifetime_randomness = 1.0
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 8.0
-initial_velocity_min = 800.0
-initial_velocity_max = 800.0
-gravity = Vector3(0, 0, 0)
-damping_min = 100.0
-damping_max = 100.0
-scale_min = 0.1
-scale_max = 2.0
-scale_over_velocity_max = 1000.0
-scale_over_velocity_curve = SubResource("CurveTexture_3klk1")
-turbulence_enabled = true
-turbulence_noise_speed = Vector3(1.465, 0, 0)
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_iworn"]
-resource_local_to_scene = true
-lifetime_randomness = 1.0
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 8.0
-initial_velocity_min = 800.0
-initial_velocity_max = 800.0
-gravity = Vector3(0, 0, 0)
-damping_min = 100.0
-damping_max = 100.0
-scale_min = 0.1
-scale_max = 2.0
-scale_over_velocity_max = 1000.0
-scale_over_velocity_curve = SubResource("CurveTexture_3klk1")
-turbulence_enabled = true
-turbulence_noise_speed = Vector3(1.465, 0, 0)
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xhnhc"]
-resource_local_to_scene = true
-lifetime_randomness = 1.0
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 8.0
-initial_velocity_min = 800.0
-initial_velocity_max = 800.0
-gravity = Vector3(0, 0, 0)
-damping_min = 100.0
-damping_max = 100.0
-scale_min = 0.1
-scale_max = 2.0
-scale_over_velocity_max = 1000.0
-scale_over_velocity_curve = SubResource("CurveTexture_3klk1")
-turbulence_enabled = true
-turbulence_noise_speed = Vector3(1.465, 0, 0)
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yy2c1"]
-resource_local_to_scene = true
-lifetime_randomness = 1.0
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 8.0
-initial_velocity_min = 800.0
-initial_velocity_max = 800.0
-gravity = Vector3(0, 0, 0)
-damping_min = 100.0
-damping_max = 100.0
-scale_min = 0.1
-scale_max = 2.0
-scale_over_velocity_max = 1000.0
-scale_over_velocity_curve = SubResource("CurveTexture_3klk1")
-turbulence_enabled = true
-turbulence_noise_speed = Vector3(1.465, 0, 0)
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jicdx"]
-friction = 0.1
-bounce = 0.5
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_2u03b"]
-radius = 40.0
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sn02o"]
-atlas = ExtResource("12_5le38")
-region = Rect2(0, 0, 500, 500)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yv6t1"]
-atlas = ExtResource("12_5le38")
-region = Rect2(500, 0, 500, 500)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6k7bu"]
-atlas = ExtResource("12_5le38")
-region = Rect2(1000, 0, 500, 500)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wkj8c"]
-atlas = ExtResource("12_5le38")
-region = Rect2(1500, 0, 500, 500)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nbpyp"]
-atlas = ExtResource("12_5le38")
-region = Rect2(2000, 0, 500, 500)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0hc8e"]
-atlas = ExtResource("11_xerof")
-region = Rect2(0, 0, 500, 500)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4me0f"]
-atlas = ExtResource("11_xerof")
-region = Rect2(500, 0, 500, 500)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pfwgf"]
-atlas = ExtResource("11_xerof")
-region = Rect2(1000, 0, 500, 500)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0r6yf"]
-atlas = ExtResource("11_xerof")
-region = Rect2(1500, 0, 500, 500)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_f7nxf"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sn02o")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_yv6t1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6k7bu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wkj8c")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nbpyp")
-}],
-"loop": false,
-"name": &"blink",
-"speed": 15.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0hc8e")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4me0f")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pfwgf")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0r6yf")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 10.0
-}]
-
 [node name="main" type="Node2D"]
 script = ExtResource("1_ynw3k")
 obstacle_scene = ExtResource("5_pqu4f")
-hookshot_scene = ExtResource("3_qclwk")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 540)
@@ -299,67 +127,4 @@ position = Vector2(2485, 1281)
 [node name="GroundChunkCrooked2" parent="Ground" instance=ExtResource("10_y2yad")]
 position = Vector2(176, 0)
 
-[node name="ThrusterEmitters" type="Node2D" parent="."]
-position = Vector2(959, 543)
-script = ExtResource("8_lfdc1")
-
-[node name="RightThrusterGPUParticles2D" parent="ThrusterEmitters" instance=ExtResource("8_3luf2")]
-process_material = SubResource("ParticleProcessMaterial_wv1c7")
-
-[node name="LeftThrusterGPUParticles2D" parent="ThrusterEmitters" instance=ExtResource("8_3luf2")]
-process_material = SubResource("ParticleProcessMaterial_iworn")
-direction = Vector3(-1, 0, 0)
-
-[node name="UpThrusterGPUParticles2D" parent="ThrusterEmitters" instance=ExtResource("8_3luf2")]
-process_material = SubResource("ParticleProcessMaterial_xhnhc")
-direction = Vector3(0, -1, 0)
-
-[node name="DownThrusterGPUParticles2D" parent="ThrusterEmitters" instance=ExtResource("8_3luf2")]
-process_material = SubResource("ParticleProcessMaterial_yy2c1")
-direction = Vector3(0, 1, 0)
-
-[node name="PlayerBody" type="RigidBody2D" parent="." groups=["player"]]
-position = Vector2(959, 543)
-collision_layer = 2
-collision_mask = 5
-physics_material_override = SubResource("PhysicsMaterial_jicdx")
-continuous_cd = 2
-max_contacts_reported = 100
-contact_monitor = true
-
-[node name="PlayerCollisionShape2D" type="CollisionShape2D" parent="PlayerBody"]
-shape = SubResource("CircleShape2D_2u03b")
-
-[node name="PlayerSprite2D" type="Sprite2D" parent="PlayerBody"]
-z_index = 1
-scale = Vector2(0.15, 0.15)
-texture = ExtResource("9_uny2i")
-
-[node name="JumpCooldownTimer" type="Timer" parent="PlayerBody"]
-wait_time = 0.1
-one_shot = true
-
-[node name="SuckComponent" parent="PlayerBody" instance=ExtResource("8_55a36")]
-
-[node name="Eyehole" type="Node2D" parent="PlayerBody"]
-z_index = 1
-scale = Vector2(0.155, 0.155)
-
-[node name="BackgroundSprite2D" type="Sprite2D" parent="PlayerBody/Eyehole"]
-scale = Vector2(0.95, 0.95)
-texture = ExtResource("10_gfx7d")
-
-[node name="EyeholeAnimatedSprite2D" type="AnimatedSprite2D" parent="PlayerBody/Eyehole"]
-z_index = 1
-sprite_frames = SubResource("SpriteFrames_f7nxf")
-animation = &"idle"
-autoplay = "idle"
-
-[node name="PupilBase" type="Node2D" parent="PlayerBody/Eyehole"]
-
-[node name="PupilSprite2D" type="Sprite2D" parent="PlayerBody/Eyehole/PupilBase"]
-texture = ExtResource("13_6v7i5")
-
-[node name="BlinkTimer" type="Timer" parent="PlayerBody/Eyehole"]
-wait_time = 2.0
-autostart = true
+[node name="PlayerBody" parent="." instance=ExtResource("10_y746t")]
