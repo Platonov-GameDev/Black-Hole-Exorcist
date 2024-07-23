@@ -69,6 +69,7 @@ obstacle_scene = ExtResource("5_pqu4f")
 position = Vector2(960, 540)
 process_callback = 0
 position_smoothing_enabled = true
+position_smoothing_speed = 9.0
 
 [node name="KillboxArea2D" type="Area2D" parent="Camera2D"]
 position = Vector2(-1040, -1299)
@@ -128,3 +129,4 @@ position = Vector2(2485, 1281)
 position = Vector2(176, 0)
 
 [node name="PlayerBody" parent="." instance=ExtResource("10_y746t")]
+position = Vector2(366, 609)

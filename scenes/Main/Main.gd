@@ -16,7 +16,7 @@ extends Node2D
 var CAM_Y_OFFSET := 0
 var CAM_X_OFFSET := 600
 var SCORE_COEFFICIENT := 0.1
-var KILLBOX_MOVE_SPEED := 100
+var KILLBOX_MOVE_SPEED := 200
 var OBSTACLE_SPAWN_OFFSET := 50
 
 var score: float
@@ -69,8 +69,7 @@ func _physics_process(delta):
 func _on_killbox_area_2d_body_entered(_body):
 	if not is_instance_valid(player_body): return
 	
-	player_body.call_deferred("queue_free")
-	player_body.is_dead = true
+	player_body.die()
 
 
 func update_score(new_score):

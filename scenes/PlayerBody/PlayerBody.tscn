@@ -174,7 +174,6 @@ turbulence_enabled = true
 turbulence_noise_speed = Vector3(1.465, 0, 0)
 
 [node name="PlayerBody" type="RigidBody2D" groups=["player"]]
-position = Vector2(959, 543)
 collision_layer = 2
 collision_mask = 5
 physics_material_override = SubResource("PhysicsMaterial_jicdx")

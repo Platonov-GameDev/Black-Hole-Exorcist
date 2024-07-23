@@ -15,19 +15,22 @@ class_name PlayerBody
 @onready var down_thruster_gpu_particles_2d = $ThrusterEmitters/DownThrusterGPUParticles2D
 @onready var jump_cooldown_timer = $JumpCooldownTimer
 
-var MOVE_SPEED := 70000
+var MOVE_SPEED := 40000
 var TORQUE_SPEED := 1000000
 var FALL_SPEED := 80000
 var HOVER_SPEED := 80000
-var FLOOR_MOVE_MULTIPLIER := 3000
 var JUMP_SPEED := 800
 var MAX_PUPIL_OFFSET := 12.0
+var FLUNG_THRESHOLD_VELOCITY := 1800
 
 var is_dead := false
 var thruster_emitters_array: Array[GPUParticles2D] = []
 var is_hookshot_already_fired := false
 var hookshot: CharacterBody2D
 var hookgrapple: Node2D
+var movement_input := 0.0
+var is_on_floor := false
+var is_flung := false
 
 
 func _ready():
@@ -56,7 +59,7 @@ func _process(delta):
 
 func _physics_process(delta):
 	# Apply player movement forces
-	var movement_input := 0.0
+	movement_input = 0.0
 	if Input.is_action_pressed("Left"):
 		movement_input -= 1.0
 		right_thruster_gpu_particles_2d.emitting = true
@@ -70,26 +73,21 @@ func _physics_process(delta):
 	apply_force(Vector2.RIGHT * movement_input * MOVE_SPEED * delta)
 	apply_torque(movement_input * TORQUE_SPEED * delta)
 	
-	# Quickstart gamefeel movement
-	if linear_velocity.length() <= 800:
-		apply_force(Vector2.RIGHT * movement_input * MOVE_SPEED * delta * 20)
-		apply_torque(movement_input * TORQUE_SPEED * delta * 20)
-	
 	if Input.is_action_pressed("Fall"):
 		apply_force(Vector2.DOWN * FALL_SPEED * delta)
 		up_thruster_gpu_particles_2d.emitting = true
 	else:
 		up_thruster_gpu_particles_2d.emitting = false
 	
-	var is_player_on_floor := false
+	is_on_floor = false
 	for body in get_colliding_bodies():
 		if body.is_in_group("ground"):
-			is_player_on_floor = true
+			is_on_floor = true
 			break
 	
 	if Input.is_action_pressed("Jump"):
 		apply_force(Vector2.UP * HOVER_SPEED * delta)
-		if is_player_on_floor and jump_cooldown_timer.is_stopped():
+		if is_on_floor and jump_cooldown_timer.is_stopped():
 			apply_central_impulse(Vector2.UP * JUMP_SPEED)
 			jump_cooldown_timer.start()
 		down_thruster_gpu_particles_2d.emitting = true
@@ -124,7 +122,6 @@ func _physics_process(delta):
 		elif hookgrapple:
 			hookgrapple.queue_free()
 			hookgrapple = null
-	
 	
 	# Thruster visuals
 	change_thruster_particles_velocity_min_max(
@@ -168,3 +165,26 @@ func _on_hookshot_expired():
 func _on_hookshot_grappled(new_hookgrapple):
 	hookgrapple = new_hookgrapple
 	add_sibling(hookgrapple)
+
+
+func _integrate_forces(state):
+	# Flung
+	is_flung = abs(linear_velocity.x) > FLUNG_THRESHOLD_VELOCITY
+	
+	# Arcadify movement
+	if not is_flung:
+		if movement_input != 0.0:
+			state.linear_velocity.x = movement_input * FLUNG_THRESHOLD_VELOCITY * 0.9
+			state.angular_velocity = 10 * movement_input
+		else:
+			state.linear_velocity.x = state.linear_velocity.x * 0.95
+			state.angular_velocity = state.angular_velocity * 0.95
+
+
+func die():
+	is_dead = true
+	if hookshot != null:
+		hookshot.queue_free()
+	if hookgrapple != null:
+		hookgrapple.queue_free()
+	call_deferred("queue_free")

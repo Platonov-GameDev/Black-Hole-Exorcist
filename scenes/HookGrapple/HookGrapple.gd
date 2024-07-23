@@ -11,7 +11,7 @@ extends Node2D
 @onready var grapple_rope_handle = $GrappleRigidBody2D/Rotatable/GrappleRopeHandle
 
 var CHAIN_STIFFNESS = 1
-var GRAPPLE_FORCE = 3
+var GRAPPLE_FORCE = 5
 
 var player_body: RigidBody2D
 var obstacle: RigidBody2D
@@ -34,7 +34,7 @@ func _ready():
 	var chain_vector = grapple_rigid_body_2d.position - player_body.position
 	var grapple_pull_force = chain_vector * GRAPPLE_FORCE
 	player_body.apply_central_impulse(grapple_pull_force)
-	grapple_rigid_body_2d.apply_central_impulse(-grapple_pull_force)
+	obstacle.apply_impulse(-grapple_pull_force, collision_point - obstacle.global_position)
 	
 	# Initialize rope
 	rope.global_position = rope_connection_point.global_position
