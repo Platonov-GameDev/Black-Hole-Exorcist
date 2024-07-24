@@ -11,7 +11,7 @@ extends Node2D
 @onready var grapple_rope_handle = $GrappleRigidBody2D/Rotatable/GrappleRopeHandle
 
 var CHAIN_STIFFNESS = 1
-var GRAPPLE_FORCE = 5
+var GRAPPLE_FORCE = 4
 
 var player_body: RigidBody2D
 var obstacle: RigidBody2D

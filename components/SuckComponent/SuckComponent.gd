@@ -1,7 +1,7 @@
 extends Node
 
 
-var SUCK_FORCE = 70000
+var SUCK_FORCE = 40000
 var parent_body: RigidBody2D
 
 
