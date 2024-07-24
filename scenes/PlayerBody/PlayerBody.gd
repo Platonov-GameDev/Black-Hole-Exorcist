@@ -21,7 +21,7 @@ var FALL_SPEED := 80000
 var HOVER_SPEED := 80000
 var JUMP_SPEED := 800
 var MAX_PUPIL_OFFSET := 12.0
-var FLUNG_THRESHOLD_VELOCITY := 1800
+var FLUNG_THRESHOLD_VELOCITY := 1000
 
 var is_dead := false
 var thruster_emitters_array: Array[GPUParticles2D] = []
