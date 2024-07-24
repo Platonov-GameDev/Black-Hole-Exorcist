@@ -41,7 +41,7 @@ func _ready():
 		thruster_emitters_array.append(emitter as GPUParticles2D)
 
 
-func _process(delta):
+func _process(_delta):
 	# Move pupil
 	var mouse_screen_position = Vector2(get_tree().root.get_mouse_position())
 	
@@ -98,7 +98,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("Shoot") and not is_hookshot_already_fired:
 		is_hookshot_already_fired = true
 		hookshot = hookshot_scene.instantiate()
-		hookshot.position = position
+		hookshot.position = global_position
 		hookshot.player_body = self
 		hookshot.expired.connect(_on_hookshot_expired)
 		hookshot.grappled.connect(_on_hookshot_grappled)
@@ -134,7 +134,6 @@ func _physics_process(delta):
 
 func _on_blink_timer_timeout():
 	eyehole_animated_sprite_2d.play("blink")
-	eyehole_animated_sprite_2d.play
 	
 	blink_timer.wait_time = randf_range(3.0, 6.0)
 	blink_timer.start()

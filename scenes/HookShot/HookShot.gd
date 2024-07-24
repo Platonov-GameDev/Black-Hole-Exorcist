@@ -20,8 +20,7 @@ func _ready():
 	velocity = direction * SPEED + player_body.linear_velocity
 
 
-func _process(delta):
-	
+func _physics_process(delta):
 	chain_line_2d.set_point_position(1, player_body.position - position)
 	
 	var player_to_hook_vector = position - player_body.position

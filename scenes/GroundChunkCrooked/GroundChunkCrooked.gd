@@ -21,14 +21,14 @@ func _ready():
 	
 	var new_point_array := PackedVector2Array()
 	var uv_array := PackedVector2Array()
-	new_point_array.append(Vector2(WIDTH / 2, HEIGHT / 2))
-	new_point_array.append(Vector2(-WIDTH / 2, HEIGHT / 2))
+	new_point_array.append(Vector2(WIDTH / 2.0, HEIGHT / 2.0))
+	new_point_array.append(Vector2(-WIDTH / 2.0, HEIGHT / 2.0))
 	uv_array.append(Vector2(1, 1))
 	uv_array.append(Vector2(0, 1))
 	for i in range(RESOLUTION + 1):
-		var point_x = WIDTH / RESOLUTION * i - WIDTH / 2
+		var point_x = WIDTH / RESOLUTION * i - WIDTH / 2.0
 		var point_height = int(noise.get_noise_1d(point_x + position.x) * CAVITY_DEPTH)
-		var point_y = -HEIGHT / 2 + point_height
+		var point_y = -HEIGHT / 2.0 + point_height
 		new_point_array.append(Vector2(point_x, point_y))
 		uv_array.append(Vector2(i / RESOLUTION, 0))
 	polygon_2d.polygon = new_point_array

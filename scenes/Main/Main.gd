@@ -15,7 +15,6 @@ extends Node2D
 
 var CAM_Y_OFFSET := 0
 var CAM_X_OFFSET := 600
-var SCORE_COEFFICIENT := 0.1
 var KILLBOX_MOVE_SPEED := 200
 var OBSTACLE_SPAWN_OFFSET := 50
 
@@ -43,16 +42,6 @@ func _process(delta):
 		camera_2d.position.x += KILLBOX_MOVE_SPEED * delta
 		camera_2d.position.y = player_body.position.y + CAM_Y_OFFSET
 		
-		# Update max height if needed
-		var current_player_distance = player_body.position.x
-		if current_player_distance > previous_player_distance:
-			var score_delta = snapped(
-				(current_player_distance - previous_player_distance) / (delta * 100000),
-				1
-			)
-			update_score(score + score_delta)
-		previous_player_distance = current_player_distance
-		
 		# Scroll background
 		close_stars_sprite_2d.material.set_shader_parameter("player_x", player_body.position.x)
 		far_stars_sprite_2d.material.set_shader_parameter("player_x", player_body.position.x)
@@ -60,8 +49,15 @@ func _process(delta):
 		# Align black hole with cam height
 		black_hole_arm.global_position.y = camera_2d.get_screen_center_position().y
 
-func _physics_process(delta):
-	if not is_instance_valid(player_body):
+func _physics_process(_delta):
+	if is_instance_valid(player_body):
+		# Update score
+		var current_player_distance = player_body.position.x
+		if player_body.is_flung and current_player_distance > previous_player_distance:
+			var score_delta = snapped(current_player_distance - previous_player_distance, 1)
+			update_score(score + score_delta)
+		previous_player_distance = current_player_distance
+	elif not is_instance_valid(player_body):
 		if Input.is_action_just_pressed("Reload"):
 			get_tree().call_deferred("reload_current_scene")
 
