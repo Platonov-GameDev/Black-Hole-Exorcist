@@ -31,6 +31,7 @@ var hookgrapple: Node2D
 var movement_input := 0.0
 var is_on_floor := false
 var is_flung := false
+var camera: Camera2D
 
 
 func _ready():
@@ -103,16 +104,33 @@ func _physics_process(delta):
 		hookshot.expired.connect(_on_hookshot_expired)
 		hookshot.grappled.connect(_on_hookshot_grappled)
 		
+		# Calculate mouse position (based on screen shader)
 		var mouse_screen_position = Vector2(get_tree().root.get_mouse_position())
+		mouse_screen_position.x /= 1920.0
+		mouse_screen_position.y /= 1080.0
 		
-		var player_screen_position = get_global_transform_with_canvas().get_origin()
-		player_screen_position.x -= 2880
-		player_screen_position.y -= 540
-		player_screen_position.y /= pow(player_screen_position.x / 1920.0, .2)
-		player_screen_position.y += 540
+		var uv = mouse_screen_position
+		if uv.x < 0.5:
+			uv.x /= 4.0;
+			uv.x += 0.375;
+		else:
+			uv.x -= 0.5;
+			var x = uv.x * 2.0;
+			var x_shrinkage = pow(x, 3);
+			uv.x /= 4.0 - 3.0 * x_shrinkage;
+			uv.x += 0.5;
+		uv.y -= 0.5;
+		uv.y /= pow(mouse_screen_position.x, .2);
+		uv.y += 0.5;
+		mouse_screen_position = uv
 		
-		var hookshot_direction = (mouse_screen_position - player_screen_position).normalized()
+		mouse_screen_position.x *= 7680.0
+		mouse_screen_position.y *= 1080.0
+		mouse_screen_position.x += camera.get_screen_center_position().x - 7680.0 / 2.0
+		
+		var hookshot_direction = (mouse_screen_position - position).normalized()
 		hookshot.direction = hookshot_direction
+		
 		add_sibling(hookshot)
 	if Input.is_action_just_released("Shoot"):
 		if is_hookshot_already_fired:

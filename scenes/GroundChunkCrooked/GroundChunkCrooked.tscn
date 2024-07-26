@@ -4,9 +4,7 @@
 [ext_resource type="Shader" path="res://shaders/AccretionRoad.gdshader" id="2_w4ebk"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_iwft2"]
-friction = 0.5
-bounce = 1.0
-absorbent = true
+friction = 0.0
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_c5u6a"]
 noise_type = 0

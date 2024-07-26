@@ -13,7 +13,6 @@ extends Node2D
 @onready var black_hole_arm = $Camera2D/BlackHoleArm
 @onready var player_body: PlayerBody = $PlayerBody
 
-var CAM_Y_OFFSET := 0
 var CAM_X_OFFSET := 600
 var KILLBOX_MOVE_SPEED := 200
 var OBSTACLE_SPAWN_OFFSET := 50
@@ -30,6 +29,8 @@ func _ready():
 	
 	previous_player_distance = player_body.position.x
 	update_score(0.0)
+	
+	player_body.camera = camera_2d
 
 
 func _process(delta):
@@ -40,7 +41,6 @@ func _process(delta):
 		if player_body.position.x + CAM_X_OFFSET > camera_2d.position.x:
 			camera_2d.position.x = player_body.position.x + CAM_X_OFFSET
 		camera_2d.position.x += KILLBOX_MOVE_SPEED * delta
-		camera_2d.position.y = player_body.position.y + CAM_Y_OFFSET
 		
 		# Scroll background
 		close_stars_sprite_2d.material.set_shader_parameter("player_x", player_body.position.x)

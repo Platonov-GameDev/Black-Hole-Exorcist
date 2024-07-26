@@ -66,7 +66,7 @@ script = ExtResource("1_ynw3k")
 obstacle_scene = ExtResource("5_pqu4f")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(960, 540)
+position = Vector2(0, 540)
 process_callback = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 9.0
@@ -88,7 +88,6 @@ gizmo_extents = 92.6
 
 [node name="SpawnTimer" type="Timer" parent="Camera2D/ObstacleSpawner"]
 wait_time = 2.0
-autostart = true
 
 [node name="BlackHoleSprite2D" type="Sprite2D" parent="Camera2D"]
 visible = false
@@ -123,10 +122,10 @@ position = Vector2(-1630, 0)
 texture = SubResource("GradientTexture2D_884i6")
 
 [node name="Ground" type="Node2D" parent="."]
-position = Vector2(2485, 1281)
+position = Vector2(1611, 895)
 
 [node name="GroundChunkCrooked2" parent="Ground" instance=ExtResource("10_y2yad")]
 position = Vector2(176, 0)
 
 [node name="PlayerBody" parent="." instance=ExtResource("10_y746t")]
-position = Vector2(366, 609)
+position = Vector2(-707, 323)
