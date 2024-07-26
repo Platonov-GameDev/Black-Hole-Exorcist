@@ -4,8 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://cpx0x2gu43o4s" path="res://scenes/Obstacle_SmoothBoulder/Obstacle_SmoothBoulder.tscn" id="5_pqu4f"]
 [ext_resource type="Texture2D" uid="uid://ciqxfqv1smg0x" path="res://assets/—Pngtree—yellow black hole_4491995.png" id="5_q3dxc"]
 [ext_resource type="Shader" path="res://shaders/BlackHole.gdshader" id="5_temnx"]
+[ext_resource type="PackedScene" uid="uid://c753vkupur4x6" path="res://scenes/Walls/Walls.tscn" id="6_fkknr"]
 [ext_resource type="Shader" path="res://shaders/Stars.gdshader" id="8_jy67s"]
-[ext_resource type="PackedScene" uid="uid://c45wo45yjj7gb" path="res://scenes/GroundChunkCrooked/GroundChunkCrooked.tscn" id="10_y2yad"]
 [ext_resource type="PackedScene" uid="uid://de4xi8lb2qi2q" path="res://scenes/PlayerBody/PlayerBody.tscn" id="10_y746t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_djo4m"]
@@ -121,11 +121,8 @@ material = SubResource("ShaderMaterial_68mvg")
 position = Vector2(-1630, 0)
 texture = SubResource("GradientTexture2D_884i6")
 
-[node name="Ground" type="Node2D" parent="."]
-position = Vector2(1611, 895)
-
-[node name="GroundChunkCrooked2" parent="Ground" instance=ExtResource("10_y2yad")]
-position = Vector2(176, 0)
+[node name="Walls" parent="." instance=ExtResource("6_fkknr")]
+position = Vector2(800, 540)
 
 [node name="PlayerBody" parent="." instance=ExtResource("10_y746t")]
-position = Vector2(-707, 323)
+position = Vector2(-611, 536)

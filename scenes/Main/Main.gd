@@ -50,14 +50,7 @@ func _process(delta):
 		black_hole_arm.global_position.y = camera_2d.get_screen_center_position().y
 
 func _physics_process(_delta):
-	if is_instance_valid(player_body):
-		# Update score
-		var current_player_distance = player_body.position.x
-		if player_body.is_flung and current_player_distance > previous_player_distance:
-			var score_delta = snapped(current_player_distance - previous_player_distance, 1)
-			update_score(score + score_delta)
-		previous_player_distance = current_player_distance
-	elif not is_instance_valid(player_body):
+	if not is_instance_valid(player_body):
 		if Input.is_action_just_pressed("Reload"):
 			get_tree().call_deferred("reload_current_scene")
 

@@ -13,13 +13,9 @@ class_name PlayerBody
 @onready var left_thruster_gpu_particles_2d = $ThrusterEmitters/LeftThrusterGPUParticles2D
 @onready var up_thruster_gpu_particles_2d = $ThrusterEmitters/UpThrusterGPUParticles2D
 @onready var down_thruster_gpu_particles_2d = $ThrusterEmitters/DownThrusterGPUParticles2D
-@onready var jump_cooldown_timer = $JumpCooldownTimer
 
 var MOVE_SPEED := 40000
 var TORQUE_SPEED := 1000000
-var FALL_SPEED := 80000
-var HOVER_SPEED := 80000
-var JUMP_SPEED := 800
 var MAX_PUPIL_OFFSET := 12.0
 var FLUNG_THRESHOLD_VELOCITY := 1000
 
@@ -28,9 +24,7 @@ var thruster_emitters_array: Array[GPUParticles2D] = []
 var is_hookshot_already_fired := false
 var hookshot: CharacterBody2D
 var hookgrapple: Node2D
-var movement_input := 0.0
-var is_on_floor := false
-var is_flung := false
+var movement_input := Vector2.ZERO
 var camera: Camera2D
 
 
@@ -40,6 +34,8 @@ func _ready():
 	
 	for emitter in thruster_emitters.get_children():
 		thruster_emitters_array.append(emitter as GPUParticles2D)
+	
+	apply_torque_impulse(1000)
 
 
 func _process(_delta):
@@ -60,40 +56,24 @@ func _process(_delta):
 
 func _physics_process(delta):
 	# Apply player movement forces
-	movement_input = 0.0
+	movement_input = Vector2.ZERO
 	if Input.is_action_pressed("Left"):
-		movement_input -= 1.0
-		right_thruster_gpu_particles_2d.emitting = true
+		move_in_direction(Vector2.LEFT)
 	else:
-		right_thruster_gpu_particles_2d.emitting = false
+		move_in_direction(Vector2.LEFT, false)
 	if Input.is_action_pressed("Right"):
-		movement_input += 1.0
-		left_thruster_gpu_particles_2d.emitting = true
+		move_in_direction(Vector2.RIGHT)
 	else:
-		left_thruster_gpu_particles_2d.emitting = false
-	apply_force(Vector2.RIGHT * movement_input * MOVE_SPEED * delta)
-	apply_torque(movement_input * TORQUE_SPEED * delta)
-	
-	if Input.is_action_pressed("Fall"):
-		apply_force(Vector2.DOWN * FALL_SPEED * delta)
-		up_thruster_gpu_particles_2d.emitting = true
+		move_in_direction(Vector2.RIGHT, false)
+	if Input.is_action_pressed("Up"):
+		move_in_direction(Vector2.UP)
 	else:
-		up_thruster_gpu_particles_2d.emitting = false
-	
-	is_on_floor = false
-	for body in get_colliding_bodies():
-		if body.is_in_group("ground"):
-			is_on_floor = true
-			break
-	
-	if Input.is_action_pressed("Jump"):
-		apply_force(Vector2.UP * HOVER_SPEED * delta)
-		if is_on_floor and jump_cooldown_timer.is_stopped():
-			apply_central_impulse(Vector2.UP * JUMP_SPEED)
-			jump_cooldown_timer.start()
-		down_thruster_gpu_particles_2d.emitting = true
+		move_in_direction(Vector2.UP, false)
+	if Input.is_action_pressed("Down"):
+		move_in_direction(Vector2.DOWN)
 	else:
-		down_thruster_gpu_particles_2d.emitting = false
+		move_in_direction(Vector2.DOWN, false)
+	apply_central_force(movement_input * delta * MOVE_SPEED)
 	
 	# Fire and release hook shot
 	if Input.is_action_just_pressed("Shoot") and not is_hookshot_already_fired:
@@ -184,20 +164,6 @@ func _on_hookshot_grappled(new_hookgrapple):
 	add_sibling(hookgrapple)
 
 
-func _integrate_forces(state):
-	# Flung
-	is_flung = abs(linear_velocity.x) > FLUNG_THRESHOLD_VELOCITY
-	
-	# Arcadify movement
-	if not is_flung:
-		if movement_input != 0.0:
-			state.linear_velocity.x = movement_input * FLUNG_THRESHOLD_VELOCITY * 0.9
-			state.angular_velocity = 10 * movement_input
-		else:
-			state.linear_velocity.x = state.linear_velocity.x * 0.95
-			state.angular_velocity = state.angular_velocity * 0.95
-
-
 func die():
 	is_dead = true
 	if hookshot != null:
@@ -205,3 +171,17 @@ func die():
 	if hookgrapple != null:
 		hookgrapple.queue_free()
 	call_deferred("queue_free")
+
+
+func move_in_direction(direction: Vector2, is_moving := true):
+	match direction:
+		Vector2.LEFT:
+			right_thruster_gpu_particles_2d.emitting = is_moving
+		Vector2.RIGHT:
+			left_thruster_gpu_particles_2d.emitting = is_moving
+		Vector2.UP:
+			down_thruster_gpu_particles_2d.emitting = is_moving
+		Vector2.DOWN:
+			up_thruster_gpu_particles_2d.emitting = is_moving
+	if is_moving:
+		movement_input = (movement_input + direction).normalized()

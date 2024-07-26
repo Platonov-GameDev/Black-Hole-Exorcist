@@ -1,4 +1,5 @@
 extends StaticBody2D
+class_name GroundChunkCrooked
 
 
 var chunk_scene := load("res://scenes/GroundChunkCrooked/GroundChunkCrooked.tscn")
@@ -9,11 +10,12 @@ var chunk_scene := load("res://scenes/GroundChunkCrooked/GroundChunkCrooked.tscn
 @onready var collision_polygon_2d = $CollisionPolygon2D
 
 var WIDTH := 6000
-var HEIGHT := 400
+var HEIGHT := 100.0
 var RESOLUTION := 100.0
-var CAVITY_DEPTH = 150.0
+var CAVITY_DEPTH = 90.0
 
 var did_spawn_next_chunk := false
+var is_ceiling := false
 
 
 func _ready():
@@ -35,14 +37,18 @@ func _ready():
 	polygon_2d.uv = uv_array
 	
 	collision_polygon_2d.polygon = new_point_array
+	
+	if is_ceiling:
+		scale.y = -1
 
 
 func _on_chunk_spawn_trigger_area_2d_body_entered(_body):
 	if did_spawn_next_chunk:
 		return
 	
-	var new_chunk = chunk_scene.instantiate()
+	var new_chunk = chunk_scene.instantiate() as GroundChunkCrooked
 	new_chunk.position = position
 	new_chunk.position.x += WIDTH
+	new_chunk.is_ceiling = is_ceiling
 	call_deferred("add_sibling", new_chunk)
 	did_spawn_next_chunk = true

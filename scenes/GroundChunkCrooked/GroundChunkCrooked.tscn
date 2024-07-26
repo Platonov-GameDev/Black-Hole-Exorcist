@@ -4,7 +4,9 @@
 [ext_resource type="Shader" path="res://shaders/AccretionRoad.gdshader" id="2_w4ebk"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_iwft2"]
-friction = 0.0
+friction = 0.5
+bounce = 1.0
+absorbent = true
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_c5u6a"]
 noise_type = 0
@@ -16,7 +18,7 @@ frequency = 0.05
 
 [sub_resource type="NoiseTexture3D" id="NoiseTexture3D_fxw88"]
 width = 50
-height = 400
+height = 200
 seamless = true
 seamless_blend_skirt = 1.0
 noise = SubResource("FastNoiseLite_t6adw")
@@ -26,7 +28,7 @@ frequency = 0.03
 
 [sub_resource type="NoiseTexture3D" id="NoiseTexture3D_rp5gf"]
 width = 50
-height = 500
+height = 200
 seamless = true
 seamless_blend_skirt = 1.0
 noise = SubResource("FastNoiseLite_pwj3h")

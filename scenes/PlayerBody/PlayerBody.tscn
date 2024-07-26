@@ -191,10 +191,6 @@ z_index = 1
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("1_ewm2e")
 
-[node name="JumpCooldownTimer" type="Timer" parent="."]
-wait_time = 0.1
-one_shot = true
-
 [node name="SuckComponent" parent="." instance=ExtResource("2_kmpx5")]
 
 [node name="Eyehole" type="Node2D" parent="."]
