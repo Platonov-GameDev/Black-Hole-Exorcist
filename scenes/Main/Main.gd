@@ -27,6 +27,8 @@ func _ready():
 	update_score(0.0)
 	
 	player_body.camera = camera_2d
+	
+	PhysicsServer2D.set_active(false)
 
 
 func _process(delta):
@@ -62,4 +64,6 @@ func update_score(new_score):
 
 
 func _on_player_body_acted():
-	did_player_act = true
+	if not did_player_act:
+		did_player_act = true
+		PhysicsServer2D.set_active(true)
