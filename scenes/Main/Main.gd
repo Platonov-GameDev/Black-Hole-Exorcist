@@ -19,6 +19,7 @@ var OBSTACLE_SPAWN_OFFSET := 50
 
 var score: float
 var previous_player_distance: float
+var did_player_act := false
 
 signal score_changed(new_max_score)
 
@@ -26,6 +27,7 @@ signal score_changed(new_max_score)
 func _ready():
 	killbox_area_2d.body_entered.connect(_on_killbox_area_2d_body_entered)
 	spawn_timer.timeout.connect(_on_spawn_timer_timeout)
+	player_body.acted.connect(_on_player_body_acted)
 	
 	previous_player_distance = player_body.position.x
 	update_score(0.0)
@@ -40,11 +42,12 @@ func _process(delta):
 		# Move camera
 		if player_body.position.x + CAM_X_OFFSET > camera_2d.position.x:
 			camera_2d.position.x = player_body.position.x + CAM_X_OFFSET
-		camera_2d.position.x += KILLBOX_MOVE_SPEED * delta
+		if did_player_act:
+			camera_2d.position.x += KILLBOX_MOVE_SPEED * delta
 		
 		# Scroll background
-		close_stars_sprite_2d.material.set_shader_parameter("player_x", player_body.position.x)
-		far_stars_sprite_2d.material.set_shader_parameter("player_x", player_body.position.x)
+		close_stars_sprite_2d.material.set_shader_parameter("player_x", camera_2d.position.x)
+		far_stars_sprite_2d.material.set_shader_parameter("player_x", camera_2d.position.x)
 		
 		# Align black hole with cam height
 		black_hole_arm.global_position.y = camera_2d.get_screen_center_position().y
@@ -72,3 +75,7 @@ func _on_spawn_timer_timeout():
 	new_obstacle.position.x += randf_range(-OBSTACLE_SPAWN_OFFSET, OBSTACLE_SPAWN_OFFSET)
 	new_obstacle.position.y += randf_range(-OBSTACLE_SPAWN_OFFSET, OBSTACLE_SPAWN_OFFSET)
 	obstacle_spawner.add_child(new_obstacle, true)
+
+
+func _on_player_body_acted():
+	did_player_act = true

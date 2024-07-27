@@ -27,6 +27,8 @@ var hookgrapple: Node2D
 var movement_input := Vector2.ZERO
 var camera: Camera2D
 
+signal acted
+
 
 func _ready():
 	blink_timer.timeout.connect(_on_blink_timer_timeout)
@@ -112,6 +114,8 @@ func _physics_process(delta):
 		hookshot.direction = hookshot_direction
 		
 		add_sibling(hookshot)
+		
+		acted.emit()
 	if Input.is_action_just_released("Shoot"):
 		if is_hookshot_already_fired:
 			is_hookshot_already_fired = false
@@ -185,3 +189,4 @@ func move_in_direction(direction: Vector2, is_moving := true):
 			up_thruster_gpu_particles_2d.emitting = is_moving
 	if is_moving:
 		movement_input = (movement_input + direction).normalized()
+		acted.emit()
