@@ -1,18 +1,14 @@
-[gd_scene load_steps=22 format=3 uid="uid://2s6aljemt4da"]
+[gd_scene load_steps=20 format=3 uid="uid://2s6aljemt4da"]
 
 [ext_resource type="Script" path="res://scenes/Main/Main.gd" id="1_ynw3k"]
-[ext_resource type="PackedScene" uid="uid://cpx0x2gu43o4s" path="res://scenes/Obstacle_SmoothBoulder/Obstacle_SmoothBoulder.tscn" id="5_pqu4f"]
-[ext_resource type="Texture2D" uid="uid://ciqxfqv1smg0x" path="res://assets/—Pngtree—yellow black hole_4491995.png" id="5_q3dxc"]
 [ext_resource type="Shader" path="res://shaders/BlackHole.gdshader" id="5_temnx"]
 [ext_resource type="PackedScene" uid="uid://c753vkupur4x6" path="res://scenes/Walls/Walls.tscn" id="6_fkknr"]
+[ext_resource type="PackedScene" uid="uid://dxs6ln84vcjvs" path="res://scenes/ObstacleChunk/ObstacleChunk.tscn" id="7_gmlx2"]
 [ext_resource type="Texture2D" uid="uid://dmu51v7x40gav" path="res://assets/start_platform.png" id="8_2id2s"]
 [ext_resource type="Shader" path="res://shaders/Stars.gdshader" id="8_jy67s"]
 [ext_resource type="PackedScene" uid="uid://de4xi8lb2qi2q" path="res://scenes/PlayerBody/PlayerBody.tscn" id="10_y746t"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_djo4m"]
-size = Vector2(20, 2000)
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mauxj"]
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_f3jnd"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_t0hpg"]
 frequency = 0.1996
@@ -64,10 +60,10 @@ height = 1500
 
 [node name="main" type="Node2D"]
 script = ExtResource("1_ynw3k")
-obstacle_scene = ExtResource("5_pqu4f")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, 540)
+process_callback = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 9.0
 
@@ -79,23 +75,8 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/KillboxArea2D"]
 position = Vector2(-731.451, 1116.91)
-rotation = 0.523599
-shape = SubResource("RectangleShape2D_djo4m")
-
-[node name="ObstacleSpawner" type="Marker2D" parent="Camera2D"]
-position = Vector2(5485, -541)
-gizmo_extents = 92.6
-
-[node name="SpawnTimer" type="Timer" parent="Camera2D/ObstacleSpawner"]
-wait_time = 2.0
-
-[node name="BlackHoleSprite2D" type="Sprite2D" parent="Camera2D"]
-visible = false
-modulate = Color(1, 1, 1, 0.784314)
-z_index = 1
-material = SubResource("CanvasItemMaterial_mauxj")
-position = Vector2(-1392, 0)
-texture = ExtResource("5_q3dxc")
+rotation = -4.18878
+shape = SubResource("WorldBoundaryShape2D_f3jnd")
 
 [node name="Background" type="Node2D" parent="Camera2D"]
 
@@ -126,7 +107,7 @@ texture = SubResource("GradientTexture2D_884i6")
 position = Vector2(800, 540)
 
 [node name="StartPlatformStaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(-733, 527)
+position = Vector2(-733, 532)
 
 [node name="Sprite2D" type="Sprite2D" parent="StartPlatformStaticBody2D"]
 texture = ExtResource("8_2id2s")
@@ -135,4 +116,7 @@ texture = ExtResource("8_2id2s")
 polygon = PackedVector2Array(19, 61, 38, 42, 38, 9, 38, -48, 55, -89, 33, -98, 4, -98, -25, -107, -93, -110, -250, -149, -250, -24, -54, -10, -34, -2)
 
 [node name="PlayerBody" parent="." instance=ExtResource("10_y746t")]
-position = Vector2(-655, 536)
+position = Vector2(-655, 540)
+
+[node name="ObstacleChunk" parent="." instance=ExtResource("7_gmlx2")]
+position = Vector2(-242, 540)

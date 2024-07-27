@@ -14,7 +14,8 @@ class_name PlayerBody
 @onready var up_thruster_gpu_particles_2d = $ThrusterEmitters/UpThrusterGPUParticles2D
 @onready var down_thruster_gpu_particles_2d = $ThrusterEmitters/DownThrusterGPUParticles2D
 
-var MOVE_SPEED := 40000
+var HORIZONTAL_ACCELERATION := 40000
+var VERTICAL_ACCELERATION := 90000
 var TORQUE_SPEED := 1000000
 var MAX_PUPIL_OFFSET := 12.0
 var FLUNG_THRESHOLD_VELOCITY := 1000
@@ -26,6 +27,7 @@ var hookshot: CharacterBody2D
 var hookgrapple: Node2D
 var movement_input := Vector2.ZERO
 var camera: Camera2D
+var grapple_direction: Vector2
 
 signal acted
 
@@ -75,7 +77,12 @@ func _physics_process(delta):
 		move_in_direction(Vector2.DOWN)
 	else:
 		move_in_direction(Vector2.DOWN, false)
-	apply_central_force(movement_input * delta * MOVE_SPEED)
+	var horizontal_movement_input = movement_input
+	horizontal_movement_input.y = 0
+	var vertical_movement_input = movement_input
+	vertical_movement_input.x = 0
+	apply_central_force(horizontal_movement_input * delta * HORIZONTAL_ACCELERATION)
+	apply_central_force(vertical_movement_input * delta * VERTICAL_ACCELERATION)
 	
 	# Fire and release hook shot
 	if Input.is_action_just_pressed("Shoot") and not is_hookshot_already_fired:
@@ -130,7 +137,7 @@ func _physics_process(delta):
 		linear_velocity.length() * 0.8 + 400,
 		linear_velocity.length() * 0.8 + 425
 	)
-	change_thruster_particles_gravity(-linear_velocity * 3)
+	change_thruster_particles_gravity(-linear_velocity * 10)
 	thruster_emitters.rotation = -rotation
 
 
@@ -163,9 +170,11 @@ func _on_hookshot_expired():
 	hookshot = null
 
 
-func _on_hookshot_grappled(new_hookgrapple):
+func _on_hookshot_grappled(new_hookgrapple, direction):
 	hookgrapple = new_hookgrapple
 	add_sibling(hookgrapple)
+	
+	grapple_direction = direction
 
 
 func die():
@@ -188,5 +197,15 @@ func move_in_direction(direction: Vector2, is_moving := true):
 		Vector2.DOWN:
 			up_thruster_gpu_particles_2d.emitting = is_moving
 	if is_moving:
-		movement_input = (movement_input + direction).normalized()
+		movement_input = (movement_input + direction)
 		acted.emit()
+
+
+func _integrate_forces(state):
+	# Reset velocity if grappled in other direction
+	if grapple_direction != Vector2.ZERO:
+		if sign(state.linear_velocity.x * grapple_direction.x) == -1:
+			state.linear_velocity.x = 0
+		if sign(state.linear_velocity.y * grapple_direction.y) == -1:
+			state.linear_velocity.y = 0
+		grapple_direction = Vector2.ZERO

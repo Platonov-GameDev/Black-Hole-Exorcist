@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxs6ln84vcjvs"]
+
+[ext_resource type="Script" path="res://scenes/ObstacleChunk/ObstacleChunk.gd" id="1_x1dsc"]
+[ext_resource type="PackedScene" uid="uid://cpx0x2gu43o4s" path="res://scenes/Obstacle_SmoothBoulder/Obstacle_SmoothBoulder.tscn" id="2_f0mgs"]
+
+[node name="ObstacleChunk" type="Node2D"]
+script = ExtResource("1_x1dsc")
+obstacle_boulder_scene = ExtResource("2_f0mgs")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

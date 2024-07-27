@@ -1,19 +1,14 @@
 extends Node2D
 
 
-@export var obstacle_scene: PackedScene
-
 @onready var killbox_area_2d = $Camera2D/KillboxArea2D
-@onready var obstacle_spawner = $Camera2D/ObstacleSpawner
-@onready var spawn_timer = $Camera2D/ObstacleSpawner/SpawnTimer
 @onready var camera_2d = $Camera2D
-@onready var black_hole_sprite_2d = $Camera2D/BlackHoleSprite2D
 @onready var close_stars_sprite_2d = $Camera2D/Background/CloseStarsSprite2D
 @onready var far_stars_sprite_2d = $Camera2D/Background/FarStarsSprite2D
 @onready var black_hole_arm = $Camera2D/BlackHoleArm
 @onready var player_body: PlayerBody = $PlayerBody
 
-var CAM_X_OFFSET := 600
+var CAM_X_OFFSET := 300
 var KILLBOX_MOVE_SPEED := 200
 var OBSTACLE_SPAWN_OFFSET := 50
 
@@ -26,7 +21,6 @@ signal score_changed(new_max_score)
 
 func _ready():
 	killbox_area_2d.body_entered.connect(_on_killbox_area_2d_body_entered)
-	spawn_timer.timeout.connect(_on_spawn_timer_timeout)
 	player_body.acted.connect(_on_player_body_acted)
 	
 	previous_player_distance = player_body.position.x
@@ -36,8 +30,6 @@ func _ready():
 
 
 func _process(delta):
-	black_hole_sprite_2d.rotate(delta)
-	
 	if is_instance_valid(player_body):
 		# Move camera
 		if player_body.position.x + CAM_X_OFFSET > camera_2d.position.x:
@@ -67,14 +59,6 @@ func _on_killbox_area_2d_body_entered(_body):
 func update_score(new_score):
 	score = new_score
 	score_changed.emit(new_score)
-
-
-func _on_spawn_timer_timeout():
-	var new_obstacle := obstacle_scene.instantiate()
-	new_obstacle.position = obstacle_spawner.position
-	new_obstacle.position.x += randf_range(-OBSTACLE_SPAWN_OFFSET, OBSTACLE_SPAWN_OFFSET)
-	new_obstacle.position.y += randf_range(-OBSTACLE_SPAWN_OFFSET, OBSTACLE_SPAWN_OFFSET)
-	obstacle_spawner.add_child(new_obstacle, true)
 
 
 func _on_player_body_acted():

@@ -13,7 +13,7 @@ var direction: Vector2
 
 
 signal expired
-signal grappled(hookgrapple)
+signal grappled(hookgrapple, grapple_direction)
 
 
 func _ready():
@@ -34,8 +34,9 @@ func _physics_process(delta):
 			hookgrapple.player_body = player_body
 			hookgrapple.obstacle = collider
 			hookgrapple.collision_point = collision.get_position()
+			var grapple_direction = (collision.get_position() - player_body.position).normalized()
 			
-			grappled.emit(hookgrapple)
+			grappled.emit(hookgrapple, grapple_direction)
 		
 		expire()
 	
