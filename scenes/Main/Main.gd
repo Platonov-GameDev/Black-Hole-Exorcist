@@ -45,6 +45,11 @@ func _process(delta):
 		
 		# Align black hole with cam height
 		black_hole_arm.global_position.y = camera_2d.get_screen_center_position().y
+		
+		# Update score
+		var snapped_player_position = snapped(player_body.position.x, 1) / 100
+		if snapped_player_position > score:
+			update_score(snapped_player_position)
 
 func _physics_process(_delta):
 	if not is_instance_valid(player_body):

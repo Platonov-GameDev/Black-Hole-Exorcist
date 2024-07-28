@@ -12,6 +12,7 @@ extends Node2D
 
 var CHAIN_STIFFNESS = 1
 var GRAPPLE_FORCE = 2
+var TORQUE_FORCE = 50
 
 var player_body: RigidBody2D
 var obstacle: RigidBody2D
@@ -35,6 +36,7 @@ func _ready():
 	var grapple_pull_force = chain_vector * GRAPPLE_FORCE
 	player_body.apply_central_impulse(grapple_pull_force)
 	obstacle.apply_impulse(-grapple_pull_force, collision_point - obstacle.global_position)
+	player_body.apply_torque_impulse(chain_vector.y * TORQUE_FORCE)
 	
 	# Initialize rope
 	rope.global_position = rope_connection_point.global_position

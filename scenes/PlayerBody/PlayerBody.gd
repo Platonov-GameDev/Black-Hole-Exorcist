@@ -15,7 +15,9 @@ class_name PlayerBody
 @onready var down_thruster_gpu_particles_2d = $ThrusterEmitters/DownThrusterGPUParticles2D
 
 var HORIZONTAL_ACCELERATION := 40000
-var VERTICAL_ACCELERATION := 90000
+var VERTICAL_ACCELERATION := 150000
+var MAX_HORIZONTAL_VELOCITY := 2500
+var MAX_VERTICAL_VELOCITY := 2000
 var TORQUE_SPEED := 1000000
 var MAX_PUPIL_OFFSET := 12.0
 var FLUNG_THRESHOLD_VELOCITY := 1000
