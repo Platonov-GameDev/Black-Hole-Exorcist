@@ -8,7 +8,7 @@ extends Node2D
 @onready var black_hole_arm = $Camera2D/BlackHoleArm
 @onready var player_body: PlayerBody = $PlayerBody
 
-var CAM_X_OFFSET := 300
+var CAM_X_OFFSET := 100
 var KILLBOX_MOVE_SPEED := 200
 var OBSTACLE_SPAWN_OFFSET := 50
 

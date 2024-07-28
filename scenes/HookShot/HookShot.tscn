@@ -17,7 +17,7 @@ hookgrapple_scene = ExtResource("2_b83my")
 [node name="ChainLine2D" type="Line2D" parent="."]
 texture_repeat = 2
 points = PackedVector2Array(0, 0, -300, 0)
-width = 50.0
+width = 30.0
 texture = ExtResource("3_ls11d")
 texture_mode = 2
 
@@ -27,6 +27,6 @@ shape = SubResource("CircleShape2D_85whw")
 [node name="Rotatable" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="Rotatable"]
-position = Vector2(25, -1)
-scale = Vector2(0.5, 0.5)
+position = Vector2(15, 0)
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("4_48py2")

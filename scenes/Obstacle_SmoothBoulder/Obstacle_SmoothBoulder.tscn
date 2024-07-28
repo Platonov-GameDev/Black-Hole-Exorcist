@@ -7,7 +7,7 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3s5c3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dcqts"]
-radius = 80.0
+radius = 50.55
 
 [node name="Obstacle_SmoothBoulder" type="RigidBody2D" groups=["obstacle"]]
 collision_layer = 4
@@ -21,6 +21,7 @@ shape = SubResource("CircleShape2D_dcqts")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-1, -4)
+scale = Vector2(0.66, 0.66)
 texture = ExtResource("1_vgu8r")
 
 [node name="SuckComponent" parent="." instance=ExtResource("2_gd847")]

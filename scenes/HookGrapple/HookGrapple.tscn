@@ -36,6 +36,7 @@ mass = 0.01
 shape = SubResource("CircleShape2D_5mdqx")
 
 [node name="Rotatable" type="Node2D" parent="GrappleRigidBody2D"]
+scale = Vector2(0.6, 0.6)
 
 [node name="GrappleSprite2D" type="Sprite2D" parent="GrappleRigidBody2D/Rotatable"]
 scale = Vector2(0.5, 0.5)
@@ -69,7 +70,7 @@ metadata/_edit_group_ = true
 [node name="RopeRendererLine2D" type="Line2D" parent="Rope"]
 show_behind_parent = true
 points = PackedVector2Array(0, 0, 0, 1.65968, 0, 3.45323, 0, 5.45806, 0, 7.74194, 0, 10.3629, 0, 13.3694, 0, 16.8, 0, 20.6839, 0, 25.0403, 0, 29.879, 0, 35.2, 0, 40.9935, 0, 47.2403, 0, 53.9113, 0, 60.9677, 0, 68.3613, 0, 76.0339, 0, 83.9177, 0, 91.9355, 0, 100)
-width = 44.0
+width = 27.0
 texture = ExtResource("4_ver6f")
 texture_mode = 2
 joint_mode = 2
