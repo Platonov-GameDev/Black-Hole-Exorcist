@@ -30,6 +30,8 @@ var hookgrapple: Node2D
 var movement_input := Vector2.ZERO
 var camera: Camera2D
 var grapple_direction: Vector2
+var is_velocity_getting_redirected := false
+var chain_vector: Vector2
 
 signal acted
 
@@ -128,11 +130,12 @@ func _physics_process(delta):
 	if Input.is_action_just_released("Shoot"):
 		if is_hookshot_already_fired:
 			is_hookshot_already_fired = false
-			hookshot.queue_free()
+			hookshot.call_deferred("queue_free")
 			hookshot = null
 		elif hookgrapple:
-			hookgrapple.queue_free()
+			hookgrapple.call_deferred("queue_free")
 			hookgrapple = null
+			is_velocity_getting_redirected = false
 	
 	# Thruster visuals
 	change_thruster_particles_velocity_min_max(
@@ -211,3 +214,14 @@ func _integrate_forces(state):
 		if sign(state.linear_velocity.y * grapple_direction.y) == -1:
 			state.linear_velocity.y = 0
 		grapple_direction = Vector2.ZERO
+	
+	if is_velocity_getting_redirected:
+		redirect_velocity_by_chain_tension(state)
+
+
+func redirect_velocity_by_chain_tension(state: PhysicsDirectBodyState2D):
+	var orbit_vector = chain_vector.rotated(deg_to_rad(90))
+	var result_velocity_direction = state.linear_velocity.project(orbit_vector).normalized()
+	state.linear_velocity = state.linear_velocity.length() * result_velocity_direction
+	
+	is_velocity_getting_redirected = false

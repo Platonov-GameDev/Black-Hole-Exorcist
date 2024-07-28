@@ -44,7 +44,7 @@ func _ready():
 	
 	var rope_vector = rope_connection_point.global_position - player_body.global_position
 	rope.rope_length = rope_vector.length() * 0.1
-	rope.num_segments = int(rope.rope_length / 2.0);
+	rope.num_segments = int(rope.rope_length / 4.0);
 	rope.update_segments()
 	
 	var num_points = rope.get_num_points()
@@ -77,4 +77,8 @@ func _physics_process(_delta):
 		var player_to_grapple_vector = chain_vector.normalized()
 		var chain_pull_force = player_to_grapple_vector * chain_stretch_length * CHAIN_STIFFNESS
 		grapple_rigid_body_2d.apply_central_impulse(-chain_pull_force)
-		player_body.apply_central_impulse(chain_pull_force)
+		#player_body.apply_central_impulse(chain_pull_force)
+		player_body.is_velocity_getting_redirected = true
+		player_body.chain_vector = chain_vector
+	elif chain_length < max_length:
+		max_length = chain_length
