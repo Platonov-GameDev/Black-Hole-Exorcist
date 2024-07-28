@@ -14,7 +14,7 @@ func _ready():
 	visible_on_screen_notifier_2d.screen_entered.connect(_on_visible_on_screen_notifier_2d_screen_entered)
 	
 	var obstacle_boulder = obstacle_boulder_scene.instantiate()
-	obstacle_boulder.position.y += randf_range(-HEIGHT / 2, HEIGHT / 2)
+	obstacle_boulder.position.y += randf_range(-HEIGHT / 2.0, HEIGHT / 2.0)
 	call_deferred("add_child", obstacle_boulder)
 
 
