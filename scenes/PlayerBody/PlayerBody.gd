@@ -21,7 +21,7 @@ var VERTICAL_ACCELERATION := 150000
 var MAX_HORIZONTAL_VELOCITY := 2500
 var MAX_VERTICAL_VELOCITY := 2000
 var TORQUE_SPEED := 1000000
-var MAX_PUPIL_OFFSET := 12.0
+var MAX_PUPIL_OFFSET := 8.0
 var FLUNG_THRESHOLD_VELOCITY := 1000
 
 var is_dead := false
@@ -147,10 +147,10 @@ func _physics_process(delta):
 	
 	# Thruster visuals
 	change_thruster_particles_velocity_min_max(
-		linear_velocity.length() * 0.8 + 400,
-		linear_velocity.length() * 0.8 + 425
+		linear_velocity.length() * 0.5 + 400,
+		linear_velocity.length() * 0.5 + 425
 	)
-	change_thruster_particles_gravity(-linear_velocity * 10)
+	change_thruster_particles_gravity(-linear_velocity * 4)
 	thruster_emitters.rotation = -rotation
 
 

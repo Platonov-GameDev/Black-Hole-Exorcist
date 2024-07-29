@@ -116,7 +116,7 @@ texture = ExtResource("8_2id2s")
 polygon = PackedVector2Array(19, 61, 38, 42, 38, 9, 38, -48, 55, -89, 33, -98, 4, -98, -25, -107, -93, -110, -250, -149, -250, -24, -54, -10, -34, -2)
 
 [node name="PlayerBody" parent="." instance=ExtResource("10_y746t")]
-position = Vector2(-655, 540)
+position = Vector2(-668, 540)
 
 [node name="ObstacleChunk" parent="." instance=ExtResource("7_gmlx2")]
 position = Vector2(-242, 540)
