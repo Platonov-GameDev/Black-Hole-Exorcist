@@ -210,6 +210,7 @@ autoplay = "idle"
 [node name="PupilBase" type="Node2D" parent="Eyehole"]
 
 [node name="PupilSprite2D" type="Sprite2D" parent="Eyehole/PupilBase"]
+scale = Vector2(1.3, 1.3)
 texture = ExtResource("6_nj7fg")
 
 [node name="BlinkTimer" type="Timer" parent="Eyehole"]
