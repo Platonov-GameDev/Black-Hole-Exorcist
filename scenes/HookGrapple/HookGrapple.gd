@@ -13,8 +13,9 @@ extends Node2D
 var CHAIN_STIFFNESS = 1
 var GRAPPLE_FORCE = 2
 var TORQUE_FORCE = 50
+var MIN_LENGTH := 150
 
-var player_body: RigidBody2D
+var player_body: PlayerBody
 var obstacle: RigidBody2D
 var collision_point: Vector2
 var max_length: float
@@ -31,6 +32,7 @@ func _ready():
 	pin_joint_2d.node_b = pin_joint_2d.get_path_to(grapple_rigid_body_2d)
 	
 	max_length = player_body.position.distance_to(grapple_rigid_body_2d.position)
+	max_length = clampf(max_length, MIN_LENGTH, 999999)
 	
 	var chain_vector = grapple_rigid_body_2d.position - player_body.position
 	var grapple_pull_force = chain_vector * GRAPPLE_FORCE
@@ -43,7 +45,8 @@ func _ready():
 	body_rope_handle.global_position = player_body.global_position
 	
 	var rope_vector = rope_connection_point.global_position - player_body.global_position
-	rope.rope_length = rope_vector.length() * 0.1
+	var rope_length = clampf(rope_vector.length(), MIN_LENGTH, 999999)
+	rope.rope_length = rope_length * 0.1
 	rope.num_segments = int(rope.rope_length / 4.0);
 	rope.update_segments()
 	
@@ -80,5 +83,7 @@ func _physics_process(_delta):
 		#player_body.apply_central_impulse(chain_pull_force)
 		player_body.is_velocity_getting_redirected = true
 		player_body.chain_vector = chain_vector
+		player_body.max_chain_length = max_length
 	elif chain_length < max_length:
 		max_length = chain_length
+		max_length = clampf(max_length, MIN_LENGTH, 999999)

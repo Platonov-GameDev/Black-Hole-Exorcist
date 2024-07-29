@@ -32,6 +32,7 @@ var camera: Camera2D
 var grapple_direction: Vector2
 var is_velocity_getting_redirected := false
 var chain_vector: Vector2
+var max_chain_length: float
 
 signal acted
 
@@ -223,5 +224,8 @@ func redirect_velocity_by_chain_tension(state: PhysicsDirectBodyState2D):
 	var orbit_vector = chain_vector.rotated(deg_to_rad(90))
 	var result_velocity_direction = state.linear_velocity.project(orbit_vector).normalized()
 	state.linear_velocity = state.linear_velocity.length() * result_velocity_direction
+	
+	var correct_position_vector = chain_vector.normalized() * max_chain_length
+	position = position + chain_vector - correct_position_vector
 	
 	is_velocity_getting_redirected = false
