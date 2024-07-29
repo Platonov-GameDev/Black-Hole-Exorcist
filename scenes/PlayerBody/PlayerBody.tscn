@@ -1,9 +1,10 @@
-[gd_scene load_steps=28 format=3 uid="uid://de4xi8lb2qi2q"]
+[gd_scene load_steps=29 format=3 uid="uid://de4xi8lb2qi2q"]
 
 [ext_resource type="Script" path="res://scenes/PlayerBody/PlayerBody.gd" id="1_8dce7"]
 [ext_resource type="Texture2D" uid="uid://fe3k568v6hjc" path="res://assets/player/player_body.png" id="1_ewm2e"]
 [ext_resource type="PackedScene" uid="uid://dde0d7jiv30my" path="res://scenes/HookShot/HookShot.tscn" id="2_1vod2"]
 [ext_resource type="PackedScene" uid="uid://cesfu4jt84pph" path="res://components/SuckComponent/SuckComponent.tscn" id="2_kmpx5"]
+[ext_resource type="PackedScene" uid="uid://dlnxeiedujq2i" path="res://scenes/HookGrapple/HookGrapple.tscn" id="3_7v3xh"]
 [ext_resource type="Texture2D" uid="uid://desrac4t6cmro" path="res://assets/player/player_eyehole_background.png" id="3_tc5xw"]
 [ext_resource type="Texture2D" uid="uid://dytlpqek1gkr1" path="res://assets/player/player_eyehole_blink-Sheet.png" id="4_ncdur"]
 [ext_resource type="Texture2D" uid="uid://xd7gw7pgqpx3" path="res://assets/player/player_eyehole_idle-Sheet.png" id="5_gq1s2"]
@@ -182,6 +183,7 @@ max_contacts_reported = 100
 contact_monitor = true
 script = ExtResource("1_8dce7")
 hookshot_scene = ExtResource("2_1vod2")
+hookgrapple_scene = ExtResource("3_7v3xh")
 
 [node name="PlayerCollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_2u03b")

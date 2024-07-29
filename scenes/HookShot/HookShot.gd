@@ -1,7 +1,6 @@
 extends CharacterBody2D
 
 
-@export var hookgrapple_scene: PackedScene
 @onready var chain_line_2d = $ChainLine2D
 @onready var rotatable = $Rotatable
 
@@ -13,7 +12,7 @@ var direction: Vector2
 
 
 signal expired
-signal grappled(hookgrapple, grapple_direction)
+signal grappled(collider, collision_point)
 
 
 func _ready():
@@ -30,14 +29,7 @@ func _physics_process(delta):
 	if collision:
 		var collider = collision.get_collider()
 		if collider.is_in_group("obstacle"):
-			var hookgrapple = hookgrapple_scene.instantiate()
-			hookgrapple.player_body = player_body
-			hookgrapple.obstacle = collider
-			hookgrapple.collision_point = collision.get_position()
-			var grapple_direction = (collision.get_position() - player_body.position).normalized()
-			
-			grappled.emit(hookgrapple, grapple_direction)
-		
+			grappled.emit(collider, collision.get_position())
 		expire()
 	
 	if player_to_hook_vector.length() > MAX_DISTANCE:

@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://dde0d7jiv30my"]
+[gd_scene load_steps=5 format=3 uid="uid://dde0d7jiv30my"]
 
 [ext_resource type="Script" path="res://scenes/HookShot/HookShot.gd" id="1_r3dbw"]
-[ext_resource type="PackedScene" uid="uid://dlnxeiedujq2i" path="res://scenes/HookGrapple/HookGrapple.tscn" id="2_b83my"]
 [ext_resource type="Texture2D" uid="uid://d346cmwgojyiq" path="res://assets/player/player_arm_segment.png" id="3_ls11d"]
 [ext_resource type="Texture2D" uid="uid://d3ahsydaymkgy" path="res://assets/player/player_grapple.png" id="4_48py2"]
 
@@ -12,7 +11,6 @@ radius = 20.0
 collision_layer = 8
 collision_mask = 5
 script = ExtResource("1_r3dbw")
-hookgrapple_scene = ExtResource("2_b83my")
 
 [node name="ChainLine2D" type="Line2D" parent="."]
 texture_repeat = 2

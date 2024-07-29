@@ -3,6 +3,7 @@ class_name PlayerBody
 
 
 @export var hookshot_scene: PackedScene
+@export var hookgrapple_scene: PackedScene
 
 @onready var pupil_base = $Eyehole/PupilBase
 @onready var pupil_sprite_2d = $Eyehole/PupilBase/PupilSprite2D
@@ -176,11 +177,15 @@ func _on_hookshot_expired():
 	hookshot = null
 
 
-func _on_hookshot_grappled(new_hookgrapple, direction):
-	hookgrapple = new_hookgrapple
-	add_sibling(hookgrapple)
-	
-	grapple_direction = direction
+func _on_hookshot_grappled(collider, collision_point):
+	if Input.is_action_pressed("Shoot"):
+		hookgrapple = hookgrapple_scene.instantiate()
+		hookgrapple.player_body = self
+		hookgrapple.obstacle = collider
+		hookgrapple.collision_point = collision_point
+		grapple_direction = (collision_point - position).normalized()
+		
+		add_sibling(hookgrapple)
 
 
 func die():
