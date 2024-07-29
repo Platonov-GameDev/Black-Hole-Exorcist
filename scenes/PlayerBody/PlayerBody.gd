@@ -14,6 +14,7 @@ class_name PlayerBody
 @onready var left_thruster_gpu_particles_2d = $ThrusterEmitters/LeftThrusterGPUParticles2D
 @onready var up_thruster_gpu_particles_2d = $ThrusterEmitters/UpThrusterGPUParticles2D
 @onready var down_thruster_gpu_particles_2d = $ThrusterEmitters/DownThrusterGPUParticles2D
+@onready var obstacle_passer_area_2d = $ObstaclePasserArea2D
 
 var HORIZONTAL_ACCELERATION := 40000
 var VERTICAL_ACCELERATION := 150000
@@ -34,6 +35,7 @@ var grapple_direction: Vector2
 var is_velocity_getting_redirected := false
 var chain_vector: Vector2
 var max_chain_length: float
+var passed_obstacles = []
 
 signal acted
 
@@ -41,6 +43,7 @@ signal acted
 func _ready():
 	blink_timer.timeout.connect(_on_blink_timer_timeout)
 	eyehole_animated_sprite_2d.animation_finished.connect(_on_eyehole_animated_sprite_2d_animation_finished)
+	obstacle_passer_area_2d.body_entered.connect(_on_obstacle_passer_area_2d_body_entered)
 	
 	for emitter in thruster_emitters.get_children():
 		thruster_emitters_array.append(emitter as GPUParticles2D)
@@ -62,6 +65,9 @@ func _process(_delta):
 	
 	pupil_sprite_2d.global_position = (pupil_base.global_position +
 		(mouse_vector / 15.0).limit_length(MAX_PUPIL_OFFSET))
+	
+	# Rotate obstacle passer
+	obstacle_passer_area_2d.rotation = -rotation
 
 
 func _physics_process(delta):
@@ -234,3 +240,9 @@ func redirect_velocity_by_chain_tension(state: PhysicsDirectBodyState2D):
 	position = position + chain_vector - correct_position_vector
 	
 	is_velocity_getting_redirected = false
+
+
+func _on_obstacle_passer_area_2d_body_entered(body):
+	if not passed_obstacles.has(body):
+		GameManager.update_score(GameManager.score + 1)
+		passed_obstacles.append(body)

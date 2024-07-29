@@ -3,7 +3,7 @@ extends Node2D
 
 @export var ground_scene: PackedScene
 
-var GROUND_OFFSET := 500
+var GROUND_OFFSET := 450
 
 
 func _ready():

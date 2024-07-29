@@ -10,3 +10,7 @@ func _physics_process(_delta):
 	if not did_init:
 		apply_torque(TORQUE * sign(randf_range(-1, 1)))
 		did_init = true
+
+
+func expire():
+	call_deferred("queue_free")

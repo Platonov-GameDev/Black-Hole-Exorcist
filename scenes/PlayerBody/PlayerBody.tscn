@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://de4xi8lb2qi2q"]
+[gd_scene load_steps=30 format=3 uid="uid://de4xi8lb2qi2q"]
 
 [ext_resource type="Script" path="res://scenes/PlayerBody/PlayerBody.gd" id="1_8dce7"]
 [ext_resource type="Texture2D" uid="uid://fe3k568v6hjc" path="res://assets/player/player_body.png" id="1_ewm2e"]
@@ -174,6 +174,8 @@ scale_over_velocity_curve = SubResource("CurveTexture_3klk1")
 turbulence_enabled = true
 turbulence_noise_speed = Vector3(1.465, 0, 0)
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_svkly"]
+
 [node name="PlayerBody" type="RigidBody2D" groups=["player"]]
 collision_layer = 2
 collision_mask = 5
@@ -235,3 +237,11 @@ direction = Vector3(0, -1, 0)
 [node name="DownThrusterGPUParticles2D" parent="ThrusterEmitters" instance=ExtResource("9_0csqw")]
 process_material = SubResource("ParticleProcessMaterial_q8b21")
 direction = Vector3(0, 1, 0)
+
+[node name="ObstaclePasserArea2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstaclePasserArea2D"]
+rotation = 1.57079
+shape = SubResource("WorldBoundaryShape2D_svkly")

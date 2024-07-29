@@ -7,7 +7,7 @@ var obstacle_chunk_scene = load("res://scenes/ObstacleChunk/ObstacleChunk.tscn")
 @onready var visible_on_screen_notifier_2d = $VisibleOnScreenNotifier2D
 
 var WIDTH := 1000
-var HEIGHT := 800
+var HEIGHT := 600
 
 
 func _ready():

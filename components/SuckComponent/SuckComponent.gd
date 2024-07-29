@@ -10,4 +10,5 @@ func _ready():
 
 
 func _physics_process(delta):
-	parent_body.apply_central_force(Vector2.LEFT * SUCK_FORCE * delta)
+	if GameManager.is_round_active:
+		parent_body.apply_central_force(Vector2.LEFT * SUCK_FORCE * delta)

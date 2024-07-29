@@ -10,8 +10,10 @@ extends Control
 func _ready():
 	screen_shader.material.set_shader_parameter("viewport_texture", sub_viewport.get_texture())
 	
-	main.score_changed.connect(_on_main_score_changed)
+	GameManager.score_changed.connect(_on_game_manager_score_changed)
+	
+	GameManager.update_score(0.0)
 
 
-func _on_main_score_changed(new_score):
-	score_label.text = "Insight: " + str(new_score)
+func _on_game_manager_score_changed(new_score):
+	score_label.text = "Insight: " + "%.2f" % [new_score]

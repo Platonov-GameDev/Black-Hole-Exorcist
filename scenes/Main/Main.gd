@@ -12,19 +12,12 @@ var CAM_X_OFFSET := 100
 var KILLBOX_MOVE_SPEED := 200
 var OBSTACLE_SPAWN_OFFSET := 50
 
-var score: float
-var previous_player_distance: float
 var did_player_act := false
-
-signal score_changed(new_max_score)
 
 
 func _ready():
 	killbox_area_2d.body_entered.connect(_on_killbox_area_2d_body_entered)
 	player_body.acted.connect(_on_player_body_acted)
-	
-	previous_player_distance = player_body.position.x
-	update_score(0.0)
 	
 	player_body.camera = camera_2d
 	
@@ -45,11 +38,6 @@ func _process(delta):
 		
 		# Align black hole with cam height
 		black_hole_arm.global_position.y = camera_2d.get_screen_center_position().y
-		
-		# Update score
-		var snapped_player_position = snapped(player_body.position.x, 1) / 100
-		if snapped_player_position > score:
-			update_score(snapped_player_position)
 
 func _physics_process(_delta):
 	if not is_instance_valid(player_body):
@@ -61,14 +49,11 @@ func _on_killbox_area_2d_body_entered(_body):
 	if not is_instance_valid(player_body): return
 	
 	player_body.die()
-
-
-func update_score(new_score):
-	score = new_score
-	score_changed.emit(new_score)
+	GameManager.is_round_active = false
 
 
 func _on_player_body_acted():
 	if not did_player_act:
 		did_player_act = true
 		PhysicsServer2D.set_active(true)
+		GameManager.is_round_active = true

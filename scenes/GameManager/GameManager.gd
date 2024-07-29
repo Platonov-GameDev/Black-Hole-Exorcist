@@ -1,0 +1,17 @@
+extends Node
+
+
+var score: float
+var is_round_active := false
+
+signal score_changed(new_max_score)
+
+
+func _process(delta):
+	if is_round_active:
+		update_score(score - delta)
+
+
+func update_score(new_score):
+	score = new_score
+	score_changed.emit(new_score)
