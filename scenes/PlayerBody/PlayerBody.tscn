@@ -97,7 +97,7 @@ animations = [{
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_3klk1"]
+[sub_resource type="CurveTexture" id="CurveTexture_3e3nm"]
 curve = SubResource("Curve_fbo3d")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pwo6r"]
@@ -113,7 +113,7 @@ damping_min = 100.0
 damping_max = 100.0
 scale_min = 0.1
 scale_over_velocity_max = 1.0
-scale_over_velocity_curve = SubResource("CurveTexture_3klk1")
+scale_over_velocity_curve = SubResource("CurveTexture_3e3nm")
 turbulence_enabled = true
 turbulence_noise_speed = Vector3(1.465, 0, 0)
 
@@ -130,7 +130,7 @@ damping_min = 100.0
 damping_max = 100.0
 scale_min = 0.1
 scale_over_velocity_max = 1000.0
-scale_over_velocity_curve = SubResource("CurveTexture_3klk1")
+scale_over_velocity_curve = SubResource("CurveTexture_3e3nm")
 turbulence_enabled = true
 turbulence_noise_speed = Vector3(1.465, 0, 0)
 
@@ -147,7 +147,7 @@ damping_min = 100.0
 damping_max = 100.0
 scale_min = 0.1
 scale_over_velocity_max = 1000.0
-scale_over_velocity_curve = SubResource("CurveTexture_3klk1")
+scale_over_velocity_curve = SubResource("CurveTexture_3e3nm")
 turbulence_enabled = true
 turbulence_noise_speed = Vector3(1.465, 0, 0)
 
@@ -164,7 +164,7 @@ damping_min = 100.0
 damping_max = 100.0
 scale_min = 0.1
 scale_over_velocity_max = 1000.0
-scale_over_velocity_curve = SubResource("CurveTexture_3klk1")
+scale_over_velocity_curve = SubResource("CurveTexture_3e3nm")
 turbulence_enabled = true
 turbulence_noise_speed = Vector3(1.465, 0, 0)
 

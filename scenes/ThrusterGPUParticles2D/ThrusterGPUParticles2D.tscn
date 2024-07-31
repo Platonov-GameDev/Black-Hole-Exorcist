@@ -21,13 +21,16 @@ scale_min = 0.1
 scale_over_velocity_curve = SubResource("CurveTexture_3klk1")
 turbulence_enabled = true
 turbulence_noise_speed = Vector3(1.465, 0, 0)
+turbulence_influence_min = 1.0
+turbulence_influence_max = 1.0
 
 [node name="ThrusterGPUParticles2D" type="GPUParticles2D"]
 emitting = false
-amount = 50
+amount = 100
 process_material = SubResource("ParticleProcessMaterial_651yi")
+lifetime = 0.1
 fract_delta = false
 local_coords = true
 trail_enabled = true
-trail_lifetime = 0.25
+trail_lifetime = 0.05
 script = ExtResource("1_a81wi")

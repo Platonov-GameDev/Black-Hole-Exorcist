@@ -33,6 +33,7 @@ var is_velocity_getting_redirected := false
 var chain_vector: Vector2
 var max_chain_length: float
 var passed_obstacles = []
+var previous_velocity: Vector2
 
 signal acted
 
@@ -46,6 +47,8 @@ func _ready():
 		thruster_emitters_array.append(emitter as GPUParticles2D)
 	
 	apply_torque_impulse(1000)
+	
+	previous_velocity = linear_velocity
 
 
 func _process(_delta):
@@ -138,12 +141,14 @@ func _physics_process(delta):
 			is_velocity_getting_redirected = false
 	
 	# Thruster visuals
+	var linear_acceleration = (linear_velocity - previous_velocity) / delta
 	change_thruster_particles_velocity_min_max(
-		linear_velocity.length() * 0.5 + 400,
-		linear_velocity.length() * 0.5 + 425
+		linear_velocity.length() * 0.5 + 1000,
+		linear_velocity.length() * 0.5 + 1025
 	)
-	change_thruster_particles_gravity(-linear_velocity * 4)
+	change_thruster_particles_gravity(-linear_acceleration)
 	thruster_emitters.rotation = -rotation
+	previous_velocity = linear_velocity
 
 
 func _on_blink_timer_timeout():
