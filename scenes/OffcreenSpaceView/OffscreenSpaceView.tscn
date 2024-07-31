@@ -8,6 +8,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ac4ue"]
 resource_local_to_scene = true
 shader = ExtResource("1_6nnqt")
+shader_parameter/pixelate_amount = 1000
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_cy8jo"]
 

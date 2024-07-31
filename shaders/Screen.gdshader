@@ -1,9 +1,10 @@
 shader_type canvas_item;
 
-uniform sampler2D viewport_texture: source_color;
+uniform sampler2D viewport_texture: source_color, filter_nearest;
+uniform int pixelate_amount = 40;
 
 void fragment() {
-	vec2 uv = SCREEN_UV;
+	vec2 uv = round(SCREEN_UV * float(pixelate_amount)) / float(pixelate_amount);
 	
 	if (uv.x < 0.5){
 		uv.x /= 4.0;
