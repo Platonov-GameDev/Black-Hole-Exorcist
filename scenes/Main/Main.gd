@@ -9,7 +9,7 @@ extends Node2D
 @onready var player_body: PlayerBody = $PlayerBody
 
 var CAM_X_OFFSET := 100
-var KILLBOX_MOVE_SPEED := 200
+var KILLBOX_MOVE_SPEED := 0
 var OBSTACLE_SPAWN_OFFSET := 50
 
 var did_player_act := false

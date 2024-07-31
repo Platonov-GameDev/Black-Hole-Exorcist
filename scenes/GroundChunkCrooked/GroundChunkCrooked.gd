@@ -7,39 +7,44 @@ var chunk_scene := load("res://scenes/GroundChunkCrooked/GroundChunkCrooked.tscn
 
 @onready var chunk_spawn_trigger_area_2d = $ChunkSpawnTriggerArea2D
 @onready var polygon_2d = $Polygon2D
-@onready var collision_polygon_2d = $CollisionPolygon2D
+@onready var floor_boundary_collision_shape_2d = $FloorBoundaryCollisionShape2D
+@onready var ceiling_boundary_collision_shape_2d = $CeilingBoundaryCollisionShape2D
+@onready var accretion_pull_area_2d = $AccretionPullArea2D
 
 var WIDTH := 6000
 var HEIGHT := 100.0
 var RESOLUTION := 100.0
-var CAVITY_DEPTH = 90.0
+var CAVITY_DEPTH := 90.0
+var ACCRETION_PULL_FORCE := 100000.0
 
 var did_spawn_next_chunk := false
 var is_ceiling := false
+var pulled_bodies: Array[RigidBody2D] = []
 
 
 func _ready():
 	chunk_spawn_trigger_area_2d.body_entered.connect(_on_chunk_spawn_trigger_area_2d_body_entered)
+	accretion_pull_area_2d.body_entered.connect(_on_accretion_pull_area_2d_body_entered)
+	accretion_pull_area_2d.body_exited.connect(_on_accretion_pull_area_2d_body_exited)
 	
-	var new_point_array := PackedVector2Array()
-	var uv_array := PackedVector2Array()
-	new_point_array.append(Vector2(WIDTH / 2.0, HEIGHT / 2.0))
-	new_point_array.append(Vector2(-WIDTH / 2.0, HEIGHT / 2.0))
-	uv_array.append(Vector2(1, 1))
-	uv_array.append(Vector2(0, 1))
-	for i in range(RESOLUTION + 1):
-		var point_x = WIDTH / RESOLUTION * i - WIDTH / 2.0
-		var point_height = int(noise.get_noise_1d(point_x + position.x) * CAVITY_DEPTH)
-		var point_y = -HEIGHT / 2.0 + point_height
-		new_point_array.append(Vector2(point_x, point_y))
-		uv_array.append(Vector2(i / RESOLUTION, 0))
-	polygon_2d.polygon = new_point_array
-	polygon_2d.uv = uv_array
-	
-	collision_polygon_2d.polygon = new_point_array
+	floor_boundary_collision_shape_2d.position.y += HEIGHT / 2.0
+	ceiling_boundary_collision_shape_2d.position.y -= HEIGHT / 2.0
 	
 	if is_ceiling:
-		scale.y = -1
+		ceiling_boundary_collision_shape_2d.disabled = false
+		polygon_2d.material.set_shader_parameter("speed", -2)
+	else:
+		floor_boundary_collision_shape_2d.disabled = false
+		polygon_2d.scale.y = -polygon_2d.scale.y
+
+
+func _physics_process(delta):
+	# Pull bodies
+	for body in pulled_bodies:
+		var direction = 1
+		if is_ceiling:
+			direction *= -1
+		body.apply_central_force(Vector2.LEFT * delta * ACCRETION_PULL_FORCE * direction)
 
 
 func _on_chunk_spawn_trigger_area_2d_body_entered(_body):
@@ -52,3 +57,11 @@ func _on_chunk_spawn_trigger_area_2d_body_entered(_body):
 	new_chunk.is_ceiling = is_ceiling
 	call_deferred("add_sibling", new_chunk)
 	did_spawn_next_chunk = true
+
+
+func _on_accretion_pull_area_2d_body_entered(body):
+	pulled_bodies.append(body)
+
+
+func _on_accretion_pull_area_2d_body_exited(body):
+	pulled_bodies.erase(body)

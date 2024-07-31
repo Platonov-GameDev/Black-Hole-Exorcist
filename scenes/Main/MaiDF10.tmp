@@ -93,6 +93,7 @@ texture = SubResource("PlaceholderTexture2D_r21u6")
 [node name="BlackSprite2D" type="Sprite2D" parent="Camera2D/Background"]
 self_modulate = Color(0, 0, 0, 1)
 z_index = -2
+position = Vector2(-204, 118)
 texture = SubResource("PlaceholderTexture2D_l4nni")
 
 [node name="BlackHoleArm" type="Node2D" parent="Camera2D"]
@@ -112,10 +113,10 @@ position = Vector2(-733, 532)
 texture = ExtResource("8_2id2s")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StartPlatformStaticBody2D"]
-polygon = PackedVector2Array(19, 61, 44, 80, 85, 82, 123, 66, 136, 35, 129, 29, 53, 33, 38, 25, -93, -110, -250, -149, -250, -24, -54, -10, -34, -2)
+polygon = PackedVector2Array(19, 61, 38, 42, 38, 9, 38, -48, 55, -89, 33, -98, 4, -98, -25, -107, -93, -110, -250, -149, -250, -24, -54, -10, -34, -2)
 
 [node name="PlayerBody" parent="." instance=ExtResource("10_y746t")]
-position = Vector2(-674, 538)
+position = Vector2(-668, 540)
 
 [node name="ObstacleChunk" parent="." instance=ExtResource("7_gmlx2")]
-position = Vector2(-267, 540)
+position = Vector2(-242, 540)

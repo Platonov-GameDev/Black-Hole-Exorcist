@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c45wo45yjj7gb"]
+[gd_scene load_steps=14 format=3 uid="uid://c45wo45yjj7gb"]
 
 [ext_resource type="Script" path="res://scenes/GroundChunkCrooked/GroundChunkCrooked.gd" id="1_kbjce"]
 [ext_resource type="Shader" path="res://shaders/AccretionRoad.gdshader" id="2_w4ebk"]
@@ -32,7 +32,9 @@ seamless_blend_skirt = 1.0
 noise = SubResource("FastNoiseLite_pwj3h")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fd25u"]
+resource_local_to_scene = true
 shader = ExtResource("2_w4ebk")
+shader_parameter/speed = 2.0
 shader_parameter/white_streaks_noise = SubResource("NoiseTexture3D_rp5gf")
 shader_parameter/orange_streaks_noise = SubResource("NoiseTexture3D_fxw88")
 
@@ -40,15 +42,19 @@ shader_parameter/orange_streaks_noise = SubResource("NoiseTexture3D_fxw88")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_fpxbd"]
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_0eu8f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ygjq4"]
+size = Vector2(6000, 179.86)
+
 [node name="GroundChunkCrooked" type="StaticBody2D" groups=["ground"]]
 physics_material_override = SubResource("PhysicsMaterial_iwft2")
 script = ExtResource("1_kbjce")
 noise = SubResource("FastNoiseLite_c5u6a")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-
 [node name="Polygon2D" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_fd25u")
+scale = Vector2(1, 0.3)
 texture = SubResource("PlaceholderTexture2D_rm3s7")
 polygon = PackedVector2Array(3000, 300, -3000, 300, -3000, -300, 3000, -300)
 uv = PackedVector2Array(1, 1, 0, 1, 0, 0, 1, 0)
@@ -61,3 +67,19 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSpawnTriggerArea2D"]
 rotation = -1.57079
 shape = SubResource("WorldBoundaryShape2D_fpxbd")
+
+[node name="FloorBoundaryCollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("WorldBoundaryShape2D_0eu8f")
+disabled = true
+
+[node name="CeilingBoundaryCollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 3.14159
+shape = SubResource("WorldBoundaryShape2D_0eu8f")
+disabled = true
+
+[node name="AccretionPullArea2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AccretionPullArea2D"]
+shape = SubResource("RectangleShape2D_ygjq4")

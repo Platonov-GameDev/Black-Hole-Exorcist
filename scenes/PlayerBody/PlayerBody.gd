@@ -16,10 +16,7 @@ class_name PlayerBody
 @onready var down_thruster_gpu_particles_2d = $ThrusterEmitters/DownThrusterGPUParticles2D
 @onready var obstacle_passer_area_2d = $ObstaclePasserArea2D
 
-var HORIZONTAL_ACCELERATION := 40000
-var VERTICAL_ACCELERATION := 150000
-var MAX_HORIZONTAL_VELOCITY := 2500
-var MAX_VERTICAL_VELOCITY := 2000
+var ACCELERATION := 30000
 var TORQUE_SPEED := 1000000
 var MAX_PUPIL_OFFSET := 8.0
 var FLUNG_THRESHOLD_VELOCITY := 1000
@@ -89,12 +86,7 @@ func _physics_process(delta):
 		move_in_direction(Vector2.DOWN)
 	else:
 		move_in_direction(Vector2.DOWN, false)
-	var horizontal_movement_input = movement_input
-	horizontal_movement_input.y = 0
-	var vertical_movement_input = movement_input
-	vertical_movement_input.x = 0
-	apply_central_force(horizontal_movement_input * delta * HORIZONTAL_ACCELERATION)
-	apply_central_force(vertical_movement_input * delta * VERTICAL_ACCELERATION)
+	apply_central_force(movement_input * delta * ACCELERATION)
 	
 	# Fire and release hook shot
 	if Input.is_action_just_pressed("Shoot") and not is_hookshot_already_fired:

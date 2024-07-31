@@ -1,9 +1,8 @@
-[gd_scene load_steps=30 format=3 uid="uid://de4xi8lb2qi2q"]
+[gd_scene load_steps=29 format=3 uid="uid://de4xi8lb2qi2q"]
 
 [ext_resource type="Script" path="res://scenes/PlayerBody/PlayerBody.gd" id="1_8dce7"]
 [ext_resource type="Texture2D" uid="uid://fe3k568v6hjc" path="res://assets/player/player_body.png" id="1_ewm2e"]
 [ext_resource type="PackedScene" uid="uid://dde0d7jiv30my" path="res://scenes/HookShot/HookShot.tscn" id="2_1vod2"]
-[ext_resource type="PackedScene" uid="uid://cesfu4jt84pph" path="res://components/SuckComponent/SuckComponent.tscn" id="2_kmpx5"]
 [ext_resource type="PackedScene" uid="uid://dlnxeiedujq2i" path="res://scenes/HookGrapple/HookGrapple.tscn" id="3_7v3xh"]
 [ext_resource type="Texture2D" uid="uid://desrac4t6cmro" path="res://assets/player/player_eyehole_background.png" id="3_tc5xw"]
 [ext_resource type="Texture2D" uid="uid://dytlpqek1gkr1" path="res://assets/player/player_eyehole_blink-Sheet.png" id="4_ncdur"]
@@ -178,6 +177,7 @@ physics_material_override = SubResource("PhysicsMaterial_jicdx")
 continuous_cd = 2
 max_contacts_reported = 100
 contact_monitor = true
+constant_force = Vector2(0, 1500)
 script = ExtResource("1_8dce7")
 hookshot_scene = ExtResource("2_1vod2")
 hookgrapple_scene = ExtResource("3_7v3xh")
@@ -189,8 +189,6 @@ shape = SubResource("CircleShape2D_2u03b")
 z_index = 1
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_ewm2e")
-
-[node name="SuckComponent" parent="." instance=ExtResource("2_kmpx5")]
 
 [node name="Eyehole" type="Node2D" parent="."]
 z_index = 1

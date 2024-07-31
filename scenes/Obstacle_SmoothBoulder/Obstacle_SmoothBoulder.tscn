@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://cpx0x2gu43o4s"]
+[gd_scene load_steps=5 format=3 uid="uid://cpx0x2gu43o4s"]
 
 [ext_resource type="Script" path="res://scenes/Obstacle_SmoothBoulder/Obstacle_SmoothBoulder.gd" id="1_5ij3b"]
 [ext_resource type="Texture2D" uid="uid://m33amcuoqwl8" path="res://assets/smooth_boulder.png" id="1_vgu8r"]
-[ext_resource type="PackedScene" uid="uid://cesfu4jt84pph" path="res://components/SuckComponent/SuckComponent.tscn" id="2_gd847"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3s5c3"]
 
@@ -23,5 +22,3 @@ shape = SubResource("CircleShape2D_dcqts")
 position = Vector2(-1, -4)
 scale = Vector2(0.66, 0.66)
 texture = ExtResource("1_vgu8r")
-
-[node name="SuckComponent" parent="." instance=ExtResource("2_gd847")]
