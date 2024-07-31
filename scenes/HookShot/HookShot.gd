@@ -17,6 +17,8 @@ signal grappled(collider, collision_point)
 
 func _ready():
 	velocity = direction * SPEED + player_body.linear_velocity
+	
+	chain_line_2d.set_point_position(1, player_body.position - position)
 
 
 func _physics_process(delta):
