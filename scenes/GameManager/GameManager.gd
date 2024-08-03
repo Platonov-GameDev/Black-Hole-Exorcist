@@ -9,7 +9,7 @@ signal score_changed(new_max_score)
 
 func _process(delta):
 	if is_round_active:
-		update_score(score - delta)
+		update_score(score + delta)
 
 
 func update_score(new_score):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://de4xi8lb2qi2q"]
+[gd_scene load_steps=28 format=3 uid="uid://de4xi8lb2qi2q"]
 
 [ext_resource type="Script" path="res://scenes/PlayerBody/PlayerBody.gd" id="1_8dce7"]
 [ext_resource type="Texture2D" uid="uid://fe3k568v6hjc" path="res://assets/player/player_body.png" id="1_ewm2e"]
@@ -93,12 +93,12 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="Curve" id="Curve_fbo3d"]
+[sub_resource type="Curve" id="Curve_21nrp"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_3e3nm"]
-curve = SubResource("Curve_fbo3d")
+curve = SubResource("Curve_21nrp")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pwo6r"]
 resource_local_to_scene = true
@@ -168,8 +168,6 @@ scale_over_velocity_curve = SubResource("CurveTexture_3e3nm")
 turbulence_enabled = true
 turbulence_noise_speed = Vector3(1.465, 0, 0)
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_svkly"]
-
 [node name="PlayerBody" type="RigidBody2D" groups=["player"]]
 collision_layer = 2
 collision_mask = 5
@@ -177,7 +175,6 @@ physics_material_override = SubResource("PhysicsMaterial_jicdx")
 continuous_cd = 2
 max_contacts_reported = 100
 contact_monitor = true
-constant_force = Vector2(0, 1500)
 script = ExtResource("1_8dce7")
 hookshot_scene = ExtResource("2_1vod2")
 hookgrapple_scene = ExtResource("3_7v3xh")
@@ -230,11 +227,3 @@ direction = Vector3(0, -1, 0)
 [node name="DownThrusterGPUParticles2D" parent="ThrusterEmitters" instance=ExtResource("9_0csqw")]
 process_material = SubResource("ParticleProcessMaterial_q8b21")
 direction = Vector3(0, 1, 0)
-
-[node name="ObstaclePasserArea2D" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstaclePasserArea2D"]
-rotation = 1.57079
-shape = SubResource("WorldBoundaryShape2D_svkly")

@@ -1,0 +1,54 @@
+extends Node2D
+
+
+@export var obstacle_scene: PackedScene
+
+@onready var player_body = $PlayerBody
+@onready var camera_2d = $Camera2D
+@onready var killbox_area_2d = $KillboxArea2D
+@onready var spawn_path_follow_2d = $SpawnPath2D/SpawnPathFollow2D
+@onready var spawn_timer = $SpawnTimer
+
+var PULL_FORCE := 5
+
+var bodies: Array[RigidBody2D] = []
+
+
+func _ready():
+	spawn_timer.timeout.connect(_on_spawn_timer_timeout)
+	killbox_area_2d.body_entered.connect(_on_killbox_area_2d_body_entered)
+	
+	player_body.apply_central_impulse(Vector2.DOWN * 1000)
+	
+	bodies.append(player_body)
+	
+	GameManager.is_round_active = true
+	GameManager.score = 0
+
+
+func _physics_process(_delta):
+	for body in bodies:
+		body.apply_central_force((killbox_area_2d.position - body.position) * PULL_FORCE)
+	
+	if not is_instance_valid(player_body):
+		if Input.is_action_just_pressed("Reload"):
+			get_tree().call_deferred("reload_current_scene")
+
+
+func _on_spawn_timer_timeout():
+	spawn_path_follow_2d.progress_ratio = randf_range(0, 1)
+	var spawn_position = spawn_path_follow_2d.position
+	
+	var obstacle = obstacle_scene.instantiate()
+	obstacle.position = spawn_position
+	add_child(obstacle)
+	
+	bodies.append(obstacle)
+
+
+func _on_killbox_area_2d_body_entered(body):
+	bodies.erase(body)
+	body.call_deferred("queue_free")
+	
+	if body == player_body:
+		GameManager.is_round_active = false

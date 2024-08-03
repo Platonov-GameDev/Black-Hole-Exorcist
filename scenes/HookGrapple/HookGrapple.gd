@@ -61,6 +61,10 @@ func _ready():
 
 
 func _process(_delta):
+	if not is_instance_valid(obstacle) or not is_instance_valid(player_body):
+		expire()
+		return
+	
 	# Chain visuals
 	rope.global_position = rope_connection_point.global_position
 	body_rope_handle.global_position = player_body.global_position
@@ -71,6 +75,10 @@ func _process(_delta):
 
 
 func _physics_process(_delta):
+	if not is_instance_valid(obstacle) or not is_instance_valid(player_body):
+		expire()
+		return
+	
 	# Chain physics
 	# Chain pull on max length reached
 	var chain_vector = grapple_rigid_body_2d.position - player_body.position
@@ -87,3 +95,7 @@ func _physics_process(_delta):
 	elif chain_length < max_length:
 		max_length = chain_length
 		max_length = clampf(max_length, MIN_LENGTH, 999999)
+
+
+func expire():
+	call_deferred("queue_free")

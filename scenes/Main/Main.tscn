@@ -15,7 +15,7 @@ frequency = 0.1996
 fractal_gain = 1.865
 fractal_weighted_strength = 1.0
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_mwmor"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5thvj"]
 seamless = true
 noise = SubResource("FastNoiseLite_t0hpg")
 
@@ -24,7 +24,7 @@ shader = ExtResource("8_jy67s")
 shader_parameter/scroll_speed = 1.0
 shader_parameter/zoom = 2.0
 shader_parameter/player_x = null
-shader_parameter/noise = SubResource("NoiseTexture2D_mwmor")
+shader_parameter/noise = SubResource("NoiseTexture2D_5thvj")
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_r21u6"]
 size = Vector2(7680, 3000)
@@ -34,7 +34,7 @@ shader = ExtResource("8_jy67s")
 shader_parameter/scroll_speed = 0.75
 shader_parameter/zoom = 0.5
 shader_parameter/player_x = null
-shader_parameter/noise = SubResource("NoiseTexture2D_mwmor")
+shader_parameter/noise = SubResource("NoiseTexture2D_5thvj")
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_l4nni"]
 size = Vector2(7680, 3000)

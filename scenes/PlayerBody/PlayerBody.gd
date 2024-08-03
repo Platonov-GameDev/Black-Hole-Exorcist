@@ -4,6 +4,7 @@ class_name PlayerBody
 
 @export var hookshot_scene: PackedScene
 @export var hookgrapple_scene: PackedScene
+@export var camera: Camera2D
 
 @onready var pupil_base = $Eyehole/PupilBase
 @onready var pupil_sprite_2d = $Eyehole/PupilBase/PupilSprite2D
@@ -14,7 +15,6 @@ class_name PlayerBody
 @onready var left_thruster_gpu_particles_2d = $ThrusterEmitters/LeftThrusterGPUParticles2D
 @onready var up_thruster_gpu_particles_2d = $ThrusterEmitters/UpThrusterGPUParticles2D
 @onready var down_thruster_gpu_particles_2d = $ThrusterEmitters/DownThrusterGPUParticles2D
-@onready var obstacle_passer_area_2d = $ObstaclePasserArea2D
 
 var ACCELERATION := 30000
 var TORQUE_SPEED := 1000000
@@ -27,7 +27,6 @@ var is_hookshot_already_fired := false
 var hookshot: CharacterBody2D
 var hookgrapple: Node2D
 var movement_input := Vector2.ZERO
-var camera: Camera2D
 var grapple_direction: Vector2
 var is_velocity_getting_redirected := false
 var chain_vector: Vector2
@@ -41,7 +40,6 @@ signal acted
 func _ready():
 	blink_timer.timeout.connect(_on_blink_timer_timeout)
 	eyehole_animated_sprite_2d.animation_finished.connect(_on_eyehole_animated_sprite_2d_animation_finished)
-	obstacle_passer_area_2d.body_entered.connect(_on_obstacle_passer_area_2d_body_entered)
 	
 	for emitter in thruster_emitters.get_children():
 		thruster_emitters_array.append(emitter as GPUParticles2D)
@@ -65,9 +63,6 @@ func _process(_delta):
 	
 	pupil_sprite_2d.global_position = (pupil_base.global_position +
 		(mouse_vector / 15.0).limit_length(MAX_PUPIL_OFFSET))
-	
-	# Rotate obstacle passer
-	obstacle_passer_area_2d.rotation = -rotation
 
 
 func _physics_process(delta):
@@ -133,10 +128,10 @@ func _physics_process(delta):
 	if Input.is_action_just_released("Shoot"):
 		if is_hookshot_already_fired:
 			is_hookshot_already_fired = false
-			hookshot.call_deferred("queue_free")
+			hookshot.expire()
 			hookshot = null
-		elif hookgrapple:
-			hookgrapple.call_deferred("queue_free")
+		elif is_instance_valid(hookgrapple):
+			hookgrapple.expire()
 			hookgrapple = null
 			is_velocity_getting_redirected = false
 	
@@ -194,9 +189,9 @@ func _on_hookshot_grappled(collider, collision_point):
 func die():
 	is_dead = true
 	if hookshot != null:
-		hookshot.queue_free()
+		hookshot.expire()
 	if hookgrapple != null:
-		hookgrapple.queue_free()
+		hookgrapple.expire()
 	call_deferred("queue_free")
 
 
@@ -237,9 +232,3 @@ func redirect_velocity_by_chain_tension(state: PhysicsDirectBodyState2D):
 	position = position + chain_vector - correct_position_vector
 	
 	is_velocity_getting_redirected = false
-
-
-func _on_obstacle_passer_area_2d_body_entered(body):
-	if not passed_obstacles.has(body):
-		GameManager.update_score(GameManager.score + 1)
-		passed_obstacles.append(body)

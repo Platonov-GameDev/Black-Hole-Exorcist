@@ -22,6 +22,10 @@ func _ready():
 
 
 func _physics_process(delta):
+	if not is_instance_valid(player_body):
+		expire()
+		return
+	
 	chain_line_2d.set_point_position(1, player_body.position - position)
 	
 	var player_to_hook_vector = position - player_body.position
