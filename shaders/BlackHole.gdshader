@@ -1,7 +1,7 @@
 shader_type canvas_item;
 
 uniform sampler2D noise;
-uniform float size = 25.0;
+uniform float size = 10.0;
 uniform float opacity = 1.0;
 
 void fragment() {

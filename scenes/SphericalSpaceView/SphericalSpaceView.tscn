@@ -42,7 +42,7 @@ stretch_mode = 5
 
 [node name="SubViewport" type="SubViewport" parent="."]
 transparent_bg = true
-size = Vector2i(7680, 7680)
+size = Vector2i(10000, 10000)
 
 [node name="SphericalMap" parent="SubViewport" instance=ExtResource("2_lysbx")]
 

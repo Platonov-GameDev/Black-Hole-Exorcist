@@ -62,7 +62,7 @@ radius = 40.0
 
 [sub_resource type="Curve2D" id="Curve2D_ym27g"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -3311, 4753, 0, 0, 0, 0, 5328, 4838, 0, 0, 0, 0, 5551, -3994, 0, 0, 0, 0, -3506, -3917, 0, 0, 0, 0, -3339, 4724)
+"points": PackedVector2Array(0, 0, 0, 0, -5438, 7082, 0, 0, 0, 0, 7990, 7054, 0, 0, 0, 0, 7933, -6174, 0, 0, 0, 0, -5666, -6203, 0, 0, 0, 0, -5409, 7054)
 }
 point_count = 5
 
@@ -73,6 +73,7 @@ obstacle_scene = ExtResource("2_sw6j4")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Background" type="Node2D" parent="."]
+scale = Vector2(1.6, 1.6)
 
 [node name="CloseStarsSprite2D" type="Sprite2D" parent="Background"]
 z_index = -1
@@ -95,6 +96,7 @@ collision_mask = 6
 
 [node name="BlackHoleShaderSprite2D" type="Sprite2D" parent="KillboxArea2D"]
 material = SubResource("ShaderMaterial_2gdjq")
+scale = Vector2(0.95, 0.95)
 texture = SubResource("GradientTexture2D_acq1b")
 
 [node name="Sprite2D" type="Sprite2D" parent="KillboxArea2D/BlackHoleShaderSprite2D"]
@@ -113,8 +115,8 @@ position = Vector2(-1092, -508)
 curve = SubResource("Curve2D_ym27g")
 
 [node name="SpawnPathFollow2D" type="PathFollow2D" parent="SpawnPath2D"]
-position = Vector2(-3311, 4753)
-rotation = 0.00983878
+position = Vector2(-5438, 7082)
+rotation = -0.00208519
 
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 2.0
