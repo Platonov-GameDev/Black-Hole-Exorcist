@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://dm778frawkqjp"]
+
+[ext_resource type="Script" path="res://scenes/Bullet/Bullet.gd" id="1_lc7sa"]
+
+[node name="Bullet" type="CharacterBody2D"]
+collision_layer = 32
+collision_mask = 4
+script = ExtResource("1_lc7sa")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+rotation = 1.5708
+polygon = PackedVector2Array(-8, 10, 8, 10, 0, -10)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+rotation = 1.5708
+polygon = PackedVector2Array(-8, 10, 8, 10, 0, -10)

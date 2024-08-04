@@ -5,6 +5,7 @@ class_name PlayerBody
 @export var hookshot_scene: PackedScene
 @export var hookgrapple_scene: PackedScene
 @export var camera: Camera2D
+@export var bullet_scene: PackedScene
 
 @onready var pupil_base = $Eyehole/PupilBase
 @onready var pupil_sprite_2d = $Eyehole/PupilBase/PupilSprite2D
@@ -15,6 +16,7 @@ class_name PlayerBody
 @onready var left_thruster_gpu_particles_2d = $ThrusterEmitters/LeftThrusterGPUParticles2D
 @onready var up_thruster_gpu_particles_2d = $ThrusterEmitters/UpThrusterGPUParticles2D
 @onready var down_thruster_gpu_particles_2d = $ThrusterEmitters/DownThrusterGPUParticles2D
+@onready var shoot_timer = $ShootTimer
 
 var ACCELERATION := 30000
 var TORQUE_SPEED := 1000000
@@ -40,6 +42,7 @@ signal acted
 func _ready():
 	blink_timer.timeout.connect(_on_blink_timer_timeout)
 	eyehole_animated_sprite_2d.animation_finished.connect(_on_eyehole_animated_sprite_2d_animation_finished)
+	shoot_timer.timeout.connect(_on_shoot_timer_timeout)
 	
 	for emitter in thruster_emitters.get_children():
 		thruster_emitters_array.append(emitter as GPUParticles2D)
@@ -79,7 +82,7 @@ func _physics_process(delta):
 	apply_central_force(movement_input * delta * ACCELERATION)
 	
 	# Fire and release hook shot
-	if Input.is_action_just_pressed("Shoot") and not is_hookshot_already_fired:
+	if Input.is_action_just_pressed("Grapple") and not is_hookshot_already_fired:
 		is_hookshot_already_fired = true
 		hookshot = hookshot_scene.instantiate()
 		hookshot.position = global_position
@@ -95,7 +98,7 @@ func _physics_process(delta):
 		add_sibling(hookshot)
 		
 		acted.emit()
-	if Input.is_action_just_released("Shoot"):
+	if Input.is_action_just_released("Grapple"):
 		if is_hookshot_already_fired:
 			is_hookshot_already_fired = false
 			hookshot.expire()
@@ -104,6 +107,13 @@ func _physics_process(delta):
 			hookgrapple.expire()
 			hookgrapple = null
 			is_velocity_getting_redirected = false
+	
+	# Shooting
+	if Input.is_action_just_pressed("Shoot"):
+		_on_shoot_timer_timeout()
+		shoot_timer.start()
+	if Input.is_action_just_released("Shoot"):
+		shoot_timer.stop()
 	
 	# Thruster visuals
 	var linear_acceleration = (linear_velocity - previous_velocity) / delta
@@ -146,7 +156,7 @@ func _on_hookshot_expired():
 
 
 func _on_hookshot_grappled(collider, collision_point):
-	if Input.is_action_pressed("Shoot"):
+	if Input.is_action_pressed("Grapple"):
 		hookgrapple = hookgrapple_scene.instantiate()
 		hookgrapple.player_body = self
 		hookgrapple.obstacle = collider
@@ -202,3 +212,10 @@ func redirect_velocity_by_chain_tension(state: PhysicsDirectBodyState2D):
 	position = position + chain_vector - correct_position_vector
 	
 	is_velocity_getting_redirected = false
+
+
+func _on_shoot_timer_timeout():
+	var bullet = bullet_scene.instantiate() as CharacterBody2D
+	bullet.position = position
+	bullet.look_at(GameManager.mouse_position)
+	add_sibling(bullet)
