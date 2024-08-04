@@ -96,30 +96,8 @@ func _physics_process(delta):
 		hookshot.grappled.connect(_on_hookshot_grappled)
 		
 		# Calculate mouse position (based on screen shader)
-		var mouse_screen_position = Vector2(get_tree().root.get_mouse_position())
-		mouse_screen_position.x /= 1920.0
-		mouse_screen_position.y /= 1080.0
-		
-		var uv = mouse_screen_position
-		if uv.x < 0.5:
-			uv.x /= 4.0;
-			uv.x += 0.375;
-		else:
-			uv.x -= 0.5;
-			var x = uv.x * 2.0;
-			var x_shrinkage = pow(x, 3);
-			uv.x /= 4.0 - 3.0 * x_shrinkage;
-			uv.x += 0.5;
-		uv.y -= 0.5;
-		uv.y /= pow(mouse_screen_position.x, .2);
-		uv.y += 0.5;
-		mouse_screen_position = uv
-		
-		mouse_screen_position.x *= 7680.0
-		mouse_screen_position.y *= 1080.0
-		mouse_screen_position.x += camera.get_screen_center_position().x - 7680.0 / 2.0
-		
-		var hookshot_direction = (mouse_screen_position - position).normalized()
+		var mouse_position = GameManager.mouse_position
+		var hookshot_direction = (mouse_position - position).normalized()
 		hookshot.direction = hookshot_direction
 		
 		add_sibling(hookshot)

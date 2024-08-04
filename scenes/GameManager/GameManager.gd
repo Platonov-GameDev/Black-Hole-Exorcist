@@ -3,6 +3,8 @@ extends Node
 
 var score: float
 var is_round_active := false
+var mouse_position: Vector2
+var arena_side_size: float
 
 signal score_changed(new_max_score)
 
