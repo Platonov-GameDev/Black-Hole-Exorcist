@@ -50,7 +50,7 @@ func _ready():
 
 
 func _process(_delta):
-	# Move pupil	
+	# Move pupil
 	var mouse_vector = GameManager.mouse_position - position
 	
 	pupil_sprite_2d.global_position = (pupil_base.global_position +

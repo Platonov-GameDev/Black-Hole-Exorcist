@@ -1,18 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://haquppmebf34"]
+[gd_scene load_steps=20 format=3 uid="uid://haquppmebf34"]
 
 [ext_resource type="PackedScene" uid="uid://de4xi8lb2qi2q" path="res://scenes/PlayerBody/PlayerBody.tscn" id="1_d02vr"]
 [ext_resource type="Script" path="res://scenes/SphericalMap/SphericalMap.gd" id="1_ydmn2"]
 [ext_resource type="PackedScene" uid="uid://cpx0x2gu43o4s" path="res://scenes/Obstacle_SmoothBoulder/Obstacle_SmoothBoulder.tscn" id="2_sw6j4"]
 [ext_resource type="Shader" path="res://shaders/Stars.gdshader" id="4_iyrbe"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_1e335"]
-radius = 40.0
-
-[sub_resource type="Curve2D" id="Curve2D_ym27g"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, -3311, 4753, 0, 0, 0, 0, 5328, 4838, 0, 0, 0, 0, 5551, -3994, 0, 0, 0, 0, -3506, -3917, 0, 0, 0, 0, -3339, 4724)
-}
-point_count = 5
+[ext_resource type="Shader" path="res://shaders/BlackHole.gdshader" id="4_pa76h"]
+[ext_resource type="Texture2D" uid="uid://c1kvbpwejv23p" path="res://assets/black_hole_eye.png" id="5_fwkjv"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_33m84"]
 frequency = 0.1996
@@ -43,34 +36,41 @@ shader_parameter/noise = SubResource("NoiseTexture2D_mwmor")
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vg1m3"]
 size = Vector2(7680, 7680)
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_nvlm6"]
+frequency = 0.0075
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_i86hd"]
+noise = SubResource("FastNoiseLite_nvlm6")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2gdjq"]
+shader = ExtResource("4_pa76h")
+shader_parameter/size = 1.0
+shader_parameter/opacity = 1.0
+shader_parameter/noise = SubResource("NoiseTexture2D_i86hd")
+
+[sub_resource type="Gradient" id="Gradient_vu2x8"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_acq1b"]
+gradient = SubResource("Gradient_vu2x8")
+width = 7680
+height = 7680
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1e335"]
+radius = 40.0
+
+[sub_resource type="Curve2D" id="Curve2D_ym27g"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -3311, 4753, 0, 0, 0, 0, 5328, 4838, 0, 0, 0, 0, 5551, -3994, 0, 0, 0, 0, -3506, -3917, 0, 0, 0, 0, -3339, 4724)
+}
+point_count = 5
+
 [node name="SphericalMap" type="Node2D"]
 script = ExtResource("1_ydmn2")
 obstacle_scene = ExtResource("2_sw6j4")
 
-[node name="PlayerBody" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("1_d02vr")]
-position = Vector2(-399, 0)
-camera = NodePath("../Camera2D")
-
 [node name="Camera2D" type="Camera2D" parent="."]
-
-[node name="KillboxArea2D" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 6
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KillboxArea2D"]
-shape = SubResource("CircleShape2D_1e335")
-
-[node name="SpawnPath2D" type="Path2D" parent="."]
-position = Vector2(-1092, -508)
-curve = SubResource("Curve2D_ym27g")
-
-[node name="SpawnPathFollow2D" type="PathFollow2D" parent="SpawnPath2D"]
-position = Vector2(-3311, 4753)
-rotation = 0.00983878
-
-[node name="SpawnTimer" type="Timer" parent="."]
-wait_time = 2.0
-autostart = true
 
 [node name="Background" type="Node2D" parent="."]
 
@@ -88,3 +88,34 @@ texture = SubResource("PlaceholderTexture2D_4w3c4")
 self_modulate = Color(0, 0, 0, 1)
 z_index = -2
 texture = SubResource("PlaceholderTexture2D_vg1m3")
+
+[node name="KillboxArea2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 6
+
+[node name="BlackHoleShaderSprite2D" type="Sprite2D" parent="KillboxArea2D"]
+material = SubResource("ShaderMaterial_2gdjq")
+texture = SubResource("GradientTexture2D_acq1b")
+
+[node name="Sprite2D" type="Sprite2D" parent="KillboxArea2D/BlackHoleShaderSprite2D"]
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("5_fwkjv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillboxArea2D"]
+shape = SubResource("CircleShape2D_1e335")
+
+[node name="PlayerBody" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("1_d02vr")]
+position = Vector2(-399, 0)
+camera = NodePath("../Camera2D")
+
+[node name="SpawnPath2D" type="Path2D" parent="."]
+position = Vector2(-1092, -508)
+curve = SubResource("Curve2D_ym27g")
+
+[node name="SpawnPathFollow2D" type="PathFollow2D" parent="SpawnPath2D"]
+position = Vector2(-3311, 4753)
+rotation = 0.00983878
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true

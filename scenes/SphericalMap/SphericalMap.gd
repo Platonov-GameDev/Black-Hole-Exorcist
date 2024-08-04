@@ -8,6 +8,7 @@ extends Node2D
 @onready var killbox_area_2d = $KillboxArea2D
 @onready var spawn_path_follow_2d = $SpawnPath2D/SpawnPathFollow2D
 @onready var spawn_timer = $SpawnTimer
+@onready var black_hole_shader_sprite_2d = $KillboxArea2D/BlackHoleShaderSprite2D
 
 var PULL_FORCE := 5
 
@@ -33,6 +34,15 @@ func _physics_process(_delta):
 	if not is_instance_valid(player_body):
 		if Input.is_action_just_pressed("Reload"):
 			get_tree().call_deferred("reload_current_scene")
+
+
+func _process(_delta):
+	var black_hole_visuals_coefficient = fmod(GameManager.score / 12.0, 25)
+	black_hole_shader_sprite_2d.material.set_shader_parameter("size", black_hole_visuals_coefficient)
+	black_hole_shader_sprite_2d.material.set_shader_parameter(
+		"opacity", (25.0 - black_hole_visuals_coefficient) / 2.0
+	)
+	
 
 
 func _on_spawn_timer_timeout():

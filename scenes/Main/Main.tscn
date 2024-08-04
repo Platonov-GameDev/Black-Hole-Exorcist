@@ -42,19 +42,20 @@ size = Vector2(7680, 3000)
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_lginu"]
 frequency = 0.0075
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_i86hd"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xcj5e"]
 noise = SubResource("FastNoiseLite_lginu")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_68mvg"]
 shader = ExtResource("5_temnx")
-shader_parameter/noise = SubResource("NoiseTexture2D_i86hd")
+shader_parameter/size = 1.0
+shader_parameter/noise = SubResource("NoiseTexture2D_xcj5e")
 
-[sub_resource type="Gradient" id="Gradient_vu2x8"]
+[sub_resource type="Gradient" id="Gradient_44e6d"]
 offsets = PackedFloat32Array(1)
 colors = PackedColorArray(1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_884i6"]
-gradient = SubResource("Gradient_vu2x8")
+gradient = SubResource("Gradient_44e6d")
 width = 1500
 height = 1500
 
