@@ -7,6 +7,7 @@ void fragment() {
 	
 	vec2 vector_from_center = uv - vec2(0.5);
 	if (length(vector_from_center) <= 0.1) {
+		vector_from_center *= length(vector_from_center * 10.0);
 		vector_from_center /= 4.0;
 	} else if (length(vector_from_center) <= 0.5) {
 		float divider = 1.0 + 3.0 *
