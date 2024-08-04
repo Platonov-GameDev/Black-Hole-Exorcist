@@ -50,16 +50,8 @@ func _ready():
 
 
 func _process(_delta):
-	# Move pupil
-	var mouse_screen_position = Vector2(get_tree().root.get_mouse_position())
-	
-	var player_screen_position = get_global_transform_with_canvas().get_origin()
-	player_screen_position.x -= 2880
-	player_screen_position.y -= 540
-	player_screen_position.y /= pow(player_screen_position.x / 1920.0, .2)
-	player_screen_position.y += 540
-	
-	var mouse_vector = mouse_screen_position - player_screen_position
+	# Move pupil	
+	var mouse_vector = GameManager.mouse_position - position
 	
 	pupil_sprite_2d.global_position = (pupil_base.global_position +
 		(mouse_vector / 15.0).limit_length(MAX_PUPIL_OFFSET))
