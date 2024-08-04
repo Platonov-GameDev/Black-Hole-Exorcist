@@ -5,7 +5,7 @@ var score: float
 var is_round_active := false
 var mouse_position: Vector2
 var arena_side_size: float
-var pulled_bodies: Array[RigidBody2D] = []
+var pulled_bodies = []
 
 signal score_changed(new_max_score)
 
