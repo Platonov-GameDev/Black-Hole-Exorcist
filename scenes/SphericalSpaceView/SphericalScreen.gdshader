@@ -3,7 +3,10 @@ shader_type canvas_item;
 uniform sampler2D viewport_texture: source_color, filter_nearest;
 
 void fragment() {
-	vec2 uv = UV;
+	float pixelate_amount = 600.0;
+	vec2 uv = round(
+		UV * float(pixelate_amount)) / float(pixelate_amount
+	);
 	
 	vec2 vector_from_center = uv - vec2(0.5);
 	if (length(vector_from_center) <= 0.1) {
