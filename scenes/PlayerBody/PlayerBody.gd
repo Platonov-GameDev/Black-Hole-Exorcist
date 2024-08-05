@@ -36,6 +36,7 @@ var chain_vector: Vector2
 var max_chain_length: float
 var passed_obstacles = []
 var previous_velocity: Vector2
+var current_power_level := 0
 
 signal acted
 
@@ -82,6 +83,10 @@ func _physics_process(delta):
 		move_in_direction(Vector2.DOWN)
 	else:
 		move_in_direction(Vector2.DOWN, false)
+	if movement_input.length() != 0 and not AudioPlayer.thruster_active_loop_audio.playing:
+		AudioPlayer.thruster_active_loop_audio.play()
+	elif movement_input.length() == 0:
+		AudioPlayer.thruster_active_loop_audio.stop( )
 	apply_central_force(movement_input * delta * ACCELERATION)
 	
 	# Fire and release hook shot
@@ -101,7 +106,10 @@ func _physics_process(delta):
 		add_sibling(hookshot)
 		
 		acted.emit()
+		
+		AudioPlayer.grapple_shot_audio.play()
 	if Input.is_action_just_released("Grapple"):
+		AudioPlayer.grapple_shot_audio.stop()
 		if is_hookshot_already_fired:
 			is_hookshot_already_fired = false
 			hookshot.expire()
@@ -166,6 +174,8 @@ func _on_hookshot_grappled(collider, collision_point):
 		hookgrapple.collision_point = collision_point
 		grapple_direction = (collision_point - position).normalized()
 		
+		AudioPlayer.grapple_hit_audio.play()
+		
 		add_sibling(hookgrapple)
 
 
@@ -222,12 +232,27 @@ func _on_shoot_timer_timeout():
 	bullet.position = position
 	bullet.look_at(GameManager.mouse_position)
 	add_sibling(bullet)
+	
+	if current_power_level == 0:
+		AudioPlayer.shot_1_audio.play()
+	elif current_power_level == 1:
+		AudioPlayer.shot_2_audio.play()
+	elif current_power_level == 2:
+		AudioPlayer.shot_3_audio.play()
+	elif current_power_level == 3:
+		AudioPlayer.shot_4_audio.play()
 
 
 func _on_game_manager_power_changed(new_power):
-	if new_power >= 70:
-		shoot_timer.wait_time = 0.05
-	elif new_power >= 30:
-		shoot_timer.wait_time = 0.10
-	elif new_power >= 10:
+	if new_power >= 10 and current_power_level != 1:
 		shoot_timer.wait_time = 0.2
+		current_power_level = 1
+		AudioPlayer.power_up_audio.play()
+	if new_power >= 30 and current_power_level != 2:
+		shoot_timer.wait_time = 0.10
+		current_power_level = 2
+		AudioPlayer.power_up_audio.play()
+	if new_power >= 70 and current_power_level != 3:
+		shoot_timer.wait_time = 0.05
+		current_power_level = 3
+		AudioPlayer.power_up_audio.play()

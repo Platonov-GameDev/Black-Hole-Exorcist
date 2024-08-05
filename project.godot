@@ -18,6 +18,7 @@ config/icon="res://assets/icon.svg"
 [autoload]
 
 GameManager="*res://scenes/GameManager/GameManager.gd"
+AudioPlayer="*res://scenes/AudioPlayer/AudioPlayer.tscn"
 
 [display]
 

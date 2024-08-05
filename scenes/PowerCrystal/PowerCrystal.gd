@@ -16,3 +16,4 @@ func _physics_process(delta):
 	if collision:
 		call_deferred("queue_free")
 		GameManager.add_power(1)
+		AudioPlayer.crystal_eaten_audio.play()

@@ -13,6 +13,7 @@ var did_init := false
 
 func _ready():
 	health_component.destroyed.connect(_on_health_component_destroyed)
+	health_component.damage_taken.connect(_on_health_component_damage_taken)
 
 
 func _physics_process(_delta):
@@ -31,7 +32,14 @@ func expire(with_reward := false):
 		var power_crystal = power_crystal_scene.instantiate()
 		power_crystal.position = position
 		call_deferred("add_sibling", power_crystal)
+		AudioPlayer.obstacle_eaten_audio.play()
+	else:
+		AudioPlayer.obstacle_destroyed_audio.play()
 
 
 func _on_health_component_destroyed():
 	expire()
+
+
+func _on_health_component_damage_taken():
+	AudioPlayer.obstacle_hit_audio.play()
