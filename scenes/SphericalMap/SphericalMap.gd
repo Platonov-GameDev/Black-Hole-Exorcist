@@ -16,6 +16,7 @@ var PULL_FORCE := 5
 func _ready():
 	spawn_timer.timeout.connect(_on_spawn_timer_timeout)
 	killbox_area_2d.body_entered.connect(_on_killbox_area_2d_body_entered)
+	GameManager.score_changed.connect(_on_game_manager_score_changed)
 	
 	player_body.apply_central_impulse(Vector2.DOWN * 1000)
 	
@@ -63,3 +64,7 @@ func _on_killbox_area_2d_body_entered(body):
 		body.expire(true)
 	else:
 		body.expire()
+
+
+func _on_game_manager_score_changed(new_score):
+	spawn_timer.wait_time = clampf(4 - clampf(new_score, 0, 300) / 80.0, 0.25, 4)
