@@ -22,6 +22,7 @@ var ACCELERATION := 30000
 var TORQUE_SPEED := 1000000
 var MAX_PUPIL_OFFSET := 8.0
 var FLUNG_THRESHOLD_VELOCITY := 1000
+var DEFAULT_SHOOT_COOLDOWN := 0.15
 
 var is_dead := false
 var thruster_emitters_array: Array[GPUParticles2D] = []
@@ -43,6 +44,7 @@ func _ready():
 	blink_timer.timeout.connect(_on_blink_timer_timeout)
 	eyehole_animated_sprite_2d.animation_finished.connect(_on_eyehole_animated_sprite_2d_animation_finished)
 	shoot_timer.timeout.connect(_on_shoot_timer_timeout)
+	GameManager.power_changed.connect(_on_game_manager_power_changed)
 	
 	for emitter in thruster_emitters.get_children():
 		thruster_emitters_array.append(emitter as GPUParticles2D)
@@ -50,6 +52,7 @@ func _ready():
 	apply_torque_impulse(1000)
 	
 	previous_velocity = linear_velocity
+	GameManager.player_body = self
 
 
 func _process(_delta):
@@ -219,3 +222,12 @@ func _on_shoot_timer_timeout():
 	bullet.position = position
 	bullet.look_at(GameManager.mouse_position)
 	add_sibling(bullet)
+
+
+func _on_game_manager_power_changed(new_power):
+	if new_power >= 70:
+		shoot_timer.wait_time = 0.05
+	elif new_power >= 30:
+		shoot_timer.wait_time = 0.10
+	elif new_power >= 10:
+		shoot_timer.wait_time = 0.2

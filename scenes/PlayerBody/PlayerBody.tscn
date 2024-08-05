@@ -231,4 +231,4 @@ process_material = SubResource("ParticleProcessMaterial_q8b21")
 direction = Vector3(0, 1, 0)
 
 [node name="ShootTimer" type="Timer" parent="."]
-wait_time = 0.15
+wait_time = 0.4

@@ -75,6 +75,7 @@ Grapple={
 2d_physics/layer_4="hookshot"
 2d_physics/layer_5="hookgrapple"
 2d_physics/layer_6="bullet"
+2d_physics/layer_7="power_crystal"
 
 [physics]
 

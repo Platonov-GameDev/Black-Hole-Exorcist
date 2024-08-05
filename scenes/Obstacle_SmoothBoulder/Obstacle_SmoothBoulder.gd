@@ -1,6 +1,8 @@
 extends RigidBody2D
 
 
+@export var power_crystal_scene: PackedScene
+
 @onready var health_component = $HealthComponent
 
 var TORQUE := 3000000.0
@@ -21,9 +23,14 @@ func _physics_process(_delta):
 		did_init = true
 
 
-func expire():
+func expire(with_reward := false):
 	GameManager.pulled_bodies.erase(self)
 	call_deferred("queue_free")
+	
+	if with_reward:
+		var power_crystal = power_crystal_scene.instantiate()
+		power_crystal.position = position
+		call_deferred("add_sibling", power_crystal)
 
 
 func _on_health_component_destroyed():

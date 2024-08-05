@@ -18,8 +18,12 @@ func _physics_process(delta):
 	if collision:
 		var collider = collision.get_collider() as Node
 		collider.health_component.take_damage(35)
-		call_deferred("queue_free")
+		expire()
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
+	expire()
+
+
+func expire():
 	call_deferred("queue_free")

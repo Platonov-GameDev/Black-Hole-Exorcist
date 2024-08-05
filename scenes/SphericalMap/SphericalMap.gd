@@ -26,7 +26,8 @@ func _ready():
 
 func _physics_process(_delta):
 	for body in GameManager.pulled_bodies:
-		body.apply_central_force((killbox_area_2d.position - body.position) * PULL_FORCE)
+		if is_instance_valid(body):
+			body.apply_central_force((killbox_area_2d.position - body.position) * PULL_FORCE)
 	
 	if not is_instance_valid(player_body):
 		if Input.is_action_just_pressed("Reload"):
@@ -40,7 +41,6 @@ func _process(_delta):
 	black_hole_shader_sprite_2d.material.set_shader_parameter(
 		"opacity", (25.0 - black_hole_visuals_coefficient) / 2.0
 	)
-	
 
 
 func _on_spawn_timer_timeout():
@@ -55,8 +55,11 @@ func _on_spawn_timer_timeout():
 
 
 func _on_killbox_area_2d_body_entered(body):
-	GameManager.pulled_bodies.erase(body)
-	body.call_deferred("queue_free")
-	
 	if body == player_body:
 		GameManager.is_round_active = false
+		spawn_timer.stop()
+		body.die()
+	elif body.is_in_group("obstacle"):
+		body.expire(true)
+	else:
+		body.expire()
