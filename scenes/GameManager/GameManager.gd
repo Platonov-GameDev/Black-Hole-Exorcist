@@ -7,6 +7,8 @@ var mouse_position: Vector2
 var arena_side_size: float
 var player_body: PlayerBody
 var power: int
+var player_distance_from_black_hole = 10.0
+var black_hole_position := Vector2.ZERO
 
 signal score_changed(new_max_score)
 signal power_changed(new_power)
@@ -30,3 +32,9 @@ func reset():
 func add_power(amount):
 	power += amount
 	power_changed.emit(power)
+
+
+func calculate_time_coefficient(object_position):
+	var object_distance_from_blackhole = (black_hole_position - object_position).length()
+	var raw_coefficient = (3000 + object_distance_from_blackhole - player_distance_from_black_hole) / 3000
+	return pow(raw_coefficient, 6)

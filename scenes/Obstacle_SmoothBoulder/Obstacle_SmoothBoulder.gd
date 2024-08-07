@@ -6,7 +6,8 @@ class_name Obstacle_SmoothBoulder
 
 @onready var health_component = $HealthComponent
 
-var SPEED := 500.0
+var MOVE_SPEED := 500.0
+var ROTATION_SPEED := 5.0
 
 var did_init := false
 var movement_direction := Vector2.ZERO
@@ -18,7 +19,11 @@ func _ready():
 
 
 func _process(delta):
-	var collision = move_and_collide(movement_direction * SPEED * delta)
+	var time_coefficient = GameManager.calculate_time_coefficient(position)
+	var collision = move_and_collide(
+		movement_direction * clampf(MOVE_SPEED * delta * time_coefficient, 0, 5000)
+	)
+	rotate(ROTATION_SPEED * delta * time_coefficient)
 	_process_collision(collision)
 
 
@@ -31,7 +36,9 @@ func _process_collision(collision: KinematicCollision2D):
 	if collider.is_in_group("player"):
 		collider.die()
 	else:
-		movement_direction = movement_direction.reflect(collision.get_normal().rotated(PI / 2))
+		var reflection_line_vector = collision.get_normal().rotated(PI / 2)
+		if reflection_line_vector.is_normalized():
+			movement_direction = movement_direction.reflect(reflection_line_vector)
 
 
 func expire(with_reward := false):

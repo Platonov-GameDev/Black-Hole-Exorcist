@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 @onready var visible_on_screen_notifier_2d = $VisibleOnScreenNotifier2D
 
-var SPEED = 2500.0
+var MOVE_SPEED = 2500.0
 var damage = 35
 
 
@@ -14,7 +14,10 @@ func _ready():
 
 
 func _physics_process(delta):
-	var collision = move_and_collide(Vector2.RIGHT.rotated(rotation) * SPEED * delta)
+	var time_coefficient = GameManager.calculate_time_coefficient(position)
+	var collision = move_and_collide(
+		Vector2.RIGHT.rotated(rotation) * MOVE_SPEED * delta * time_coefficient
+	)
 	if collision:
 		var collider = collision.get_collider() as Node
 		collider.health_component.take_damage(35)

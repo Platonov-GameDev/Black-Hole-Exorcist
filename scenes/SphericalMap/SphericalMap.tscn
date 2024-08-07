@@ -1,11 +1,10 @@
-[gd_scene load_steps=20 format=3 uid="uid://haquppmebf34"]
+[gd_scene load_steps=19 format=3 uid="uid://haquppmebf34"]
 
 [ext_resource type="PackedScene" uid="uid://de4xi8lb2qi2q" path="res://scenes/PlayerBody/PlayerBody.tscn" id="1_d02vr"]
 [ext_resource type="Script" path="res://scenes/SphericalMap/SphericalMap.gd" id="1_ydmn2"]
 [ext_resource type="PackedScene" uid="uid://cpx0x2gu43o4s" path="res://scenes/Obstacle_SmoothBoulder/Obstacle_SmoothBoulder.tscn" id="2_sw6j4"]
 [ext_resource type="Shader" path="res://shaders/Stars.gdshader" id="4_iyrbe"]
 [ext_resource type="Shader" path="res://shaders/BlackHole.gdshader" id="4_pa76h"]
-[ext_resource type="Texture2D" uid="uid://c1kvbpwejv23p" path="res://assets/black_hole_eye.png" id="5_fwkjv"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_33m84"]
 frequency = 0.1996
@@ -46,6 +45,7 @@ noise = SubResource("FastNoiseLite_nvlm6")
 shader = ExtResource("4_pa76h")
 shader_parameter/size = 1.0
 shader_parameter/opacity = 1.0
+shader_parameter/time = 0.0
 shader_parameter/noise = SubResource("NoiseTexture2D_i86hd")
 
 [sub_resource type="Gradient" id="Gradient_vu2x8"]
@@ -94,11 +94,6 @@ material = SubResource("ShaderMaterial_2gdjq")
 scale = Vector2(0.95, 0.95)
 texture = SubResource("GradientTexture2D_acq1b")
 
-[node name="Sprite2D" type="Sprite2D" parent="BlackHoleShaderSprite2D"]
-visible = false
-scale = Vector2(0.16, 0.16)
-texture = ExtResource("5_fwkjv")
-
 [node name="PlayerBody" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("1_d02vr")]
 position = Vector2(-399, 0)
 camera = NodePath("../Camera2D")
@@ -110,10 +105,6 @@ curve = SubResource("Curve2D_ym27g")
 [node name="SpawnPathFollow2D" type="PathFollow2D" parent="SpawnPath2D"]
 position = Vector2(-5438, 7082)
 rotation = -0.00208519
-
-[node name="SpawnTimer" type="Timer" parent="."]
-wait_time = 4.0
-autostart = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
