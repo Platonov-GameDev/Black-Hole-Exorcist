@@ -152,15 +152,15 @@ func _on_shoot_timer_timeout():
 
 
 func _on_game_manager_power_changed(new_power):
-	if new_power >= 10 and current_power_level != 1:
+	if new_power >= 10 and current_power_level < 1:
 		shoot_timer.wait_time = 0.2
 		current_power_level = 1
 		AudioPlayer.power_up_audio.play()
-	if new_power >= 30 and current_power_level != 2:
+	if new_power >= 30 and current_power_level < 2:
 		shoot_timer.wait_time = 0.10
 		current_power_level = 2
 		AudioPlayer.power_up_audio.play()
-	if new_power >= 70 and current_power_level != 3:
+	if new_power >= 70 and current_power_level < 3:
 		shoot_timer.wait_time = 0.05
 		current_power_level = 3
 		AudioPlayer.power_up_audio.play()
