@@ -113,6 +113,7 @@ func die():
 	is_dead = true
 	GameManager.is_round_active = false
 	call_deferred("queue_free")
+	AudioPlayer.thruster_active_loop_audio.stop()
 
 
 func move_in_direction(direction: Vector2, is_moving := true):
