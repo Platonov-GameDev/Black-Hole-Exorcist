@@ -41,20 +41,18 @@ func _process_collision(collision: KinematicCollision2D):
 			movement_direction = movement_direction.reflect(reflection_line_vector)
 
 
-func expire(with_reward := false):
+func expire():
 	call_deferred("queue_free")
 	
-	if with_reward:
-		var power_crystal = power_crystal_scene.instantiate()
-		power_crystal.position = position
-		call_deferred("add_sibling", power_crystal)
-		AudioPlayer.obstacle_eaten_audio.play()
-	else:
-		AudioPlayer.obstacle_destroyed_audio.play()
+	var power_crystal = power_crystal_scene.instantiate()
+	power_crystal.position = position
+	call_deferred("add_sibling", power_crystal)
+	AudioPlayer.obstacle_destroyed_audio.play()
+	GameManager.update_score(GameManager.score + 3)
 
 
 func _on_health_component_destroyed():
-	expire(true)
+	expire()
 
 
 func _on_health_component_damage_taken():
