@@ -15,13 +15,13 @@ signal power_changed(new_power)
 
 
 func _process(delta):
-	if is_round_active:
-		update_score(score - delta)
+	update_score(score - delta)
 
 
 func update_score(new_score):
-	score = new_score
-	score_changed.emit(new_score)
+	if is_round_active:
+		score = new_score
+		score_changed.emit(new_score)
 
 
 func reset():
