@@ -44,14 +44,23 @@ func _process(delta):
 	
 	var entities_that_had_to_spawn = floori(spawn_time_counter / 10)
 	while spawn_entities_counter < entities_that_had_to_spawn:
-		spawn_path_follow_2d.progress_ratio = randf_range(0, 1)
-		var spawn_position = spawn_path_follow_2d.position
+		var repeat_spawn_counter = floori(spawn_entities_counter / 20)
+		var i = 0
+		while i < repeat_spawn_counter:
+			spawn_obstacle()
+			i += 1
 		
-		var obstacle = obstacle_scene.instantiate() as Obstacle_SmoothBoulder
-		obstacle.position = spawn_position
-		obstacle.movement_direction = (
-			(black_hole_shader_sprite_2d.position - obstacle.position).normalized()
-		)
-		add_child(obstacle)
-		
+		spawn_obstacle()
 		spawn_entities_counter += 1
+
+
+func spawn_obstacle():
+	spawn_path_follow_2d.progress_ratio = randf_range(0, 1)
+	var spawn_position = spawn_path_follow_2d.position
+	
+	var obstacle = obstacle_scene.instantiate() as Obstacle_SmoothBoulder
+	obstacle.position = spawn_position
+	obstacle.movement_direction = (
+		(black_hole_shader_sprite_2d.position - obstacle.position).normalized()
+	)
+	add_child(obstacle)
