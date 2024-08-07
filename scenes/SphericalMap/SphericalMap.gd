@@ -47,4 +47,4 @@ func _on_spawn_timer_timeout():
 
 
 func _on_game_manager_score_changed(new_score):
-	spawn_timer.wait_time = clampf(4 - clampf(new_score, 0, 300) / 80.0, 0.25, 4)
+	spawn_timer.wait_time = clampf(2 - clampf(new_score, 0, 300) / 80.0, 0.25, 2)
