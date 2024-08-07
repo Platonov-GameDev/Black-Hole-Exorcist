@@ -40,18 +40,19 @@ func _process(delta):
 			get_tree().call_deferred("reload_current_scene")
 	
 	# Spawn obstacles
-	spawn_time_counter += delta * GameManager.calculate_time_coefficient(Vector2(1500, 1500))
-	
-	var entities_that_had_to_spawn = floori(spawn_time_counter / 10)
-	while spawn_entities_counter < entities_that_had_to_spawn:
-		var repeat_spawn_counter = floori(spawn_entities_counter / 20)
-		var i = 0
-		while i < repeat_spawn_counter:
-			spawn_obstacle()
-			i += 1
+	if GameManager.is_round_active:
+		spawn_time_counter += delta * GameManager.calculate_time_coefficient(Vector2(1500, 1500))
 		
-		spawn_obstacle()
-		spawn_entities_counter += 1
+		var entities_that_had_to_spawn = floori(spawn_time_counter / 10)
+		while spawn_entities_counter < entities_that_had_to_spawn:
+			var repeat_spawn_counter = floori(spawn_entities_counter / 20)
+			var i = 0
+			while i < repeat_spawn_counter:
+				spawn_obstacle()
+				i += 1
+			
+			spawn_obstacle()
+			spawn_entities_counter += 1
 
 
 func spawn_obstacle():
