@@ -117,6 +117,7 @@ func change_thruster_particles_gravity(new_gravity: Vector2):
 
 func die():
 	is_dead = true
+	GameManager.is_round_active = false
 	call_deferred("queue_free")
 
 
