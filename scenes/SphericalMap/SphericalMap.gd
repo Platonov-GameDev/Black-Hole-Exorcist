@@ -5,17 +5,15 @@ extends Node2D
 
 @onready var player_body = $PlayerBody
 @onready var camera_2d = $Camera2D
-@onready var killbox_area_2d = $KillboxArea2D
 @onready var spawn_path_follow_2d = $SpawnPath2D/SpawnPathFollow2D
 @onready var spawn_timer = $SpawnTimer
-@onready var black_hole_shader_sprite_2d = $KillboxArea2D/BlackHoleShaderSprite2D
+@onready var black_hole_shader_sprite_2d = $BlackHoleShaderSprite2D
 
 var PULL_FORCE := 5
 
 
 func _ready():
 	spawn_timer.timeout.connect(_on_spawn_timer_timeout)
-	killbox_area_2d.body_entered.connect(_on_killbox_area_2d_body_entered)
 	GameManager.score_changed.connect(_on_game_manager_score_changed)
 	
 	GameManager.is_round_active = true
@@ -40,20 +38,12 @@ func _on_spawn_timer_timeout():
 	spawn_path_follow_2d.progress_ratio = randf_range(0, 1)
 	var spawn_position = spawn_path_follow_2d.position
 	
-	var obstacle = obstacle_scene.instantiate()
+	var obstacle = obstacle_scene.instantiate() as Obstacle_SmoothBoulder
 	obstacle.position = spawn_position
+	obstacle.movement_direction = (
+		(black_hole_shader_sprite_2d.position - obstacle.position).normalized()
+	)
 	add_child(obstacle)
-
-
-func _on_killbox_area_2d_body_entered(body):
-	if body == player_body:
-		GameManager.is_round_active = false
-		spawn_timer.stop()
-		body.die()
-	elif body.is_in_group("obstacle"):
-		body.expire(true)
-	else:
-		body.expire()
 
 
 func _on_game_manager_score_changed(new_score):

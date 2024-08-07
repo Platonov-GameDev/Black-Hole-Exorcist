@@ -57,14 +57,13 @@ gradient = SubResource("Gradient_vu2x8")
 width = 7680
 height = 7680
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_1e335"]
-radius = 40.0
-
 [sub_resource type="Curve2D" id="Curve2D_ym27g"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, -5438, 7082, 0, 0, 0, 0, 7990, 7054, 0, 0, 0, 0, 7933, -6174, 0, 0, 0, 0, -5666, -6203, 0, 0, 0, 0, -5409, 7054)
 }
 point_count = 5
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_tbvmn"]
 
 [node name="SphericalMap" type="Node2D"]
 script = ExtResource("1_ydmn2")
@@ -90,21 +89,15 @@ self_modulate = Color(0, 0, 0, 1)
 z_index = -2
 texture = SubResource("PlaceholderTexture2D_vg1m3")
 
-[node name="KillboxArea2D" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 38
-
-[node name="BlackHoleShaderSprite2D" type="Sprite2D" parent="KillboxArea2D"]
+[node name="BlackHoleShaderSprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_2gdjq")
 scale = Vector2(0.95, 0.95)
 texture = SubResource("GradientTexture2D_acq1b")
 
-[node name="Sprite2D" type="Sprite2D" parent="KillboxArea2D/BlackHoleShaderSprite2D"]
+[node name="Sprite2D" type="Sprite2D" parent="BlackHoleShaderSprite2D"]
+visible = false
 scale = Vector2(0.16, 0.16)
 texture = ExtResource("5_fwkjv")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KillboxArea2D"]
-shape = SubResource("CircleShape2D_1e335")
 
 [node name="PlayerBody" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("1_d02vr")]
 position = Vector2(-399, 0)
@@ -121,3 +114,28 @@ rotation = -0.00208519
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 4.0
 autostart = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 1500)
+shape = SubResource("WorldBoundaryShape2D_tbvmn")
+one_way_collision = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, -1500)
+rotation = 3.14159
+shape = SubResource("WorldBoundaryShape2D_tbvmn")
+one_way_collision = true
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-1500, 0)
+rotation = 1.57079
+shape = SubResource("WorldBoundaryShape2D_tbvmn")
+one_way_collision = true
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1500, 0)
+rotation = 4.71238
+shape = SubResource("WorldBoundaryShape2D_tbvmn")
+one_way_collision = true

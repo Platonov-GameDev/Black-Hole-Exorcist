@@ -82,7 +82,7 @@ Grapple={
 
 common/max_physics_steps_per_frame=16
 2d/default_gravity=0.0
-2d/default_linear_damp=0.6
+2d/default_linear_damp=0.0
 2d/default_angular_damp=0.1
 
 [rendering]

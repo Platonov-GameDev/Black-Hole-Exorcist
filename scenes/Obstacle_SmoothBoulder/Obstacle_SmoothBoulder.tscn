@@ -1,20 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://cpx0x2gu43o4s"]
+[gd_scene load_steps=6 format=3 uid="uid://cpx0x2gu43o4s"]
 
 [ext_resource type="Script" path="res://scenes/Obstacle_SmoothBoulder/Obstacle_SmoothBoulder.gd" id="1_5ij3b"]
 [ext_resource type="Texture2D" uid="uid://m33amcuoqwl8" path="res://assets/smooth_boulder.png" id="1_vgu8r"]
 [ext_resource type="PackedScene" uid="uid://mrxibiywsdke" path="res://scenes/PowerCrystal/PowerCrystal.tscn" id="2_t0gmp"]
 [ext_resource type="PackedScene" uid="uid://bv66o437md56p" path="res://components/HealthComponent/HealthComponent.tscn" id="3_20ff0"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3s5c3"]
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_dcqts"]
 radius = 50.55
 
-[node name="Obstacle_SmoothBoulder" type="RigidBody2D" groups=["obstacle"]]
+[node name="Obstacle_SmoothBoulder" type="CharacterBody2D" groups=["obstacle"]]
 collision_layer = 4
 collision_mask = 7
-mass = 10.0
-physics_material_override = SubResource("PhysicsMaterial_3s5c3")
 script = ExtResource("1_5ij3b")
 power_crystal_scene = ExtResource("2_t0gmp")
 

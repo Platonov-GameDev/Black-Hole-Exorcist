@@ -1,14 +1,15 @@
-extends RigidBody2D
+extends CharacterBody2D
+class_name Obstacle_SmoothBoulder
 
 
 @export var power_crystal_scene: PackedScene
 
 @onready var health_component = $HealthComponent
 
-var TORQUE := 3000000.0
-var SPEED := 1000.0
+var SPEED := 500.0
 
 var did_init := false
+var movement_direction := Vector2.ZERO
 
 
 func _ready():
@@ -16,16 +17,24 @@ func _ready():
 	health_component.damage_taken.connect(_on_health_component_damage_taken)
 
 
-func _physics_process(_delta):
-	if not did_init:
-		apply_torque_impulse(TORQUE * sign(randf_range(-1, 1)))
-		apply_central_impulse(SPEED * Vector2(randf_range(-1, 1), randf_range(-1, 1)))
-		
-		did_init = true
+func _process(delta):
+	var collision = move_and_collide(movement_direction * SPEED * delta)
+	_process_collision(collision)
+
+
+func _process_collision(collision: KinematicCollision2D):
+	if not collision: return
+	
+	var collider = collision.get_collider()
+	if not collider: return
+	
+	if collider.is_in_group("player"):
+		collider.die()
+	else:
+		movement_direction = movement_direction.reflect(collision.get_normal().rotated(PI / 2))
 
 
 func expire(with_reward := false):
-	GameManager.pulled_bodies.erase(self)
 	call_deferred("queue_free")
 	
 	if with_reward:
@@ -38,7 +47,7 @@ func expire(with_reward := false):
 
 
 func _on_health_component_destroyed():
-	expire()
+	expire(true)
 
 
 func _on_health_component_damage_taken():
