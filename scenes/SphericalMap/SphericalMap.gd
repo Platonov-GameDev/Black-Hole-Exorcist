@@ -18,18 +18,10 @@ func _ready():
 	killbox_area_2d.body_entered.connect(_on_killbox_area_2d_body_entered)
 	GameManager.score_changed.connect(_on_game_manager_score_changed)
 	
-	player_body.apply_central_impulse(Vector2.DOWN * 1000)
-	
-	GameManager.pulled_bodies.append(player_body)
-	
 	GameManager.is_round_active = true
 
 
-func _physics_process(_delta):
-	for body in GameManager.pulled_bodies:
-		if is_instance_valid(body):
-			body.apply_central_force((killbox_area_2d.position - body.position) * PULL_FORCE)
-	
+func _physics_process(_delta):	
 	if not is_instance_valid(player_body):
 		if Input.is_action_just_pressed("Reload"):
 			GameManager.reset()
@@ -51,8 +43,6 @@ func _on_spawn_timer_timeout():
 	var obstacle = obstacle_scene.instantiate()
 	obstacle.position = spawn_position
 	add_child(obstacle)
-	
-	GameManager.pulled_bodies.append(obstacle)
 
 
 func _on_killbox_area_2d_body_entered(body):

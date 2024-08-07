@@ -1,9 +1,7 @@
-extends RigidBody2D
+extends CharacterBody2D
 class_name PlayerBody
 
 
-@export var hookshot_scene: PackedScene
-@export var hookgrapple_scene: PackedScene
 @export var camera: Camera2D
 @export var bullet_scene: PackedScene
 
@@ -18,24 +16,14 @@ class_name PlayerBody
 @onready var down_thruster_gpu_particles_2d = $ThrusterEmitters/DownThrusterGPUParticles2D
 @onready var shoot_timer = $ShootTimer
 
-var ACCELERATION := 30000
-var TORQUE_SPEED := 1000000
+var MOVE_SPEED := 500
 var MAX_PUPIL_OFFSET := 8.0
 var FLUNG_THRESHOLD_VELOCITY := 1000
 var DEFAULT_SHOOT_COOLDOWN := 0.15
 
 var is_dead := false
 var thruster_emitters_array: Array[GPUParticles2D] = []
-var is_hookshot_already_fired := false
-var hookshot: CharacterBody2D
-var hookgrapple: Node2D
 var movement_input := Vector2.ZERO
-var grapple_direction: Vector2
-var is_velocity_getting_redirected := false
-var chain_vector: Vector2
-var max_chain_length: float
-var passed_obstacles = []
-var previous_velocity: Vector2
 var current_power_level := 0
 
 signal acted
@@ -50,9 +38,6 @@ func _ready():
 	for emitter in thruster_emitters.get_children():
 		thruster_emitters_array.append(emitter as GPUParticles2D)
 	
-	apply_torque_impulse(1000)
-	
-	previous_velocity = linear_velocity
 	GameManager.player_body = self
 
 
@@ -86,38 +71,8 @@ func _physics_process(delta):
 	if movement_input.length() != 0 and not AudioPlayer.thruster_active_loop_audio.playing:
 		AudioPlayer.thruster_active_loop_audio.play()
 	elif movement_input.length() == 0:
-		AudioPlayer.thruster_active_loop_audio.stop( )
-	apply_central_force(movement_input * delta * ACCELERATION)
-	
-	# Fire and release hook shot
-	if Input.is_action_just_pressed("Grapple") and not is_hookshot_already_fired:
-		is_hookshot_already_fired = true
-		hookshot = hookshot_scene.instantiate()
-		hookshot.position = global_position
-		hookshot.player_body = self
-		hookshot.expired.connect(_on_hookshot_expired)
-		hookshot.grappled.connect(_on_hookshot_grappled)
-		
-		# Calculate mouse position (based on screen shader)
-		var mouse_position = GameManager.mouse_position
-		var hookshot_direction = (mouse_position - position).normalized()
-		hookshot.direction = hookshot_direction
-		
-		add_sibling(hookshot)
-		
-		acted.emit()
-		
-		AudioPlayer.grapple_shot_audio.play()
-	if Input.is_action_just_released("Grapple"):
-		AudioPlayer.grapple_shot_audio.stop()
-		if is_hookshot_already_fired:
-			is_hookshot_already_fired = false
-			hookshot.expire()
-			hookshot = null
-		elif is_instance_valid(hookgrapple):
-			hookgrapple.expire()
-			hookgrapple = null
-			is_velocity_getting_redirected = false
+		AudioPlayer.thruster_active_loop_audio.stop()
+	move_and_collide(movement_input * delta * MOVE_SPEED)
 	
 	# Shooting
 	if Input.is_action_just_pressed("Shoot"):
@@ -127,14 +82,13 @@ func _physics_process(delta):
 		shoot_timer.stop()
 	
 	# Thruster visuals
-	var linear_acceleration = (linear_velocity - previous_velocity) / delta
-	change_thruster_particles_velocity_min_max(
-		linear_velocity.length() * 0.5 + 1000,
-		linear_velocity.length() * 0.5 + 1025
-	)
-	change_thruster_particles_gravity(-linear_acceleration)
+	#change_thruster_particles_velocity_min_max(
+		#linear_velocity.length() * 0.5 + 1000,
+		#linear_velocity.length() * 0.5 + 1025
+	#)
+	#change_thruster_particles_gravity(-linear_acceleration)
 	thruster_emitters.rotation = -rotation
-	previous_velocity = linear_velocity
+	#previous_velocity = linear_velocity
 
 
 func _on_blink_timer_timeout():
@@ -161,30 +115,8 @@ func change_thruster_particles_gravity(new_gravity: Vector2):
 		emitter.process_material.gravity.y = new_gravity.y
 
 
-func _on_hookshot_expired():
-	is_hookshot_already_fired = false
-	hookshot = null
-
-
-func _on_hookshot_grappled(collider, collision_point):
-	if Input.is_action_pressed("Grapple"):
-		hookgrapple = hookgrapple_scene.instantiate()
-		hookgrapple.player_body = self
-		hookgrapple.obstacle = collider
-		hookgrapple.collision_point = collision_point
-		grapple_direction = (collision_point - position).normalized()
-		
-		AudioPlayer.grapple_hit_audio.play()
-		
-		add_sibling(hookgrapple)
-
-
 func die():
 	is_dead = true
-	if hookshot != null:
-		hookshot.expire()
-	if hookgrapple != null:
-		hookgrapple.expire()
 	call_deferred("queue_free")
 
 
@@ -201,30 +133,6 @@ func move_in_direction(direction: Vector2, is_moving := true):
 	if is_moving:
 		movement_input = (movement_input + direction)
 		acted.emit()
-
-
-func _integrate_forces(state):
-	# Reset velocity if grappled in other direction
-	if grapple_direction != Vector2.ZERO:
-		if sign(state.linear_velocity.x * grapple_direction.x) == -1:
-			state.linear_velocity.x = 0
-		if sign(state.linear_velocity.y * grapple_direction.y) == -1:
-			state.linear_velocity.y = 0
-		grapple_direction = Vector2.ZERO
-	
-	if is_velocity_getting_redirected:
-		redirect_velocity_by_chain_tension(state)
-
-
-func redirect_velocity_by_chain_tension(state: PhysicsDirectBodyState2D):
-	var orbit_vector = chain_vector.rotated(deg_to_rad(90))
-	var result_velocity_direction = state.linear_velocity.project(orbit_vector).normalized()
-	state.linear_velocity = state.linear_velocity.length() * result_velocity_direction
-	
-	var correct_position_vector = chain_vector.normalized() * max_chain_length
-	position = position + chain_vector - correct_position_vector
-	
-	is_velocity_getting_redirected = false
 
 
 func _on_shoot_timer_timeout():

@@ -5,7 +5,6 @@ var score: float
 var is_round_active := false
 var mouse_position: Vector2
 var arena_side_size: float
-var pulled_bodies: Array[RigidBody2D] = []
 var player_body: PlayerBody
 var power: int
 
@@ -25,7 +24,6 @@ func update_score(new_score):
 
 func reset():
 	score = 0
-	pulled_bodies.clear()
 	power = 0
 
 
