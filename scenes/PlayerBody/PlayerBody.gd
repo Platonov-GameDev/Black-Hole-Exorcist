@@ -25,6 +25,7 @@ var is_dead := false
 var thruster_emitters_array: Array[GPUParticles2D] = []
 var movement_input := Vector2.ZERO
 var current_power_level := 0
+var is_shoot_button_held := false
 
 signal acted
 
@@ -76,19 +77,12 @@ func _physics_process(delta):
 	
 	# Shooting
 	if Input.is_action_just_pressed("Shoot"):
-		_on_shoot_timer_timeout()
-		shoot_timer.start()
+		if shoot_timer.is_stopped():
+			shoot()
+			shoot_timer.start()
+		is_shoot_button_held = true
 	if Input.is_action_just_released("Shoot"):
-		shoot_timer.stop()
-	
-	# Thruster visuals
-	#change_thruster_particles_velocity_min_max(
-		#linear_velocity.length() * 0.5 + 1000,
-		#linear_velocity.length() * 0.5 + 1025
-	#)
-	#change_thruster_particles_gravity(-linear_acceleration)
-	thruster_emitters.rotation = -rotation
-	#previous_velocity = linear_velocity
+		is_shoot_button_held = false
 
 
 func _on_blink_timer_timeout():
@@ -137,6 +131,12 @@ func move_in_direction(direction: Vector2, is_moving := true):
 
 
 func _on_shoot_timer_timeout():
+	if is_shoot_button_held:
+		shoot()
+		shoot_timer.start()
+
+
+func shoot():
 	var bullet = bullet_scene.instantiate() as CharacterBody2D
 	bullet.position = position
 	bullet.look_at(GameManager.mouse_position)

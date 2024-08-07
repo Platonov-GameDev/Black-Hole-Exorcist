@@ -220,5 +220,6 @@ direction = Vector3(0, 1, 0)
 
 [node name="ShootTimer" type="Timer" parent="."]
 wait_time = 0.4
+one_shot = true
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
