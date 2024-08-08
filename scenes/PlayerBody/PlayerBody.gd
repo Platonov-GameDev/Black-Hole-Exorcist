@@ -24,6 +24,7 @@ var DEFAULT_SHOOT_COOLDOWN := 0.15
 var is_dead := false
 var thruster_emitters_array: Array[GPUParticles2D] = []
 var movement_input := Vector2.ZERO
+var shooting_input := Vector2.ZERO
 var current_power_level := 0
 var is_shoot_button_held := false
 
@@ -42,15 +43,7 @@ func _ready():
 	GameManager.player_body = self
 
 
-func _process(_delta):
-	# Move pupil
-	var mouse_vector = GameManager.mouse_position - position
-	
-	pupil_sprite_2d.global_position = (pupil_base.global_position +
-		(mouse_vector / 15.0).limit_length(MAX_PUPIL_OFFSET))
-
-
-func _physics_process(delta):
+func _process(delta):
 	# Apply player movement forces
 	movement_input = Vector2.ZERO
 	if Input.is_action_pressed("Left"):
@@ -76,13 +69,24 @@ func _physics_process(delta):
 	move_and_collide(movement_input * delta * MOVE_SPEED)
 	
 	# Shooting
-	if Input.is_action_just_pressed("Shoot"):
+	is_shoot_button_held = false
+	shooting_input = Vector2.ZERO
+	if Input.is_action_pressed("Shoot down"):
+		shoot_direction_pressed(Vector2.DOWN)
+	if Input.is_action_pressed("Shoot up"):
+		shoot_direction_pressed(Vector2.UP)
+	if Input.is_action_pressed("Shoot left"):
+		shoot_direction_pressed(Vector2.LEFT)
+	if Input.is_action_pressed("Shoot right"):
+		shoot_direction_pressed(Vector2.RIGHT)
+	if is_shoot_button_held:
 		if shoot_timer.is_stopped():
 			shoot()
 			shoot_timer.start()
-		is_shoot_button_held = true
-	if Input.is_action_just_released("Shoot"):
-		is_shoot_button_held = false
+	
+	# Move pupil
+	pupil_sprite_2d.global_position = (pupil_base.global_position +
+		shooting_input * 10)
 
 
 func _on_blink_timer_timeout():
@@ -131,6 +135,12 @@ func move_in_direction(direction: Vector2, is_moving := true):
 		acted.emit()
 
 
+func shoot_direction_pressed(direction: Vector2):
+	is_shoot_button_held = true
+	
+	shooting_input = (shooting_input + direction).normalized()
+
+
 func _on_shoot_timer_timeout():
 	if is_shoot_button_held:
 		shoot()
@@ -140,7 +150,7 @@ func _on_shoot_timer_timeout():
 func shoot():
 	var bullet = bullet_scene.instantiate() as CharacterBody2D
 	bullet.position = position
-	bullet.look_at(GameManager.mouse_position)
+	bullet.look_at(position + shooting_input)
 	add_sibling(bullet)
 	
 	if current_power_level == 0:
