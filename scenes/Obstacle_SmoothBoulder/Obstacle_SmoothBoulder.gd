@@ -21,7 +21,7 @@ func _ready():
 func _process(delta):
 	var time_coefficient = GameManager.calculate_time_coefficient(position)
 	var collision = move_and_collide(
-		movement_direction * clampf(MOVE_SPEED * delta * time_coefficient, 0, 5000)
+		movement_direction * clampf(MOVE_SPEED * delta * time_coefficient, 0, 2000)
 	)
 	rotate(ROTATION_SPEED * delta * time_coefficient)
 	_process_collision(collision)
