@@ -43,7 +43,7 @@ func _process(delta):
 	if GameManager.is_round_active:
 		spawn_time_counter += delta * GameManager.calculate_time_coefficient(Vector2(1500, 1500))
 		
-		var entities_that_had_to_spawn = floori(spawn_time_counter / 30)
+		var entities_that_had_to_spawn = floori(spawn_time_counter / 20)
 		while spawn_entities_counter < entities_that_had_to_spawn:
 			var repeat_spawn_counter = floori(spawn_entities_counter / 20)
 			var i = 0
