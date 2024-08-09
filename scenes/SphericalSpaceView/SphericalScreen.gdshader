@@ -7,6 +7,7 @@ void fragment() {
 	vec2 uv = round(
 		UV * float(pixelate_amount)) / float(pixelate_amount
 	);
+	float alpha = 1.0;
 	
 	vec2 vector_from_center = uv - vec2(0.5);
 	if (length(vector_from_center) <= 0.1) {
@@ -14,14 +15,15 @@ void fragment() {
 		vector_from_center /= 4.0;
 	} else if (length(vector_from_center) <= 0.5) {
 		float divider = 1.0 + 3.0 *
-			pow((0.5 - length(vector_from_center)) / 0.4, 0.5);
+			pow((0.5 - length(vector_from_center)) / 0.4, 1);
 		vector_from_center /= divider;
 	} else {
-		vector_from_center = normalize(vector_from_center) * 0.5;
+		alpha = 0.0;
 	}
 	
 	uv = vec2(0.5) + vector_from_center;
-	
 	vec4 final_color = texture(viewport_texture, uv);
+	final_color.a = alpha;
+	
 	COLOR = final_color;
 }
