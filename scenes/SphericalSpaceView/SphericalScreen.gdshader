@@ -14,9 +14,9 @@ void fragment() {
 		vector_from_center *= length(vector_from_center * 10.0);
 		vector_from_center /= 4.0;
 	} else if (length(vector_from_center) <= 0.5) {
-		float divider = 1.0 + 3.0 *
-			pow((0.5 - length(vector_from_center)) / 0.4, 1);
-		vector_from_center /= divider;
+		//float divider = 1.0 + 3.0 *
+			//pow((0.5 - length(vector_from_center)) / 0.4, 0.5);
+		//vector_from_center /= divider;
 	} else {
 		alpha = 0.0;
 	}
