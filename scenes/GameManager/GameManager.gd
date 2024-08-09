@@ -36,5 +36,5 @@ func add_power(amount):
 
 func calculate_time_coefficient(object_position):
 	var object_distance_from_blackhole = (black_hole_position - object_position).length()
-	var raw_coefficient = (3000 + object_distance_from_blackhole - player_distance_from_black_hole) / 3000
+	var raw_coefficient = (5000 + object_distance_from_blackhole - player_distance_from_black_hole) / 5000
 	return pow(raw_coefficient, 8)

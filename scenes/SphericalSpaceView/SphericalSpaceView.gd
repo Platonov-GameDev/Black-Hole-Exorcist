@@ -43,3 +43,8 @@ func _process(_delta):
 	
 	mouse_position *= GameManager.arena_side_size
 	GameManager.mouse_position = mouse_position
+	
+	# Set space warp edge
+	screen_shader.material.set_shader_parameter(
+		"edge_distance", GameManager.player_distance_from_black_hole / 10000.0
+	)
