@@ -7,30 +7,27 @@
 [ext_resource type="Shader" path="res://shaders/BlackHole.gdshader" id="4_pa76h"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_33m84"]
-frequency = 0.1996
+frequency = 0.2877
 fractal_gain = 1.865
 fractal_weighted_strength = 1.0
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_mwmor"]
+width = 1080
+height = 1080
 seamless = true
+seamless_blend_skirt = 0.0
 noise = SubResource("FastNoiseLite_33m84")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1jyyr"]
 shader = ExtResource("4_iyrbe")
-shader_parameter/scroll_speed = 1.0
-shader_parameter/zoom = 50.0
-shader_parameter/player_x = null
 shader_parameter/noise = SubResource("NoiseTexture2D_mwmor")
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_4w3c4"]
-size = Vector2(10000, 10000)
+[sub_resource type="Gradient" id="Gradient_sybmy"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0twps"]
-shader = ExtResource("4_iyrbe")
-shader_parameter/scroll_speed = 0.75
-shader_parameter/zoom = 30.0
-shader_parameter/player_x = null
-shader_parameter/noise = SubResource("NoiseTexture2D_mwmor")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bdvvy"]
+gradient = SubResource("Gradient_sybmy")
+width = 10000
+height = 10000
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vg1m3"]
 size = Vector2(10000, 10000)
@@ -73,15 +70,10 @@ obstacle_scene = ExtResource("2_sw6j4")
 
 [node name="Background" type="Node2D" parent="."]
 
-[node name="CloseStarsSprite2D" type="Sprite2D" parent="Background"]
+[node name="StarsSprite2D" type="Sprite2D" parent="Background"]
 z_index = -1
 material = SubResource("ShaderMaterial_1jyyr")
-texture = SubResource("PlaceholderTexture2D_4w3c4")
-
-[node name="FarStarsSprite2D" type="Sprite2D" parent="Background"]
-z_index = -1
-material = SubResource("ShaderMaterial_0twps")
-texture = SubResource("PlaceholderTexture2D_4w3c4")
+texture = SubResource("GradientTexture2D_bdvvy")
 
 [node name="BlackSprite2D" type="Sprite2D" parent="Background"]
 self_modulate = Color(0, 0, 0, 1)
