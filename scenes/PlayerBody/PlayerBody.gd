@@ -16,7 +16,7 @@ class_name PlayerBody
 @onready var down_thruster_gpu_particles_2d = $ThrusterEmitters/DownThrusterGPUParticles2D
 @onready var shoot_timer = $ShootTimer
 
-var MOVE_SPEED := 500
+var MOVE_SPEED := 800
 var MAX_PUPIL_OFFSET := 8.0
 var FLUNG_THRESHOLD_VELOCITY := 1000
 var DEFAULT_SHOOT_COOLDOWN := 0.15
