@@ -4,6 +4,7 @@ extends Control
 @onready var screen_shader = $ScreenShader
 @onready var sub_viewport = $SubViewport
 @onready var score_label = $UI/ScoreLabel
+@onready var countdown_label = $UI/CountdownLabel
 @onready var power_label = $UI/PowerLabel
 
 
@@ -48,3 +49,5 @@ func _process(_delta):
 	screen_shader.material.set_shader_parameter(
 		"edge_distance", GameManager.player_distance_from_black_hole / 10000.0
 	)
+	
+	countdown_label.text = "%.2f" % [300.0 - GameManager.time_since_start]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://culobjeq3sdrk"]
+[gd_scene load_steps=12 format=3 uid="uid://culobjeq3sdrk"]
 
 [ext_resource type="Script" path="res://scenes/SphericalSpaceView/SphericalSpaceView.gd" id="1_hp3th"]
 [ext_resource type="PackedScene" uid="uid://haquppmebf34" path="res://scenes/SphericalMap/SphericalMap.tscn" id="2_lysbx"]
@@ -18,6 +18,12 @@ font = ExtResource("3_nj5li")
 font_size = 32
 
 [sub_resource type="LabelSettings" id="LabelSettings_tanem"]
+resource_local_to_scene = true
+font = ExtResource("3_nj5li")
+font_size = 32
+font_color = Color(1, 0.215686, 0.0392157, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_8qinm"]
 resource_local_to_scene = true
 font = ExtResource("3_nj5li")
 font_size = 32
@@ -68,15 +74,24 @@ offset_left = 30.0
 offset_top = 31.0
 offset_right = 99.0
 offset_bottom = 54.0
+text = "Score: 0"
 label_settings = SubResource("LabelSettings_4qr8s")
+
+[node name="CountdownLabel" type="Label" parent="UI"]
+offset_left = 30.0
+offset_top = 78.0
+offset_right = 99.0
+offset_bottom = 121.0
+text = "300.00"
+label_settings = SubResource("LabelSettings_tanem")
 
 [node name="PowerLabel" type="Label" parent="UI"]
 offset_left = 30.0
-offset_top = 93.0
+offset_top = 122.0
 offset_right = 99.0
-offset_bottom = 116.0
+offset_bottom = 165.0
 text = "0"
-label_settings = SubResource("LabelSettings_tanem")
+label_settings = SubResource("LabelSettings_8qinm")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1

@@ -87,6 +87,10 @@ func _process(delta):
 	# Move pupil
 	pupil_sprite_2d.global_position = (pupil_base.global_position +
 		shooting_input * 10)
+	
+	# Game end
+	if GameManager.time_since_start >= 300:
+		die()
 
 
 func _on_blink_timer_timeout():

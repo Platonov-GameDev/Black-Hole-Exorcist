@@ -25,6 +25,10 @@ func _process(delta):
 	)
 	rotate(ROTATION_SPEED * delta * time_coefficient)
 	_process_collision(collision)
+	
+	# Game end
+	if GameManager.time_since_start >= 300:
+		expire()
 
 
 func _process_collision(collision: KinematicCollision2D):
