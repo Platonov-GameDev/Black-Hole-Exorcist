@@ -2,7 +2,6 @@ shader_type canvas_item;
 
 uniform sampler2D noise;
 uniform float size = 10.0;
-uniform float opacity = 1.0;
 uniform float time = 0.0;
 
 void fragment() {
@@ -31,7 +30,6 @@ void fragment() {
 	
 	final_color += orange_color * step(edge_1, edge_2);
 	final_color.rgb -= white_color.rgb * step(edge_1, edge_2 - 1.5);
-	final_color.a *= opacity;
 	
 	COLOR = final_color;
 }

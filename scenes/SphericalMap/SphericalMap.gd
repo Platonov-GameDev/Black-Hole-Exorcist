@@ -22,11 +22,8 @@ func _ready():
 
 func _process(delta):
 	time_since_start += delta
-	var black_hole_visuals_coefficient = fmod(time_since_start / 12.0, 25)
+	var black_hole_visuals_coefficient = time_since_start / 12.0
 	black_hole_shader_sprite_2d.material.set_shader_parameter("size", black_hole_visuals_coefficient)
-	black_hole_shader_sprite_2d.material.set_shader_parameter(
-		"opacity", (25.0 - black_hole_visuals_coefficient) / 2.0
-	)
 	black_hole_shader_time += delta * GameManager.calculate_time_coefficient(Vector2(0, 0))
 	black_hole_shader_sprite_2d.material.set_shader_parameter("time", black_hole_shader_time)
 	
