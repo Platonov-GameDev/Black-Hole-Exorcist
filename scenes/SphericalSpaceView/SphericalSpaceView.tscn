@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://culobjeq3sdrk"]
+[gd_scene load_steps=11 format=3 uid="uid://culobjeq3sdrk"]
 
 [ext_resource type="Script" path="res://scenes/SphericalSpaceView/SphericalSpaceView.gd" id="1_hp3th"]
 [ext_resource type="PackedScene" uid="uid://haquppmebf34" path="res://scenes/SphericalMap/SphericalMap.tscn" id="2_lysbx"]
@@ -22,6 +22,13 @@ resource_local_to_scene = true
 font = ExtResource("3_nj5li")
 font_size = 32
 font_color = Color(0, 0.784314, 0.960784, 1)
+
+[sub_resource type="Gradient" id="Gradient_qoqgh"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1ukqo"]
+gradient = SubResource("Gradient_qoqgh")
 
 [node name="SphericalSpaceView" type="Control"]
 layout_mode = 3
@@ -70,3 +77,12 @@ offset_right = 99.0
 offset_bottom = 116.0
 text = "0"
 label_settings = SubResource("LabelSettings_tanem")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_1ukqo")
