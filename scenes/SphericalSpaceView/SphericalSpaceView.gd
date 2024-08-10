@@ -50,4 +50,4 @@ func _process(_delta):
 		"edge_distance", GameManager.player_distance_from_black_hole / 10000.0
 	)
 	
-	countdown_label.text = "%.2f" % [300.0 - GameManager.time_since_start]
+	countdown_label.text = "%.2f" % [clampf(300.0 - GameManager.time_since_start, 0, 300)]
