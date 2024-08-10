@@ -48,7 +48,7 @@ func expire():
 	power_crystal.position = position
 	call_deferred("add_sibling", power_crystal)
 	AudioPlayer.obstacle_destroyed_audio.play()
-	GameManager.update_score(GameManager.score + 3)
+	GameManager.update_score(GameManager.score + 30)
 
 
 func _on_health_component_destroyed():

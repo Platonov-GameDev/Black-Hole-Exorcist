@@ -18,7 +18,7 @@ func _ready():
 
 
 func _on_game_manager_score_changed(new_score):
-	score_label.text = "Insight: " + "%.2f" % [new_score]
+	score_label.text = "Score: " + "%.0f" % [new_score]
 
 
 func _on_game_manager_power_changed(new_power):

@@ -18,10 +18,6 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 
 
-func _process(delta):
-	update_score(score - delta)
-
-
 func update_score(new_score):
 	if is_round_active:
 		score = new_score
