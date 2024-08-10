@@ -3,9 +3,9 @@ extends Control
 
 @onready var screen_shader = $ScreenShader
 @onready var sub_viewport = $SubViewport
-@onready var score_label = $UI/ScoreLabel
-@onready var countdown_label = $UI/CountdownLabel
-@onready var power_label = $UI/PowerLabel
+@onready var score_label = $UI/VBoxContainer/ScoreLabel
+@onready var countdown_label = $UI/VBoxContainer/CountdownLabel
+@onready var power_label = $UI/VBoxContainer/PowerLabel
 
 
 func _ready():

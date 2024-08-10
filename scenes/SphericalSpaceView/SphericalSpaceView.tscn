@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes/SphericalSpaceView/SphericalSpaceView.gd" id="1_hp3th"]
 [ext_resource type="PackedScene" uid="uid://haquppmebf34" path="res://scenes/SphericalMap/SphericalMap.tscn" id="2_lysbx"]
 [ext_resource type="Shader" path="res://scenes/SphericalSpaceView/SphericalScreen.gdshader" id="2_xittg"]
-[ext_resource type="FontFile" uid="uid://bba1jy5y6cy75" path="res://assets/PentagramsStregherria/PentagramsStregherriaRegular-A9a2.ttf" id="3_nj5li"]
+[ext_resource type="FontFile" uid="uid://cgjafqou3v4d6" path="res://assets/Robotronika/RobtronikaItalic-xRnXV.ttf" id="4_v021y"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j11bb"]
 resource_local_to_scene = true
@@ -14,19 +14,19 @@ shader_parameter/edge_distance = 0.1
 
 [sub_resource type="LabelSettings" id="LabelSettings_4qr8s"]
 resource_local_to_scene = true
-font = ExtResource("3_nj5li")
+font = ExtResource("4_v021y")
 font_size = 32
 
 [sub_resource type="LabelSettings" id="LabelSettings_tanem"]
 resource_local_to_scene = true
-font = ExtResource("3_nj5li")
-font_size = 32
+font = ExtResource("4_v021y")
+font_size = 26
 font_color = Color(1, 0.215686, 0.0392157, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_8qinm"]
 resource_local_to_scene = true
-font = ExtResource("3_nj5li")
-font_size = 32
+font = ExtResource("4_v021y")
+font_size = 26
 font_color = Color(0, 0.784314, 0.960784, 1)
 
 [sub_resource type="Gradient" id="Gradient_qoqgh"]
@@ -69,27 +69,24 @@ size = Vector2i(10000, 10000)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="ScoreLabel" type="Label" parent="UI"]
-offset_left = 30.0
-offset_top = 31.0
-offset_right = 99.0
-offset_bottom = 54.0
-text = "Score: 0"
+[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
+offset_left = 36.0
+offset_top = 39.0
+offset_right = 266.0
+offset_bottom = 146.0
+
+[node name="ScoreLabel" type="Label" parent="UI/VBoxContainer"]
+layout_mode = 2
+text = "Score:0"
 label_settings = SubResource("LabelSettings_4qr8s")
 
-[node name="CountdownLabel" type="Label" parent="UI"]
-offset_left = 30.0
-offset_top = 78.0
-offset_right = 99.0
-offset_bottom = 121.0
+[node name="CountdownLabel" type="Label" parent="UI/VBoxContainer"]
+layout_mode = 2
 text = "300.00"
 label_settings = SubResource("LabelSettings_tanem")
 
-[node name="PowerLabel" type="Label" parent="UI"]
-offset_left = 30.0
-offset_top = 122.0
-offset_right = 99.0
-offset_bottom = 165.0
+[node name="PowerLabel" type="Label" parent="UI/VBoxContainer"]
+layout_mode = 2
 text = "0"
 label_settings = SubResource("LabelSettings_8qinm")
 
