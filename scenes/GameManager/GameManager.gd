@@ -14,6 +14,10 @@ signal score_changed(new_max_score)
 signal power_changed(new_power)
 
 
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+
+
 func _process(delta):
 	update_score(score - delta)
 
