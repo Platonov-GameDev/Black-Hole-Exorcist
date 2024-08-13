@@ -18,7 +18,6 @@ class_name PlayerBody
 
 var MOVE_SPEED := 1200
 var PUPIL_OFFSET := 26.0
-var FLUNG_THRESHOLD_VELOCITY := 1000
 var DEFAULT_SHOOT_COOLDOWN := 0.15
 
 var is_dead := false
@@ -66,7 +65,9 @@ func _process(delta):
 		AudioPlayer.thruster_active_loop_audio.play()
 	elif movement_input.length() == 0:
 		AudioPlayer.thruster_active_loop_audio.stop()
-	move_and_collide(movement_input * delta * MOVE_SPEED)
+	velocity = movement_input * MOVE_SPEED
+	move_and_slide()
+	#move_and_collide(movement_input * delta * MOVE_SPEED)
 	
 	# Shooting
 	is_shoot_button_held = false
