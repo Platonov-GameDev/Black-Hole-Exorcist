@@ -1,7 +1,7 @@
 extends Node2D
 
 
-@export var obstacle_scene: PackedScene
+@export var enemy_scene: PackedScene
 
 @onready var player_body = $PlayerBody
 @onready var camera_2d = $Camera2D
@@ -43,26 +43,26 @@ func _process(delta):
 		while spawn_entities_counter < entities_that_had_to_spawn:
 			var repeat_spawn_counter = floori(spawn_entities_counter / 20)
 			
-			spawn_rocks(1 + repeat_spawn_counter)
+			spawn_enemies(1 + repeat_spawn_counter)
 			
 			spawn_entities_counter += 1
 
 
-func spawn_rocks(rock_count: int):
-	var spawn_angle_offset = 2 * PI / (rock_count + 1)
+func spawn_enemies(count: int):
+	var spawn_angle_offset = 2 * PI / (count + 1)
 	var center_to_player_vector = (player_body.position - black_hole_shader_sprite_2d.position).normalized()
 	if center_to_player_vector.length() == 0:
 		center_to_player_vector = Vector2.UP.rotated(randf_range(0, 2 * PI))
 	
-	for i in range(rock_count):
+	for i in range(count):
 		var spawn_position = (
 			center_to_player_vector.rotated((i + 1) * spawn_angle_offset)
 			* SPAWN_DISTANCE_FROM_CENTER
 		)
 		
-		var obstacle = obstacle_scene.instantiate() as Obstacle_SmoothBoulder
-		obstacle.position = spawn_position
-		obstacle.movement_direction = obstacle.get_restricted_movement_vector(
-			(black_hole_shader_sprite_2d.position - obstacle.position).normalized()
+		var enemy = enemy_scene.instantiate() as Enemy_Mouth
+		enemy.position = spawn_position
+		enemy.movement_direction = enemy.get_restricted_movement_vector(
+			(black_hole_shader_sprite_2d.position - enemy.position).normalized()
 		)
-		add_child(obstacle)
+		add_child(enemy)

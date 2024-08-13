@@ -1,12 +1,12 @@
 extends CharacterBody2D
-class_name Obstacle_SmoothBoulder
+class_name Enemy_Mouth
 
 
 @export var power_crystal_scene: PackedScene
 
 @onready var health_component = $HealthComponent
-@onready var sprite_2d = $Sprite2D
 @onready var kill_area_2d = $KillArea2D
+@onready var animated_sprite_2d = $AnimatedSprite2D
 
 var MOVE_SPEED := 500.0
 var ROTATION_SPEED := 5.0
@@ -28,6 +28,8 @@ func _process(delta):
 		movement_direction * clampf(MOVE_SPEED * delta * time_coefficient, 0, 2000)
 	)
 	_process_collision(collision)
+	
+	animated_sprite_2d.speed_scale = time_coefficient
 	
 	# Game end
 	if GameManager.time_since_start >= 300:
