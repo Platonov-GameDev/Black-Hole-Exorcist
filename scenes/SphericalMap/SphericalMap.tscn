@@ -78,7 +78,6 @@ material = SubResource("ShaderMaterial_2gdjq")
 texture = SubResource("GradientTexture2D_acq1b")
 
 [node name="PlayerBody" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("1_d02vr")]
-position = Vector2(-940, 0)
 camera = NodePath("../Camera2D")
 
 [node name="WorldBorders" type="StaticBody2D" parent="." groups=["world"]]

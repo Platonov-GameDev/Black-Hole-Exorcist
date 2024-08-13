@@ -51,6 +51,8 @@ func _process(delta):
 func spawn_rocks(rock_count: int):
 	var spawn_angle_offset = 2 * PI / (rock_count + 1)
 	var center_to_player_vector = (player_body.position - black_hole_shader_sprite_2d.position).normalized()
+	if center_to_player_vector.length() == 0:
+		center_to_player_vector = Vector2.UP.rotated(randf_range(0, 2 * PI))
 	
 	for i in range(rock_count):
 		var spawn_position = (
