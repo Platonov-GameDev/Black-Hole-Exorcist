@@ -1,10 +1,19 @@
 extends CharacterBody2D
 
 
+@onready var polygon_2d = $Polygon2D
+
 var ACCELERATION = 2000
 
 var speed := 0.0
 var previous_speed := 0.0
+var time_elapsed := 0.0
+
+
+func _process(delta):
+	time_elapsed += GameManager.calculate_time_coefficient(position)
+	
+	polygon_2d.color.a = 1.0 - fmod(time_elapsed, 100.0) / 100.0
 
 
 func _physics_process(delta):

@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://mnmolx7ch3l7" path="res://scenes/ThrusterGPUParticles2D/ThrusterGPUParticles2D.tscn" id="9_0csqw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2u03b"]
-radius = 27.0
+radius = 65.71
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sn02o"]
 atlas = ExtResource("4_ncdur")
@@ -174,12 +174,12 @@ shape = SubResource("CircleShape2D_2u03b")
 
 [node name="PlayerSprite2D" type="Sprite2D" parent="."]
 z_index = 1
-scale = Vector2(0.1, 0.1)
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_ewm2e")
 
 [node name="Eyehole" type="Node2D" parent="."]
 z_index = 1
-scale = Vector2(0.1, 0.1)
+scale = Vector2(0.3, 0.3)
 
 [node name="BackgroundSprite2D" type="Sprite2D" parent="Eyehole"]
 scale = Vector2(0.95, 0.95)
