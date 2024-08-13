@@ -6,6 +6,7 @@ class_name Obstacle_SmoothBoulder
 
 @onready var health_component = $HealthComponent
 @onready var sprite_2d = $Sprite2D
+@onready var kill_area_2d = $KillArea2D
 
 var MOVE_SPEED := 500.0
 var ROTATION_SPEED := 5.0
@@ -17,6 +18,7 @@ var movement_direction := Vector2.ZERO
 func _ready():
 	health_component.destroyed.connect(_on_health_component_destroyed)
 	health_component.damage_taken.connect(_on_health_component_damage_taken)
+	kill_area_2d.body_entered.connect(_on_kill_area_2d_body_entered)
 
 
 func _process(delta):
@@ -38,18 +40,16 @@ func _process_collision(collision: KinematicCollision2D):
 	var collider = collision.get_collider()
 	if not collider: return
 	
-	if collider.is_in_group("player"):
-		collider.die()
-	else:
-		var collision_normal = collision.get_normal()
-		if collision_normal.is_normalized():
-			var bounce_direction = movement_direction.bounce(collision_normal)
-			
-			var new_movement_direction = get_restricted_movement_vector(bounce_direction)
-			if new_movement_direction == movement_direction:
-				movement_direction = get_restricted_movement_vector(collision_normal)
-			else:
-				movement_direction = new_movement_direction
+	
+	var collision_normal = collision.get_normal()
+	if collision_normal.is_normalized():
+		var bounce_direction = movement_direction.bounce(collision_normal)
+		
+		var new_movement_direction = get_restricted_movement_vector(bounce_direction)
+		if new_movement_direction == movement_direction:
+			movement_direction = get_restricted_movement_vector(collision_normal)
+		else:
+			movement_direction = new_movement_direction
 
 
 func expire():
@@ -82,3 +82,9 @@ func _on_collision_area_2d_body_entered(body):
 		var bounce_direction = movement_direction.bounce(collision_normal)
 		
 		movement_direction = get_restricted_movement_vector(bounce_direction)
+
+
+func _on_kill_area_2d_body_entered(body):
+	if not is_instance_valid(body): return
+	var player = body as PlayerBody
+	player.die()
