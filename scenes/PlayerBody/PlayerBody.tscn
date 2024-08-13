@@ -204,6 +204,7 @@ wait_time = 2.0
 autostart = true
 
 [node name="ThrusterEmitters" type="Node2D" parent="."]
+scale = Vector2(3, 3)
 
 [node name="RightThrusterGPUParticles2D" parent="ThrusterEmitters" instance=ExtResource("9_0csqw")]
 process_material = SubResource("ParticleProcessMaterial_pwo6r")
