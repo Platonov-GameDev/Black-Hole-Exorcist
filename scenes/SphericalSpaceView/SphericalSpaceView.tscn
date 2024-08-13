@@ -82,12 +82,12 @@ label_settings = SubResource("LabelSettings_4qr8s")
 
 [node name="CountdownLabel" type="Label" parent="UI/VBoxContainer"]
 layout_mode = 2
-text = "Score: 0"
+text = "300.00"
 label_settings = SubResource("LabelSettings_tanem")
 
 [node name="PowerLabel" type="Label" parent="UI/VBoxContainer"]
 layout_mode = 2
-text = "Score: 0"
+text = "0"
 label_settings = SubResource("LabelSettings_8qinm")
 
 [node name="TextureRect" type="TextureRect" parent="."]

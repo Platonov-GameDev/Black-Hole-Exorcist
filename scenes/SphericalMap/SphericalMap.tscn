@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://haquppmebf34"]
+[gd_scene load_steps=18 format=3 uid="uid://haquppmebf34"]
 
 [ext_resource type="PackedScene" uid="uid://de4xi8lb2qi2q" path="res://scenes/PlayerBody/PlayerBody.tscn" id="1_d02vr"]
 [ext_resource type="Script" path="res://scenes/SphericalMap/SphericalMap.gd" id="1_ydmn2"]
@@ -53,12 +53,6 @@ gradient = SubResource("Gradient_vu2x8")
 width = 10000
 height = 10000
 
-[sub_resource type="Curve2D" id="Curve2D_ym27g"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, -5438, 7082, 0, 0, 0, 0, 7990, 7054, 0, 0, 0, 0, 7933, -6174, 0, 0, 0, 0, -5666, -6203, 0, 0, 0, 0, -5409, 7054)
-}
-point_count = 5
-
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_86fyi"]
 
 [node name="SphericalMap" type="Node2D"]
@@ -86,14 +80,6 @@ texture = SubResource("GradientTexture2D_acq1b")
 [node name="PlayerBody" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("1_d02vr")]
 position = Vector2(-940, 0)
 camera = NodePath("../Camera2D")
-
-[node name="SpawnPath2D" type="Path2D" parent="."]
-position = Vector2(-1092, -508)
-curve = SubResource("Curve2D_ym27g")
-
-[node name="SpawnPathFollow2D" type="PathFollow2D" parent="SpawnPath2D"]
-position = Vector2(-5438, 7082)
-rotation = -0.00208519
 
 [node name="WorldBorders" type="StaticBody2D" parent="." groups=["world"]]
 scale = Vector2(0.727, 0.727)

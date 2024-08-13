@@ -5,8 +5,9 @@ extends Node2D
 
 @onready var player_body = $PlayerBody
 @onready var camera_2d = $Camera2D
-@onready var spawn_path_follow_2d = $SpawnPath2D/SpawnPathFollow2D
 @onready var black_hole_shader_sprite_2d = $BlackHoleShaderSprite2D
+
+var SPAWN_DISTANCE_FROM_CENTER = 3300
 
 var spawn_time_counter := 0.0
 var spawn_entities_counter := 0
@@ -41,22 +42,25 @@ func _process(delta):
 		var entities_that_had_to_spawn = floori(spawn_time_counter / 20)
 		while spawn_entities_counter < entities_that_had_to_spawn:
 			var repeat_spawn_counter = floori(spawn_entities_counter / 20)
-			var i = 0
-			while i < repeat_spawn_counter:
-				spawn_obstacle()
-				i += 1
 			
-			spawn_obstacle()
+			spawn_rocks(1 + repeat_spawn_counter)
+			
 			spawn_entities_counter += 1
 
 
-func spawn_obstacle():
-	spawn_path_follow_2d.progress_ratio = randf_range(0, 1)
-	var spawn_position = spawn_path_follow_2d.position
+func spawn_rocks(rock_count: int):
+	var spawn_angle_offset = 2 * PI / (rock_count + 1)
+	var center_to_player_vector = (player_body.position - black_hole_shader_sprite_2d.position).normalized()
 	
-	var obstacle = obstacle_scene.instantiate() as Obstacle_SmoothBoulder
-	obstacle.position = spawn_position
-	obstacle.movement_direction = obstacle.get_restricted_movement_vector(
-		(black_hole_shader_sprite_2d.position - obstacle.position).normalized()
-	)
-	add_child(obstacle)
+	for i in range(rock_count):
+		var spawn_position = (
+			center_to_player_vector.rotated((i + 1) * spawn_angle_offset)
+			* SPAWN_DISTANCE_FROM_CENTER
+		)
+		
+		var obstacle = obstacle_scene.instantiate() as Obstacle_SmoothBoulder
+		obstacle.position = spawn_position
+		obstacle.movement_direction = obstacle.get_restricted_movement_vector(
+			(black_hole_shader_sprite_2d.position - obstacle.position).normalized()
+		)
+		add_child(obstacle)
