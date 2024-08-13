@@ -5,6 +5,8 @@ extends CharacterBody2D
 @onready var collection_area_2d = $CollectionArea2D
 
 var ACCELERATION = 2000
+var DRIFT_SPEED = 50
+var DRIFT_END_DISTANCE = 300
 
 var previous_speed := 300.0
 var speed: float
@@ -25,8 +27,18 @@ func _process(delta):
 func _physics_process(delta):
 	if not is_instance_valid(GameManager.player_body): return
 	
-	if did_player_come_by:
-		var time_coefficient = GameManager.calculate_time_coefficient(position)
+	var time_coefficient = GameManager.calculate_time_coefficient(position)
+	if not did_player_come_by:
+		if position.length() >= DRIFT_END_DISTANCE:
+			velocity = -position * delta * time_coefficient * DRIFT_SPEED
+		else:
+			velocity = (
+				(position.normalized() * DRIFT_END_DISTANCE - position)
+				* delta
+				* time_coefficient
+				* DRIFT_SPEED
+			)
+	else:
 		speed = previous_speed + ACCELERATION * delta * time_coefficient
 		velocity = (
 			(GameManager.player_body.position - position).normalized()
@@ -34,11 +46,12 @@ func _physics_process(delta):
 			* time_coefficient
 		)
 		previous_speed = speed
-		var collision = move_and_collide(velocity * delta)
-		if collision:
-			call_deferred("queue_free")
-			GameManager.add_power(1)
-			AudioPlayer.crystal_eaten_audio.play()
+	
+	var collision = move_and_collide(velocity * delta)
+	if collision:
+		call_deferred("queue_free")
+		GameManager.add_power(1)
+		AudioPlayer.crystal_eaten_audio.play()
 
 
 func _on_collection_area_2d_body_entered(body):
