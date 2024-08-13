@@ -95,7 +95,8 @@ curve = SubResource("Curve2D_ym27g")
 position = Vector2(-5438, 7082)
 rotation = -0.00208519
 
-[node name="WorldBorders" type="StaticBody2D" parent="."]
+[node name="WorldBorders" type="StaticBody2D" parent="." groups=["world"]]
+scale = Vector2(0.727, 0.727)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-4955, -319)

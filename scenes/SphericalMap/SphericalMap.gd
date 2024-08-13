@@ -56,7 +56,7 @@ func spawn_obstacle():
 	
 	var obstacle = obstacle_scene.instantiate() as Obstacle_SmoothBoulder
 	obstacle.position = spawn_position
-	obstacle.movement_direction = (
+	obstacle.movement_direction = obstacle.get_restricted_movement_vector(
 		(black_hole_shader_sprite_2d.position - obstacle.position).normalized()
 	)
 	add_child(obstacle)

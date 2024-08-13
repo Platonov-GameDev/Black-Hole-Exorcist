@@ -5,6 +5,7 @@ class_name Obstacle_SmoothBoulder
 @export var power_crystal_scene: PackedScene
 
 @onready var health_component = $HealthComponent
+@onready var sprite_2d = $Sprite2D
 
 var MOVE_SPEED := 500.0
 var ROTATION_SPEED := 5.0
@@ -20,10 +21,10 @@ func _ready():
 
 func _process(delta):
 	var time_coefficient = GameManager.calculate_time_coefficient(position)
+	rotate(ROTATION_SPEED * delta * time_coefficient)
 	var collision = move_and_collide(
 		movement_direction * clampf(MOVE_SPEED * delta * time_coefficient, 0, 2000)
 	)
-	rotate(ROTATION_SPEED * delta * time_coefficient)
 	_process_collision(collision)
 	
 	# Game end
@@ -40,9 +41,15 @@ func _process_collision(collision: KinematicCollision2D):
 	if collider.is_in_group("player"):
 		collider.die()
 	else:
-		var reflection_line_vector = collision.get_normal().rotated(PI / 2)
-		if reflection_line_vector.is_normalized():
-			movement_direction = movement_direction.reflect(reflection_line_vector)
+		var collision_normal = collision.get_normal()
+		if collision_normal.is_normalized():
+			var bounce_direction = movement_direction.bounce(collision_normal)
+			
+			var new_movement_direction = get_restricted_movement_vector(bounce_direction)
+			if new_movement_direction == movement_direction:
+				movement_direction = get_restricted_movement_vector(collision_normal)
+			else:
+				movement_direction = new_movement_direction
 
 
 func expire():
@@ -61,3 +68,17 @@ func _on_health_component_destroyed():
 
 func _on_health_component_damage_taken():
 	AudioPlayer.obstacle_hit_audio.play()
+
+
+func get_restricted_movement_vector(movement_vector: Vector2):
+	var direction_angle := movement_vector.angle_to(Vector2.UP + Vector2.RIGHT)
+	var direction_angle_snapped = snapped(direction_angle, PI / 2)
+	return (Vector2.UP + Vector2.RIGHT).rotated(-direction_angle_snapped).normalized()
+
+
+func _on_collision_area_2d_body_entered(body):
+	var collision_normal = position - body.position
+	if collision_normal.is_normalized():
+		var bounce_direction = movement_direction.bounce(collision_normal)
+		
+		movement_direction = get_restricted_movement_vector(bounce_direction)
