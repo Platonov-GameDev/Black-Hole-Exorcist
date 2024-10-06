@@ -46,6 +46,10 @@ func _process(delta):
 			spawn_enemies(1 + repeat_spawn_counter)
 			
 			spawn_entities_counter += 1
+	
+	# Set camera zoom
+	var cam_zoom = clampf(1.38 - 0.68 * (GameManager.time_since_start / 300.0), 0.7, 1.38)
+	camera_2d.zoom = Vector2(cam_zoom, cam_zoom)
 
 
 func spawn_enemies(count: int):
