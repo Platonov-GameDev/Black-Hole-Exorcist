@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dv6t0r0ii5jw4"]
+[gd_scene load_steps=15 format=3 uid="uid://dv6t0r0ii5jw4"]
 
 [ext_resource type="Script" path="res://scenes/AudioPlayer/AudioPlayer.gd" id="1_vh411"]
 [ext_resource type="AudioStream" uid="uid://bfe3dygh7r5bj" path="res://assets/sounds/crystal_eaten.wav" id="2_cprdb"]
@@ -13,6 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://x4wm3noki2jf" path="res://assets/sounds/shot_3.wav" id="11_ftdt5"]
 [ext_resource type="AudioStream" uid="uid://bf4i3d8adg3cm" path="res://assets/sounds/shot_4.wav" id="12_ed1fa"]
 [ext_resource type="AudioStream" uid="uid://bsrysbihfpol5" path="res://assets/sounds/thruster_active_loop.wav" id="12_w7mvl"]
+[ext_resource type="AudioStream" uid="uid://bmrsm0oqet2a8" path="res://assets/sounds/sniper_shot_1.wav" id="13_jmr0t"]
 
 [node name="AudioPlayer" type="Node2D"]
 script = ExtResource("1_vh411")
@@ -52,6 +53,10 @@ volume_db = -6.0
 
 [node name="Shot4Audio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_ed1fa")
+volume_db = -6.0
+
+[node name="SniperShotAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_jmr0t")
 volume_db = -6.0
 
 [node name="ThrusterActiveLoopAudio" type="AudioStreamPlayer" parent="."]

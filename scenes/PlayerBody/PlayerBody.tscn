@@ -1,7 +1,8 @@
-[gd_scene load_steps=26 format=3 uid="uid://de4xi8lb2qi2q"]
+[gd_scene load_steps=27 format=3 uid="uid://de4xi8lb2qi2q"]
 
 [ext_resource type="Script" path="res://scenes/PlayerBody/PlayerBody.gd" id="1_8dce7"]
 [ext_resource type="Texture2D" uid="uid://fe3k568v6hjc" path="res://assets/player/player_body.png" id="1_ewm2e"]
+[ext_resource type="PackedScene" uid="uid://bftjm4i8o1gtn" path="res://scenes/SniperRay/SniperRay.tscn" id="3_72i57"]
 [ext_resource type="Texture2D" uid="uid://desrac4t6cmro" path="res://assets/player/player_eyehole_background.png" id="3_tc5xw"]
 [ext_resource type="PackedScene" uid="uid://dm778frawkqjp" path="res://scenes/Bullet/Bullet.tscn" id="4_3cbhl"]
 [ext_resource type="Texture2D" uid="uid://dytlpqek1gkr1" path="res://assets/player/player_eyehole_blink-Sheet.png" id="4_ncdur"]
@@ -170,6 +171,7 @@ motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_8dce7")
 bullet_scene = ExtResource("4_3cbhl")
+sniper_ray_scene = ExtResource("3_72i57")
 
 [node name="PlayerCollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_2u03b")
@@ -221,8 +223,16 @@ direction = Vector3(0, -1, 0)
 process_material = SubResource("ParticleProcessMaterial_q8b21")
 direction = Vector3(0, 1, 0)
 
-[node name="ShootTimer" type="Timer" parent="."]
+[node name="ShootRapidCooldownTimer" type="Timer" parent="."]
 wait_time = 0.4
+one_shot = true
+
+[node name="ShootSniperPrepareTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="ShootSniperCooldownTimer" type="Timer" parent="."]
+wait_time = 0.6
 one_shot = true
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
