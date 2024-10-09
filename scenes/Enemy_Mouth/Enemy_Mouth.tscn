@@ -1,31 +1,30 @@
-[gd_scene load_steps=13 format=3 uid="uid://cpx0x2gu43o4s"]
+[gd_scene load_steps=11 format=3 uid="uid://cpx0x2gu43o4s"]
 
-[ext_resource type="Script" path="res://scenes/Obstacle_SmoothBoulder/Enemy_Mouth.gd" id="1_e6vts"]
-[ext_resource type="PackedScene" uid="uid://mrxibiywsdke" path="res://scenes/PowerCrystal/PowerCrystal.tscn" id="2_t0gmp"]
-[ext_resource type="PackedScene" uid="uid://bv66o437md56p" path="res://components/HealthComponent/HealthComponent.tscn" id="3_20ff0"]
-[ext_resource type="Texture2D" uid="uid://kx1u66xarsb1" path="res://assets/mouth_sheet.png" id="3_ho6nx"]
+[ext_resource type="Script" path="res://scenes/Enemy_Mouth/Enemy_Mouth.gd" id="1_yfkxd"]
+[ext_resource type="Texture2D" uid="uid://kx1u66xarsb1" path="res://assets/mouth_sheet.png" id="3_p0pwm"]
+[ext_resource type="PackedScene" uid="uid://bv66o437md56p" path="res://components/HealthComponent/HealthComponent.tscn" id="4_uecx6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dcqts"]
-radius = 95.49
+radius = 69.04
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kycmn"]
-atlas = ExtResource("3_ho6nx")
+atlas = ExtResource("3_p0pwm")
 region = Rect2(0, 0, 156, 156)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_etg62"]
-atlas = ExtResource("3_ho6nx")
+atlas = ExtResource("3_p0pwm")
 region = Rect2(156, 0, 156, 156)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hgm8h"]
-atlas = ExtResource("3_ho6nx")
+atlas = ExtResource("3_p0pwm")
 region = Rect2(312, 0, 156, 156)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tnwq8"]
-atlas = ExtResource("3_ho6nx")
+atlas = ExtResource("3_p0pwm")
 region = Rect2(468, 0, 156, 156)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3uf0b"]
-atlas = ExtResource("3_ho6nx")
+atlas = ExtResource("3_p0pwm")
 region = Rect2(624, 0, 156, 156)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0hlut"]
@@ -51,30 +50,27 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_gn3rp"]
-radius = 125.32
-
 [node name="Enemy_Mouth" type="CharacterBody2D" groups=["obstacle"]]
+scale = Vector2(1.5, 1.5)
 collision_layer = 4
 collision_mask = 5
-script = ExtResource("1_e6vts")
-power_crystal_scene = ExtResource("2_t0gmp")
+script = ExtResource("1_yfkxd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_dcqts")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, -4)
-scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_0hlut")
 autoplay = "default"
 frame_progress = 0.349301
 
-[node name="HealthComponent" parent="." instance=ExtResource("3_20ff0")]
+[node name="HealthComponent" parent="." instance=ExtResource("4_uecx6")]
+current_health = 30
 
 [node name="KillArea2D" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KillArea2D"]
-shape = SubResource("CircleShape2D_gn3rp")
+shape = SubResource("CircleShape2D_dcqts")

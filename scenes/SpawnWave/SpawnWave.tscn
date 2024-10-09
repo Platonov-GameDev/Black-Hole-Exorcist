@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ka6s3p8lmpik"]
+
+[ext_resource type="Script" path="res://scenes/SpawnWave/SpawnWave.gd" id="1_mbh5c"]
+
+[node name="SpawnWave" type="Node"]
+script = ExtResource("1_mbh5c")

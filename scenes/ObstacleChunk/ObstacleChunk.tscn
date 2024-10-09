@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dxs6ln84vcjvs"]
 
 [ext_resource type="Script" path="res://scenes/ObstacleChunk/ObstacleChunk.gd" id="1_x1dsc"]
-[ext_resource type="PackedScene" uid="uid://cpx0x2gu43o4s" path="res://scenes/Obstacle_SmoothBoulder/Enemy_Mouth.tscn" id="2_f0mgs"]
+[ext_resource type="PackedScene" uid="uid://cpx0x2gu43o4s" path="res://scenes/Enemy_Mouth/Enemy_Mouth.tscn" id="2_f0mgs"]
 
 [node name="ObstacleChunk" type="Node2D"]
 script = ExtResource("1_x1dsc")

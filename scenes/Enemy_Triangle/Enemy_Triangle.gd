@@ -1,24 +1,27 @@
 extends CharacterBody2D
-class_name Enemy_Mouth
+class_name Enemy_Triangle
 
 
 @export var power_crystal_scene: PackedScene
 
 @onready var health_component = $HealthComponent
 @onready var kill_area_2d = $KillArea2D
-@onready var animated_sprite_2d = $AnimatedSprite2D
+@onready var back_sprite_2d = $BackSprite2D
 
-var MOVE_SPEED := 500.0
-var ROTATION_SPEED := 5.0
+var MOVE_SPEED := 100.0
+var ROTATION_SPEED := 2.0
 
 var did_init := false
 var movement_direction := Vector2.ZERO
+var time_elapsed := 0.0
 
 
 func _ready():
 	health_component.destroyed.connect(_on_health_component_destroyed)
 	health_component.damage_taken.connect(_on_health_component_damage_taken)
 	kill_area_2d.body_entered.connect(_on_kill_area_2d_body_entered)
+	
+	movement_direction = get_restricted_movement_vector((-position).normalized())
 
 
 func _process(delta):
@@ -29,11 +32,16 @@ func _process(delta):
 	)
 	_process_collision(collision)
 	
-	animated_sprite_2d.speed_scale = time_coefficient
-	
 	# Game end
 	if GameManager.time_since_start >= 300:
 		expire()
+	
+	time_elapsed += GameManager.calculate_time_coefficient(position)
+	
+	var color_value = 1.0 - fmod(time_elapsed, 300.0) / 300.0
+	back_sprite_2d.self_modulate.r = color_value
+	back_sprite_2d.self_modulate.g = color_value
+	back_sprite_2d.self_modulate.b = color_value
 
 
 func _process_collision(collision: KinematicCollision2D):
@@ -61,7 +69,7 @@ func expire():
 	power_crystal.position = position
 	call_deferred("add_sibling", power_crystal)
 	AudioPlayer.obstacle_destroyed_audio.play()
-	GameManager.update_score(GameManager.score + 30)
+	GameManager.update_score(GameManager.score + 100)
 
 
 func _on_health_component_destroyed():

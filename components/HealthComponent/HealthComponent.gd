@@ -1,7 +1,7 @@
 extends Node
 
 
-var current_health := 100
+@export var current_health := 100
 
 signal destroyed
 signal damage_taken

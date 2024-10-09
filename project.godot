@@ -92,7 +92,7 @@ Grapple={
 
 2d_physics/layer_1="static"
 2d_physics/layer_2="player"
-2d_physics/layer_3="obstacle"
+2d_physics/layer_3="enemy"
 2d_physics/layer_4="hookshot"
 2d_physics/layer_5="hookgrapple"
 2d_physics/layer_6="bullet"
