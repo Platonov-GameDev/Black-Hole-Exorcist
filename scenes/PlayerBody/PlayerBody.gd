@@ -253,7 +253,7 @@ func spawn_sniper_ray(shot_direction: Vector2, deviation := 0.0):
 
 func _on_game_manager_power_changed(new_power):
 	if new_power >= 10 and current_power_level < 1:
-		shoot_rapid_cooldown_timer.wait_time = 0.1
+		shoot_rapid_cooldown_timer.wait_time = 0.05
 		current_power_level = 1
 		AudioPlayer.power_up_audio.play()
 	if new_power >= 30 and current_power_level < 2:
