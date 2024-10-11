@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" path="res://scenes/SphericalSpaceView/SphericalSpaceView.gd" id="1_hp3th"]
 [ext_resource type="PackedScene" uid="uid://haquppmebf34" path="res://scenes/SphericalMap/SphericalMap.tscn" id="2_lysbx"]
-[ext_resource type="Shader" path="res://scenes/SphericalSpaceView/SphericalScreen.gdshader" id="2_xittg"]
+[ext_resource type="Shader" path="res://shaders/SphericalScreen.gdshader" id="2_xittg"]
 [ext_resource type="FontFile" uid="uid://cgjafqou3v4d6" path="res://assets/Robotronika/RobtronikaItalic-xRnXV.ttf" id="4_v021y"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j11bb"]
 resource_local_to_scene = true
 shader = ExtResource("2_xittg")
 shader_parameter/edge_distance = 0.1
-shader_parameter/space_distortion = 2.0
+shader_parameter/space_distortion = 1.0
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_skmg2"]
 
