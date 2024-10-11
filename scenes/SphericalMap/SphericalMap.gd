@@ -10,6 +10,7 @@ extends Node2D
 @onready var camera_2d = $Camera2D
 @onready var black_hole_shader_sprite_2d = $BlackHoleShaderSprite2D
 @onready var spawn_waves = $SpawnWaves
+@onready var spawn_timer_circle_sprite_2d = $SpawnTimerCircleSprite2D
 
 var SPAWN_DISTANCE_FROM_CENTER = 3300
 
@@ -43,6 +44,9 @@ func _process(delta):
 	# Spawn enemies
 	if GameManager.is_round_active:
 		spawn_time_counter += delta * GameManager.calculate_time_coefficient(Vector2(0, 0))
+		
+		var spawn_timer_circle_scale = (1 - spawn_time_counter) * 7
+		spawn_timer_circle_sprite_2d.scale = Vector2(spawn_timer_circle_scale, spawn_timer_circle_scale)
 		
 		if spawn_time_counter >= 1:
 			if not experimental_random_spawns:

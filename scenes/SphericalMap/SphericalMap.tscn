@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://haquppmebf34"]
+[gd_scene load_steps=22 format=3 uid="uid://haquppmebf34"]
 
 [ext_resource type="PackedScene" uid="uid://de4xi8lb2qi2q" path="res://scenes/PlayerBody/PlayerBody.tscn" id="1_d02vr"]
 [ext_resource type="Script" path="res://scenes/SphericalMap/SphericalMap.gd" id="1_ydmn2"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bceo1kipedqxu" path="res://scenes/Enemy_Satellite/Enemy_Satellite.tscn" id="4_k8w5d"]
 [ext_resource type="Shader" path="res://shaders/BlackHole.gdshader" id="4_pa76h"]
 [ext_resource type="PackedScene" uid="uid://ka6s3p8lmpik" path="res://scenes/SpawnWave/SpawnWave.tscn" id="6_o6myd"]
+[ext_resource type="Texture2D" uid="uid://c3lp62u2q2xli" path="res://assets/spawn_timer_circle_1.png" id="9_u7mbr"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_33m84"]
 frequency = 0.2877
@@ -510,3 +511,7 @@ triangle_count = 3
 [node name="SpawnWave3" parent="SpawnWaves" instance=ExtResource("6_o6myd")]
 mouth_count = 5
 triangle_count = 1
+
+[node name="SpawnTimerCircleSprite2D" type="Sprite2D" parent="."]
+scale = Vector2(7, 7)
+texture = ExtResource("9_u7mbr")
