@@ -3,6 +3,7 @@ extends Node2D
 
 @export var mouth_scene: PackedScene
 @export var triangle_scene: PackedScene
+@export var experimental_random_spawns := false
 
 @onready var player_body = $PlayerBody
 @onready var camera_2d = $Camera2D
@@ -14,6 +15,7 @@ var SPAWN_DISTANCE_FROM_CENTER = 3300
 var spawn_time_counter := 0.0
 var black_hole_shader_time := 0.0
 var spawn_wave_count := 0
+var experimental_enemy_spawn_counter := 1
 
 
 func _ready():
@@ -42,8 +44,11 @@ func _process(delta):
 		spawn_time_counter += delta * GameManager.calculate_time_coefficient(Vector2(0, 0))
 		
 		if spawn_time_counter >= 1:
-			spawn_wave_count = clampi(spawn_wave_count, 0, spawn_waves.get_child_count() - 1)
-			spawn_enemies(spawn_waves.get_child(spawn_wave_count))
+			if not experimental_random_spawns:
+				spawn_wave_count = clampi(spawn_wave_count, 0, spawn_waves.get_child_count() - 1)
+				spawn_enemies(spawn_waves.get_child(spawn_wave_count))
+			elif experimental_random_spawns:
+				spawn_random_enemies()
 			spawn_time_counter = 0
 			spawn_wave_count += 1
 	
@@ -80,3 +85,34 @@ func spawn_enemies(spawn_wave: SpawnWave):
 		var enemy = enemy_scene.instantiate()
 		enemy.position = spawn_position
 		add_child(enemy)
+
+
+func spawn_random_enemies():
+	var enemies_left_to_spawn = experimental_enemy_spawn_counter
+	
+	var spawn_angle_offset = 2 * PI / (experimental_enemy_spawn_counter + 1)
+	var center_to_player_vector = (player_body.position - black_hole_shader_sprite_2d.position).normalized()
+	if center_to_player_vector.length() == 0:
+		center_to_player_vector = Vector2.UP.rotated(randf_range(0, 2 * PI))
+	
+	var triangle = triangle_scene.instantiate()
+	triangle.position = (
+		center_to_player_vector.rotated(spawn_angle_offset)
+		* SPAWN_DISTANCE_FROM_CENTER
+	)
+	add_child(triangle)
+	
+	for i in range(experimental_enemy_spawn_counter):
+		var spawn_position = (
+			center_to_player_vector.rotated((i + 2) * spawn_angle_offset)
+			* SPAWN_DISTANCE_FROM_CENTER
+		)
+		
+		var enemy_scenes: Array[PackedScene] = [mouth_scene]
+		var enemy_scene = enemy_scenes.pick_random()
+		
+		var enemy = enemy_scene.instantiate()
+		enemy.position = spawn_position
+		add_child(enemy)
+	
+	experimental_enemy_spawn_counter += 1

@@ -61,6 +61,7 @@ height = 10000
 script = ExtResource("1_ydmn2")
 mouth_scene = ExtResource("2_sw6j4")
 triangle_scene = ExtResource("2_dc7k2")
+experimental_random_spawns = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
