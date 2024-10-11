@@ -5,7 +5,6 @@ class_name Enemy_Triangle
 @export var power_crystal_scene: PackedScene
 
 @onready var health_component = $HealthComponent
-@onready var kill_area_2d = $KillArea2D
 @onready var back_sprite_2d = $BackSprite2D
 
 var MOVE_SPEED := 100.0
@@ -18,8 +17,6 @@ var time_elapsed := 0.0
 
 func _ready():
 	health_component.destroyed.connect(_on_health_component_destroyed)
-	health_component.damage_taken.connect(_on_health_component_damage_taken)
-	kill_area_2d.body_entered.connect(_on_kill_area_2d_body_entered)
 	
 	movement_direction = get_restricted_movement_vector((-position).normalized())
 
@@ -68,16 +65,11 @@ func expire():
 	var power_crystal = power_crystal_scene.instantiate()
 	power_crystal.position = position
 	call_deferred("add_sibling", power_crystal)
-	AudioPlayer.obstacle_destroyed_audio.play()
 	GameManager.update_score(GameManager.score + 100)
 
 
 func _on_health_component_destroyed():
 	expire()
-
-
-func _on_health_component_damage_taken():
-	AudioPlayer.obstacle_hit_audio.play()
 
 
 func get_restricted_movement_vector(movement_vector: Vector2):
@@ -92,9 +84,3 @@ func _on_collision_area_2d_body_entered(body):
 		var bounce_direction = movement_direction.bounce(collision_normal)
 		
 		movement_direction = get_restricted_movement_vector(bounce_direction)
-
-
-func _on_kill_area_2d_body_entered(body):
-	if not is_instance_valid(body): return
-	var player = body as PlayerBody
-	player.die()

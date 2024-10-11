@@ -61,4 +61,4 @@ volume_db = -6.0
 
 [node name="ThrusterActiveLoopAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_w7mvl")
-volume_db = -6.0
+volume_db = -14.0

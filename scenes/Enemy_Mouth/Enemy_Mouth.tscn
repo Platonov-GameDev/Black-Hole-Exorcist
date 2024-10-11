@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://cpx0x2gu43o4s"]
+[gd_scene load_steps=12 format=3 uid="uid://cpx0x2gu43o4s"]
 
 [ext_resource type="Script" path="res://scenes/Enemy_Mouth/Enemy_Mouth.gd" id="1_yfkxd"]
 [ext_resource type="Texture2D" uid="uid://kx1u66xarsb1" path="res://assets/mouth_sheet.png" id="3_p0pwm"]
+[ext_resource type="PackedScene" uid="uid://dhrdobvuowq7i" path="res://components/KillArea/KillArea.tscn" id="4_a74ib"]
 [ext_resource type="PackedScene" uid="uid://bv66o437md56p" path="res://components/HealthComponent/HealthComponent.tscn" id="4_uecx6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dcqts"]
@@ -51,7 +52,6 @@ animations = [{
 }]
 
 [node name="Enemy_Mouth" type="CharacterBody2D" groups=["obstacle"]]
-scale = Vector2(1.5, 1.5)
 collision_layer = 4
 collision_mask = 5
 script = ExtResource("1_yfkxd")
@@ -67,10 +67,9 @@ frame_progress = 0.349301
 
 [node name="HealthComponent" parent="." instance=ExtResource("4_uecx6")]
 current_health = 30
+score_reward = 30
 
-[node name="KillArea2D" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 2
+[node name="KillArea" parent="." instance=ExtResource("4_a74ib")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KillArea2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillArea"]
 shape = SubResource("CircleShape2D_dcqts")

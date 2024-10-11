@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://bceo1kipedqxu"]
+
+[ext_resource type="Script" path="res://scenes/Enemy_Satellite/Enemy_Satellite.gd" id="1_17fqk"]
+[ext_resource type="PackedScene" uid="uid://dhrdobvuowq7i" path="res://components/KillArea/KillArea.tscn" id="2_3dsn1"]
+[ext_resource type="PackedScene" uid="uid://bv66o437md56p" path="res://components/HealthComponent/HealthComponent.tscn" id="3_njk6k"]
+
+[sub_resource type="Gradient" id="Gradient_fhdge"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 1, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_i3608"]
+gradient = SubResource("Gradient_fhdge")
+width = 256
+height = 128
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kedco"]
+size = Vector2(256, 128)
+
+[node name="EnemySatellite" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_17fqk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_i3608")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_kedco")
+
+[node name="KillArea" parent="." instance=ExtResource("2_3dsn1")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillArea"]
+shape = SubResource("RectangleShape2D_kedco")
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_njk6k")]
+current_health = 70
+score_reward = 70

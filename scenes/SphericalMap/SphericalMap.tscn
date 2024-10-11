@@ -1,10 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://haquppmebf34"]
+[gd_scene load_steps=21 format=3 uid="uid://haquppmebf34"]
 
 [ext_resource type="PackedScene" uid="uid://de4xi8lb2qi2q" path="res://scenes/PlayerBody/PlayerBody.tscn" id="1_d02vr"]
 [ext_resource type="Script" path="res://scenes/SphericalMap/SphericalMap.gd" id="1_ydmn2"]
 [ext_resource type="PackedScene" uid="uid://dbq4iajst328c" path="res://scenes/Enemy_Triangle/Enemy_Triangle.tscn" id="2_dc7k2"]
 [ext_resource type="PackedScene" uid="uid://cpx0x2gu43o4s" path="res://scenes/Enemy_Mouth/Enemy_Mouth.tscn" id="2_sw6j4"]
 [ext_resource type="Shader" path="res://shaders/Stars.gdshader" id="4_iyrbe"]
+[ext_resource type="PackedScene" uid="uid://bceo1kipedqxu" path="res://scenes/Enemy_Satellite/Enemy_Satellite.tscn" id="4_k8w5d"]
 [ext_resource type="Shader" path="res://shaders/BlackHole.gdshader" id="4_pa76h"]
 [ext_resource type="PackedScene" uid="uid://ka6s3p8lmpik" path="res://scenes/SpawnWave/SpawnWave.tscn" id="6_o6myd"]
 
@@ -61,6 +62,7 @@ height = 10000
 script = ExtResource("1_ydmn2")
 mouth_scene = ExtResource("2_sw6j4")
 triangle_scene = ExtResource("2_dc7k2")
+satellite_scene = ExtResource("4_k8w5d")
 experimental_random_spawns = true
 
 [node name="Camera2D" type="Camera2D" parent="."]

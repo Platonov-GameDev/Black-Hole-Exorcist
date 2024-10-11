@@ -3,6 +3,7 @@ extends Node2D
 
 @export var mouth_scene: PackedScene
 @export var triangle_scene: PackedScene
+@export var satellite_scene: PackedScene
 @export var experimental_random_spawns := false
 
 @onready var player_body = $PlayerBody
@@ -108,7 +109,7 @@ func spawn_random_enemies():
 			* SPAWN_DISTANCE_FROM_CENTER
 		)
 		
-		var enemy_scenes: Array[PackedScene] = [mouth_scene]
+		var enemy_scenes: Array[PackedScene] = [mouth_scene, satellite_scene]
 		var enemy_scene = enemy_scenes.pick_random()
 		
 		var enemy = enemy_scene.instantiate()
