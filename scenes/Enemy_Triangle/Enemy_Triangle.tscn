@@ -15,25 +15,39 @@ script = ExtResource("1_223dn")
 power_crystal_scene = ExtResource("2_te6vy")
 
 [node name="BackSprite2D" type="Sprite2D" parent="."]
+visible = false
 modulate = Color(0, 0.784314, 0.960784, 1)
 position = Vector2(3, -17.6667)
 texture = ExtResource("3_nqkf3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(3, -18)
 texture = ExtResource("1_ev76f")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-visible = false
-polygon = PackedVector2Array(-72, 45, -57, 23, -10, -63, 1, -93, 11, -67, 35, -13, 64, 39, 76, 55, 52, 50, -53, 43)
+[node name="Polygon2D" type="Polygon2D" parent="."]
+scale = Vector2(1, 1)
+polygon = PackedVector2Array(-70, 50, 70, 50, 0, -90)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
+scale = Vector2(1, 1)
+polygon = PackedVector2Array(-70, 50, 70, 50, 0, -90)
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_knxxj")]
 score_reward = 100
 
-[node name="KillArea" parent="." instance=ExtResource("6_5l0wc")]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 scale = Vector2(1, 1)
+polygon = PackedVector2Array(-72, 45, -57, 23, -10, -63, 1, -93, 11, -67, 35, -13, 64, 39, 76, 55, 52, 50, -53, 43)
+disabled = true
+
+[node name="KillArea" parent="." instance=ExtResource("6_5l0wc")]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="KillArea"]
 visible = false
-scale = Vector2(1, 1)
 polygon = PackedVector2Array(-72, 45, -57, 23, -10, -63, 1, -93, 11, -67, 35, -13, 64, 39, 76, 55, 52, 50, -53, 43)
+disabled = true
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="KillArea"]
+scale = Vector2(1, 1)
+polygon = PackedVector2Array(-70, 50, 70, 50, 0, -90)

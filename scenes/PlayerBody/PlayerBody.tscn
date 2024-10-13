@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://de4xi8lb2qi2q"]
+[gd_scene load_steps=29 format=3 uid="uid://de4xi8lb2qi2q"]
 
 [ext_resource type="Script" path="res://scenes/PlayerBody/PlayerBody.gd" id="1_8dce7"]
 [ext_resource type="Texture2D" uid="uid://fe3k568v6hjc" path="res://assets/player/player_body.png" id="1_ewm2e"]
@@ -10,8 +10,16 @@
 [ext_resource type="Texture2D" uid="uid://ccuf011rimth" path="res://assets/player/player_pupil.png" id="6_nj7fg"]
 [ext_resource type="PackedScene" uid="uid://mnmolx7ch3l7" path="res://scenes/ThrusterGPUParticles2D/ThrusterGPUParticles2D.tscn" id="9_0csqw"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_2u03b"]
-radius = 65.71
+[sub_resource type="Gradient" id="Gradient_hk5ty"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_t5fn7"]
+gradient = SubResource("Gradient_hk5ty")
+width = 128
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hnyb3"]
+size = Vector2(128, 180)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sn02o"]
 atlas = ExtResource("4_ncdur")
@@ -173,15 +181,21 @@ script = ExtResource("1_8dce7")
 bullet_scene = ExtResource("4_3cbhl")
 sniper_ray_scene = ExtResource("3_72i57")
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1, 180)
+texture = SubResource("GradientTexture1D_t5fn7")
+
 [node name="PlayerCollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_2u03b")
+shape = SubResource("RectangleShape2D_hnyb3")
 
 [node name="PlayerSprite2D" type="Sprite2D" parent="."]
+visible = false
 z_index = 1
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_ewm2e")
 
 [node name="Eyehole" type="Node2D" parent="."]
+visible = false
 z_index = 1
 scale = Vector2(0.3, 0.3)
 
@@ -206,6 +220,7 @@ wait_time = 2.0
 autostart = true
 
 [node name="ThrusterEmitters" type="Node2D" parent="."]
+visible = false
 scale = Vector2(3, 3)
 
 [node name="RightThrusterGPUParticles2D" parent="ThrusterEmitters" instance=ExtResource("9_0csqw")]

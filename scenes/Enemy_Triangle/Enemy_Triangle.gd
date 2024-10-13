@@ -8,7 +8,7 @@ class_name Enemy_Triangle
 @onready var back_sprite_2d = $BackSprite2D
 
 var MOVE_SPEED := 100.0
-var ROTATION_SPEED := 2.0
+var ROTATION_SPEED := 0.5
 
 var did_init := false
 var movement_direction := Vector2.ZERO

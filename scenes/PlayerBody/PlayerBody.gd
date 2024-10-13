@@ -22,6 +22,7 @@ class_name PlayerBody
 var MOVE_SPEED := 1200
 var PUPIL_OFFSET := 26.0
 var DEFAULT_SHOOT_COOLDOWN := 0.15
+var MUZZLE_DISTANCE := 300
 
 var is_dead := false
 var thruster_emitters_array: Array[GPUParticles2D] = []
@@ -185,8 +186,8 @@ func _on_shoot_rapid_cooldown_timer_timeout():
 
 func shoot_rapid():
 	var bullet = bullet_scene.instantiate() as CharacterBody2D
-	bullet.position = position
-	bullet.look_at(position + shooting_input)
+	bullet.position = position + shooting_input * MUZZLE_DISTANCE
+	bullet.look_at(bullet.position + shooting_input)
 	var max_deviation = current_power_level * PI / 32.0
 	bullet.rotation += randf_range(-max_deviation, max_deviation)
 	add_sibling(bullet)
@@ -247,7 +248,7 @@ func spawn_sniper_ray(shot_direction: Vector2, deviation := 0.0):
 	var sniper_ray = sniper_ray_scene.instantiate() as Node2D
 	sniper_ray.look_at(shot_direction)
 	sniper_ray.rotation += deviation * PI / 256.0
-	sniper_ray.position = position
+	sniper_ray.position = position + shot_direction * MUZZLE_DISTANCE
 	add_sibling(sniper_ray)
 
 
