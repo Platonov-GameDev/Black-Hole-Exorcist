@@ -1,4 +1,17 @@
-[gd_resource type="AudioBusLayout" format=3 uid="uid://dc2estduf05dm"]
+[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://dc2estduf05dm"]
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_1evn7"]
+resource_name = "LowPassFilter"
+resonance = 0.99
+db = 3
 
 [resource]
 bus/0/volume_db = -8.00903
+bus/1/name = &"Background"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = 0.0
+bus/1/send = &"Master"
+bus/1/effect/0/effect = SubResource("AudioEffectLowPassFilter_1evn7")
+bus/1/effect/0/enabled = true

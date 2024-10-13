@@ -14,3 +14,4 @@ extends Node2D
 @onready var shot_4_audio = $Shot4Audio
 @onready var thruster_active_loop_audio = $ThrusterActiveLoopAudio
 @onready var sniper_shot_audio = $SniperShotAudio
+@onready var background_audio = $BackgroundAudio
