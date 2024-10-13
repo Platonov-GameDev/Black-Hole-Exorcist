@@ -1,13 +1,12 @@
-[gd_scene load_steps=13 format=3 uid="uid://cpx0x2gu43o4s"]
+[gd_scene load_steps=12 format=3 uid="uid://cpx0x2gu43o4s"]
 
 [ext_resource type="Script" path="res://scenes/Enemy_Mouth/Enemy_Mouth.gd" id="1_yfkxd"]
 [ext_resource type="Texture2D" uid="uid://kx1u66xarsb1" path="res://assets/mouth_sheet.png" id="3_p0pwm"]
 [ext_resource type="PackedScene" uid="uid://dhrdobvuowq7i" path="res://components/KillArea/KillArea.tscn" id="4_a74ib"]
 [ext_resource type="PackedScene" uid="uid://bv66o437md56p" path="res://components/HealthComponent/HealthComponent.tscn" id="4_uecx6"]
-[ext_resource type="Texture2D" uid="uid://dubm1rv88jkwv" path="res://assets/circle_placeholder.png" id="5_tddbh"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_dcqts"]
-radius = 69.04
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8nlxc"]
+size = Vector2(200, 120)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kycmn"]
 atlas = ExtResource("3_p0pwm")
@@ -58,7 +57,7 @@ collision_mask = 5
 script = ExtResource("1_yfkxd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_dcqts")
+shape = SubResource("RectangleShape2D_8nlxc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 visible = false
@@ -74,9 +73,14 @@ score_reward = 30
 [node name="KillArea" parent="." instance=ExtResource("4_a74ib")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KillArea"]
-shape = SubResource("CircleShape2D_dcqts")
+shape = SubResource("RectangleShape2D_8nlxc")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Polygon2D" type="Polygon2D" parent="."]
 modulate = Color(1, 1, 0, 1)
-scale = Vector2(0.127, 0.127)
-texture = ExtResource("5_tddbh")
+polygon = PackedVector2Array(100, 60, -100, 60, -100, -60, 100, -60)
+
+[node name="Polygon2D2" type="Polygon2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(67, 0.999999)
+scale = Vector2(0.205833, 0.791667)
+polygon = PackedVector2Array(100, 60, -100, 60, -100, 0.815552, -100, -60, 100, -60)

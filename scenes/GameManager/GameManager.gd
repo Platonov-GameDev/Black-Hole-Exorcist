@@ -29,7 +29,6 @@ func _process(delta):
 	
 	background_low_pass_effect.cutoff_hz = clampf(
 		1500 - pow(player_distance_from_black_hole / 3000, 0.5) * 1500 + 500, 500, 2000)
-	print(background_low_pass_effect.cutoff_hz)
 
 
 func update_score(new_score):
