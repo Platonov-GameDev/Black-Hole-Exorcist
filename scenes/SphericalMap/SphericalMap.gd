@@ -56,10 +56,6 @@ func _process(delta):
 				spawn_random_enemies()
 			spawn_time_counter = 0
 			spawn_wave_count += 1
-	
-	# Set camera zoom
-	var cam_zoom = clampf(1.38 - 0.68 * (GameManager.time_since_start / 300.0), 0.7, 1.38)
-	camera_2d.zoom = Vector2(cam_zoom, cam_zoom)
 
 
 func spawn_enemies(spawn_wave: SpawnWave):

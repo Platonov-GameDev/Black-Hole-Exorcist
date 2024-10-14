@@ -47,12 +47,7 @@ func _process(_delta):
 	
 	# Set space warp edge
 	screen_shader.material.set_shader_parameter(
-		"edge_distance", GameManager.player_distance_from_black_hole / 10000.0
-	)
-	
-	# Set space distortion
-	screen_shader.material.set_shader_parameter(
-		"space_distortion", clampf((1.0 + GameManager.time_since_start / 300.0), 1.0, 2.0)
+		"edge_distance", clampf(GameManager.player_distance_from_black_hole / 6000.0, 0.01, 1.0)
 	)
 	
 	countdown_label.text = "%.2f" % [clampf(300.0 - GameManager.time_since_start, 0, 300)]

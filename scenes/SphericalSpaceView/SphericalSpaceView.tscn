@@ -9,7 +9,6 @@
 resource_local_to_scene = true
 shader = ExtResource("2_xittg")
 shader_parameter/edge_distance = 0.1
-shader_parameter/space_distortion = 1.0
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_skmg2"]
 

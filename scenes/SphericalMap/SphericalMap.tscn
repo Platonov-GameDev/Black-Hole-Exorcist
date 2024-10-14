@@ -67,6 +67,7 @@ satellite_scene = ExtResource("4_k8w5d")
 experimental_random_spawns = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.38, 1.38)
 
 [node name="Background" type="Node2D" parent="."]
 
