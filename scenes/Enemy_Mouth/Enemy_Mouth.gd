@@ -5,8 +5,8 @@ class_name Enemy_Mouth
 @onready var health_component = $HealthComponent
 @onready var animated_sprite_2d = $AnimatedSprite2D
 
-var MOVE_SPEED := 800.0
-var ROTATION_SPEED := PI / 2
+var MOVE_SPEED := 600.0
+var ROTATION_SPEED := PI
 
 
 func _process(delta):
