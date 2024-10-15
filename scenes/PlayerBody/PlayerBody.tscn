@@ -16,10 +16,10 @@ colors = PackedColorArray(1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_t5fn7"]
 gradient = SubResource("Gradient_hk5ty")
-width = 120
+width = 12
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hnyb3"]
-size = Vector2(120, 200)
+size = Vector2(12, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sn02o"]
 atlas = ExtResource("4_ncdur")
@@ -182,7 +182,7 @@ bullet_scene = ExtResource("4_3cbhl")
 sniper_ray_scene = ExtResource("3_72i57")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(1, 200)
+scale = Vector2(1, 20)
 texture = SubResource("GradientTexture1D_t5fn7")
 
 [node name="PlayerCollisionShape2D" type="CollisionShape2D" parent="."]
@@ -249,5 +249,3 @@ one_shot = true
 [node name="ShootSniperCooldownTimer" type="Timer" parent="."]
 wait_time = 0.6
 one_shot = true
-
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

@@ -3,8 +3,8 @@ extends CharacterBody2D
 
 @onready var health_component = $HealthComponent
 
-var ORBIT_SPEED := 1000
-var ALTITUDE_CHANGE_SPEED := 200
+var ORBIT_SPEED := 100
+var ALTITUDE_CHANGE_SPEED := 20
 
 var is_orbiting_clockwise := true
 
@@ -27,7 +27,9 @@ func _process(delta):
 	if not is_orbiting_clockwise:
 		orbit_velocity *= -1
 	
-	velocity = (altitude_change_velocity + orbit_velocity) * time_coefficient * delta
+	velocity = (
+		(altitude_change_velocity + orbit_velocity) * time_coefficient
+	).limit_length(GameManager.MAX_SPEED) * delta
 	var collision = move_and_collide(velocity)
 	
 	if collision:

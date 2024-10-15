@@ -22,7 +22,7 @@ AudioPlayer="*res://scenes/AudioPlayer/AudioPlayer.tscn"
 
 [display]
 
-window/size/viewport_width=1920
+window/size/viewport_width=1080
 window/size/viewport_height=1080
 window/size/mode=3
 
@@ -97,6 +97,7 @@ Grapple={
 2d_physics/layer_5="hookgrapple"
 2d_physics/layer_6="bullet"
 2d_physics/layer_7="power_crystal"
+2d_physics/layer_8="enemy_triangle"
 
 [physics]
 

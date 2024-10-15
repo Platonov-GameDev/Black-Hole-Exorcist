@@ -7,7 +7,7 @@ class_name Enemy_Triangle
 @onready var health_component = $HealthComponent
 @onready var back_sprite_2d = $BackSprite2D
 
-var MOVE_SPEED := 100.0
+var MOVE_SPEED := 10.0
 var ROTATION_SPEED := 0.5
 
 var did_init := false
@@ -24,9 +24,9 @@ func _ready():
 func _process(delta):
 	var time_coefficient = GameManager.calculate_time_coefficient(position)
 	rotate(ROTATION_SPEED * delta * time_coefficient)
-	var collision = move_and_collide(
-		movement_direction * clampf(MOVE_SPEED * delta * time_coefficient, 0, 2000)
-	)
+	var collision = move_and_collide((
+		movement_direction * MOVE_SPEED * time_coefficient
+	).limit_length(GameManager.MAX_SPEED) * delta)
 	_process_collision(collision)
 	
 	# Game end

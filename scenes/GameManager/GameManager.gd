@@ -12,6 +12,8 @@ var black_hole_position := Vector2.ZERO
 var time_since_start := 0.0
 var background_low_pass_effect: AudioEffectLowPassFilter
 
+var MAX_SPEED = 600
+
 signal score_changed(new_max_score)
 signal power_changed(new_power)
 
@@ -28,7 +30,7 @@ func _process(delta):
 		time_since_start += delta
 	
 	background_low_pass_effect.cutoff_hz = clampf(
-		1500 - pow(player_distance_from_black_hole / 3000, 0.5) * 1500 + 500, 500, 2000)
+		1500 - pow(player_distance_from_black_hole / 300, 0.5) * 1500 + 500, 500, 2000)
 
 
 func update_score(new_score):
@@ -50,5 +52,5 @@ func add_power(amount):
 
 func calculate_time_coefficient(object_position):
 	var object_distance_from_blackhole = (black_hole_position - object_position).length()
-	var raw_coefficient = (5000 + object_distance_from_blackhole - player_distance_from_black_hole) / 5000
+	var raw_coefficient = (500 + object_distance_from_blackhole - player_distance_from_black_hole) / 500
 	return pow(raw_coefficient, 8)

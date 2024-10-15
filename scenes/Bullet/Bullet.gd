@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 @onready var visible_on_screen_notifier_2d = $VisibleOnScreenNotifier2D
 
-var MOVE_SPEED = 6000.0
+var MOVE_SPEED = 600.0
 var damage = 35
 
 

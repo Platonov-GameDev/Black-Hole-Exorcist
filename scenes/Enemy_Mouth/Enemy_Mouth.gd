@@ -5,7 +5,7 @@ class_name Enemy_Mouth
 @onready var health_component = $HealthComponent
 @onready var animated_sprite_2d = $AnimatedSprite2D
 
-var MOVE_SPEED := 600.0
+var MOVE_SPEED := 60.0
 var ROTATION_SPEED := PI
 
 
@@ -16,10 +16,10 @@ func _process(delta):
 	var vector_to_player = GameManager.player_body.position - position
 	var angle_to_player = transform.x.angle_to(vector_to_player)
 	var rotation_angle = clampf(
-		angle_to_player * ROTATION_SPEED * delta * time_coefficient, -2 * PI, 2 * PI)
+		angle_to_player * ROTATION_SPEED * time_coefficient, -2 * PI, 2 * PI) * delta
 	rotate(rotation_angle)
 	move_and_collide(
-		transform.x * clampf(MOVE_SPEED * delta * time_coefficient, 0, 2000)
+		(transform.x * MOVE_SPEED * time_coefficient).limit_length(GameManager.MAX_SPEED) * delta
 	)
 	
 	animated_sprite_2d.speed_scale = time_coefficient

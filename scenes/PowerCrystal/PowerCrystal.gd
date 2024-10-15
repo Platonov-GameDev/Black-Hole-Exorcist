@@ -4,11 +4,11 @@ extends CharacterBody2D
 @onready var polygon_2d = $Polygon2D
 @onready var collection_area_2d = $CollectionArea2D
 
-var ACCELERATION = 2000
-var DRIFT_SPEED = 20
-var DRIFT_END_DISTANCE = 500
+var ACCELERATION = 200
+var DRIFT_SPEED = 2
+var DRIFT_END_DISTANCE = 50
 
-var previous_speed := 300.0
+var previous_speed := 30.0
 var speed: float
 var time_elapsed := 0.0
 var did_player_come_by := false

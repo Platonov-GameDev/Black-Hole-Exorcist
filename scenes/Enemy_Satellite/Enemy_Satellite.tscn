@@ -10,11 +10,11 @@ colors = PackedColorArray(0, 1, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_i3608"]
 gradient = SubResource("Gradient_fhdge")
-width = 256
-height = 128
+width = 25
+height = 12
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kedco"]
-size = Vector2(256, 128)
+size = Vector2(25, 12)
 
 [node name="EnemySatellite" type="CharacterBody2D"]
 collision_layer = 4

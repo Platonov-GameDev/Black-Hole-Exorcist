@@ -30,11 +30,11 @@ shader_parameter/noise = SubResource("NoiseTexture2D_mwmor")
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_bdvvy"]
 gradient = SubResource("Gradient_sybmy")
-width = 10000
-height = 10000
+width = 1080
+height = 1080
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vg1m3"]
-size = Vector2(10000, 10000)
+size = Vector2(1080, 1080)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_nvlm6"]
 frequency = 0.0075
@@ -54,8 +54,8 @@ colors = PackedColorArray(1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_acq1b"]
 gradient = SubResource("Gradient_vu2x8")
-width = 10000
-height = 10000
+width = 1080
+height = 1080
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_86fyi"]
 
@@ -67,7 +67,6 @@ satellite_scene = ExtResource("4_k8w5d")
 experimental_random_spawns = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.38, 1.38)
 
 [node name="Background" type="Node2D" parent="."]
 
@@ -89,415 +88,483 @@ texture = SubResource("GradientTexture2D_acq1b")
 camera = NodePath("../Camera2D")
 
 [node name="WorldBorders" type="StaticBody2D" parent="." groups=["world"]]
-scale = Vector2(0.727, 0.727)
+scale = Vector2(0.108, 0.108)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-4955, -319)
 rotation = 1.64271
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-4899, -813)
 rotation = 1.74708
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-4791, -1300)
 rotation = 1.83911
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-4670, -1706)
 rotation = 1.953
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-4495, -2112)
 rotation = 2.01256
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D6" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-4282, -2525)
 rotation = 2.10189
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D7" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-4035, -2895)
 rotation = 2.19596
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D8" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-3709, -3306)
 rotation = 2.30327
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D9" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-3381, -3645)
 rotation = 2.37957
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D10" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-3022, -3946)
 rotation = 2.49502
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D11" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-2616, -4222)
 rotation = 2.57286
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D12" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-2203, -4455)
 rotation = 2.69148
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D13" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-1747, -4646)
 rotation = 2.76963
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D14" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-1282, -4799)
 rotation = 2.87921
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D15" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-799, -4898)
 rotation = 2.96643
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D16" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-361, -4952)
 rotation = 3.06826
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D17" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(81, -4965)
 rotation = 3.14459
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D18" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(532, -4938)
 rotation = 3.24462
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D19" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(1001, -4864)
 rotation = 3.3528
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D20" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(1495, -4737)
 rotation = 3.44473
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D21" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(1904, -4589)
 rotation = 3.52602
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D22" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(2266, -4426)
 rotation = 3.61953
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D23" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(2529, -4280)
 rotation = 3.67374
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D24" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(2804, -4102)
 rotation = 3.74869
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D25" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(3194, -3807)
 rotation = 3.8547
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D26" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(3552, -3479)
 rotation = 3.93663
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D27" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(3874, -3117)
 rotation = 4.03883
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D28" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(4160, -2714)
 rotation = 4.11952
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D29" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(4410, -2294)
 rotation = 4.24103
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D30" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(4599, -1885)
 rotation = 4.32847
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D31" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(4766, -1393)
 rotation = 4.42781
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D32" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(4874, -933)
 rotation = 4.51572
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D33" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(4944, -427)
 rotation = 4.62598
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D34" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(4963, 71)
 rotation = 4.72457
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D35" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(4938, 533)
 rotation = 4.82588
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D36" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(4857, 1014)
 rotation = 4.93157
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D37" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(4749, 1463)
 rotation = 5.03411
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D38" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(4588, 1906)
 rotation = 5.12072
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D39" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(4423, 2262)
 rotation = 5.17648
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D40" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(4281, 2527)
 rotation = 5.25792
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D41" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(4080, 2832)
 rotation = 5.31672
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D42" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(3796, 3207)
 rotation = 5.41455
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D43" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(3485, 3548)
 rotation = 5.50319
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D44" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(3116, 3872)
 rotation = 5.60191
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D45" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(2730, 4147)
 rotation = 5.70346
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D46" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(2308, 4399)
 rotation = 5.80068
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D47" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(1865, 4600)
 rotation = 5.90914
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D48" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(1395, 4767)
 rotation = 5.9976
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D49" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(906, 4879)
 rotation = 6.12141
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D50" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(404, 4945)
 rotation = 6.21207
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D51" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-75, 4964)
 rotation = 6.29085
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D52" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-590, 4928)
 rotation = 6.40524
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D53" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-1026, 4860)
 rotation = 6.50345
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D54" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-1310, 4794)
 rotation = 6.57283
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D55" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-1645, 4692)
 rotation = 6.61441
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D56" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-2098, 4503)
 rotation = 6.73269
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D57" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-2524, 4283)
 rotation = 6.81272
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D58" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-2891, 4039)
 rotation = 6.90784
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D59" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-3311, 3706)
 rotation = 6.99979
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D60" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-3659, 3363)
 rotation = 7.11307
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D61" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-3947, 3022)
 rotation = 7.19434
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D62" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-4244, 2583)
 rotation = 7.31646
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D63" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-4490, 2132)
 rotation = 7.40206
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D64" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-4668, 1696)
 rotation = 7.49615
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D65" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-4806, 1257)
 rotation = 7.58638
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D66" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-4897, 789)
 rotation = 7.68401
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionShape2D67" type="CollisionShape2D" parent="WorldBorders"]
 position = Vector2(-4958, 272)
 rotation = 7.7511
 scale = Vector2(6, 6)
 shape = SubResource("WorldBoundaryShape2D_86fyi")
+one_way_collision = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WorldBorders"]
 visible = false
 scale = Vector2(6, 6)
 polygon = PackedVector2Array(1250, 1250, -1250, 1250, -1250, 0, -830.1, 0, -823.1, 95, -822.3, 95, -810.3, 174, -809.4, 174, -789.5, 253, -788.6, 253, -763.6, 323, -762.7, 323, -730.8, 392, -729.9, 392, -681.9, 472, -681, 472, -633, 536, -632.1, 536, -581.1, 592, -579.2, 592, -520.1, 646, -518.3, 646, -446.3, 699, -444.4, 699, -393.5, 730, -391.5, 730, -307.5, 770, -304.6, 770, -241.6, 793, -237.7, 793, -197.7, 805, -192.8, 805, -145, 816, -138.9, 816, -50.8, 827, -30, 827, 28, 828, 28, 827.1, 111, 821.1, 111, 820.3, 196, 805.3, 196, 804.5, 271, 783.5, 271, 782.6, 350, 751.6, 350, 750.8, 417, 716.8, 417, 715.9, 489, 669.9, 489, 669, 551, 620, 551, 619.2, 609, 563.2, 609, 561.3, 657, 506.3, 657, 504.4, 704, 438.4, 704, 436.4, 724, 404.4, 724, 402.5, 751, 351.5, 751, 348.6, 778, 286.7, 778, 283.7, 802, 209.7, 802, 205.8, 819, 126.6, 819, 119.9, 827, 50.8, 827, 30, 828, -28, 827.1, -28, 821.1, -111, 820.3, -111, 805.3, -196, 804.5, -196, 783.5, -271, 782.6, -271, 751.6, -350, 750.8, -350, 716.8, -417, 715.9, -417, 669.9, -489, 669, -489, 620, -551, 619.2, -551, 563.2, -609, 561.3, -609, 506.3, -657, 504.4, -657, 438.4, -704, 436.4, -704, 404.4, -724, 402.5, -724, 351.5, -751, 348.6, -751, 286.7, -778, 283.7, -778, 209.7, -802, 205.8, -802, 126.6, -819, 119.9, -819, 50.8, -827, 30, -827, -28, -828, -28, -827.1, -95, -823.1, -95, -822.3, -174, -810.3, -174, -809.4, -253, -789.5, -253, -788.6, -330, -760.6, -330, -759.7, -403, -724.7, -403, -723.9, -472, -681.9, -472, -681, -536, -633, -536, -632.1, -592, -581.1, -592, -579.2, -646, -520.1, -646, -518.3, -699, -446.3, -699, -444.4, -730, -393.5, -730, -391.5, -768, -312.5, -768, -309.6, -789, -254.6, -789, -250.7, -810, -176, -810, -170.8, -823, -96.7, -823, -86.9, -830.2, 0, -1250, 0, -1250, -1250, 1250, -1250)
 disabled = true
+one_way_collision = true
 
 [node name="SpawnWaves" type="Node" parent="."]
 
@@ -514,5 +581,4 @@ mouth_count = 5
 triangle_count = 1
 
 [node name="SpawnTimerCircleSprite2D" type="Sprite2D" parent="."]
-scale = Vector2(7, 7)
 texture = ExtResource("9_u7mbr")

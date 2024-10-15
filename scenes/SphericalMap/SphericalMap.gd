@@ -12,7 +12,7 @@ extends Node2D
 @onready var spawn_waves = $SpawnWaves
 @onready var spawn_timer_circle_sprite_2d = $SpawnTimerCircleSprite2D
 
-var SPAWN_DISTANCE_FROM_CENTER = 3300
+var SPAWN_DISTANCE_FROM_CENTER = 1100
 
 var spawn_time_counter := 0.0
 var black_hole_shader_time := 0.0
@@ -33,9 +33,7 @@ func _process(delta):
 	black_hole_shader_sprite_2d.material.set_shader_parameter("time", black_hole_shader_time)
 	
 	if is_instance_valid(player_body):
-		GameManager.player_distance_from_black_hole = (
-			(player_body.position - black_hole_shader_sprite_2d.position).length()
-		)
+		GameManager.player_distance_from_black_hole = player_body.position.length()
 	else:
 		if Input.is_action_just_pressed("Reload"):
 			GameManager.reset()
@@ -45,7 +43,7 @@ func _process(delta):
 	if GameManager.is_round_active:
 		spawn_time_counter += delta * GameManager.calculate_time_coefficient(Vector2(0, 0))
 		
-		var spawn_timer_circle_scale = (1 - spawn_time_counter) * 7
+		var spawn_timer_circle_scale = (1 - spawn_time_counter) * 0.76
 		spawn_timer_circle_sprite_2d.scale = Vector2(spawn_timer_circle_scale, spawn_timer_circle_scale)
 		
 		if spawn_time_counter >= 1:

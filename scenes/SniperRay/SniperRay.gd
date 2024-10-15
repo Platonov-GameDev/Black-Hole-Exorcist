@@ -6,7 +6,7 @@ extends Node2D
 @onready var lifetime_timer = $LifetimeTimer
 
 var damage = 35
-var line_width = 10
+var LINE_WIDTH = 2
 
 
 func _ready():
@@ -25,7 +25,7 @@ func _ready():
 
 
 func _process(_delta):
-	line_2d.width = lifetime_timer.time_left / lifetime_timer.wait_time * line_width
+	line_2d.width = lifetime_timer.time_left / lifetime_timer.wait_time * LINE_WIDTH
 
 
 func _on_lifetime_timer_timeout():

@@ -14,16 +14,18 @@ script = ExtResource("1_lc7sa")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 rotation = 1.5708
+scale = Vector2(0.3, 0.3)
 polygon = PackedVector2Array(-8, 10, 8, 10, 0, -10)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 rotation = 1.5708
-scale = Vector2(3, 3)
-polygon = PackedVector2Array(-4, 10, 4, 10, 0, -10)
+scale = Vector2(0.3, 0.3)
+polygon = PackedVector2Array(-8, 10, 8, 10, 0, -10)
 
 [node name="TrailLine2D" type="Line2D" parent="."]
-position = Vector2(-18, 0)
-points = PackedVector2Array(-10, 0, -250, 0)
+position = Vector2(-2.93, 0)
+points = PackedVector2Array(0, 0, -25, 0)
+width = 2.0
 width_curve = SubResource("Curve_r4hlp")

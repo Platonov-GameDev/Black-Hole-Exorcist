@@ -6,10 +6,11 @@
 script = ExtResource("1_y4bdn")
 
 [node name="Line2D" type="Line2D" parent="."]
-points = PackedVector2Array(0, 0, 10000, 0)
+points = PackedVector2Array(0, 0, 1080, 0)
+width = 1.0
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
-target_position = Vector2(10000, 0)
+target_position = Vector2(1080, 0)
 collision_mask = 4
 
 [node name="LifetimeTimer" type="Timer" parent="."]

@@ -18,7 +18,7 @@ void fragment() {
 	vector_from_center = normalize(vector_from_center)
 		* pow(
 			length(vector_from_center * (1.0 / edge_distance)),
-			1.0 - abs(distance_to_edge) * (0.8 + 0.4 * sign(distance_to_edge)))
+			1.0 - abs(distance_to_edge) * (1.2 + 0.8 * sign(distance_to_edge)))
 		/ (1.0 / edge_distance);
 	
 	uv = vec2(0.5) + vector_from_center;

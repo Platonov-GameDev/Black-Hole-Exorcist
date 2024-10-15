@@ -19,10 +19,10 @@ class_name PlayerBody
 @onready var shoot_sniper_prepare_timer = $ShootSniperPrepareTimer
 @onready var shoot_sniper_cooldown_timer = $ShootSniperCooldownTimer
 
-var MOVE_SPEED := 1200
+var MOVE_SPEED := 140
 var PUPIL_OFFSET := 26.0
 var DEFAULT_SHOOT_COOLDOWN := 0.15
-var MUZZLE_DISTANCE := 300
+var MUZZLE_DISTANCE := 30
 
 var is_dead := false
 var thruster_emitters_array: Array[GPUParticles2D] = []
@@ -154,6 +154,7 @@ func die():
 	GameManager.is_round_active = false
 	call_deferred("queue_free")
 	AudioPlayer.thruster_active_loop_audio.stop()
+	pass
 
 
 func move_in_direction(direction: Vector2, is_moving := true):

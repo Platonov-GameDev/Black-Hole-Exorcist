@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bv66o437md56p" path="res://components/HealthComponent/HealthComponent.tscn" id="4_uecx6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8nlxc"]
-size = Vector2(200, 120)
+size = Vector2(20, 12)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kycmn"]
 atlas = ExtResource("3_p0pwm")
@@ -77,10 +77,11 @@ shape = SubResource("RectangleShape2D_8nlxc")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 modulate = Color(1, 1, 0, 1)
+scale = Vector2(0.1, 0.1)
 polygon = PackedVector2Array(100, 60, -100, 60, -100, -60, 100, -60)
 
 [node name="Polygon2D2" type="Polygon2D" parent="."]
 modulate = Color(0, 0, 0, 1)
-position = Vector2(67, 0.999999)
-scale = Vector2(0.205833, 0.791667)
+position = Vector2(7, 5.96046e-08)
+scale = Vector2(0.018359, 0.0706115)
 polygon = PackedVector2Array(100, 60, -100, 60, -100, 0.815552, -100, -60, 100, -60)
