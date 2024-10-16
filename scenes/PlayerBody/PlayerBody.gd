@@ -258,11 +258,11 @@ func _on_game_manager_power_changed(new_power):
 		shoot_rapid_cooldown_timer.wait_time = 0.05
 		current_power_level = 1
 		AudioPlayer.power_up_audio.play()
-	if new_power >= 30 and current_power_level < 2:
+	if new_power >= 20 and current_power_level < 2:
 		shoot_rapid_cooldown_timer.wait_time = 0.025
 		current_power_level = 2
 		AudioPlayer.power_up_audio.play()
-	if new_power >= 70 and current_power_level < 3:
+	if new_power >= 30 and current_power_level < 3:
 		shoot_rapid_cooldown_timer.wait_time = 0.0125
 		current_power_level = 3
 		AudioPlayer.power_up_audio.play()
