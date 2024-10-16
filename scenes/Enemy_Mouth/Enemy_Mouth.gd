@@ -6,7 +6,7 @@ class_name Enemy_Mouth
 @onready var animated_sprite_2d = $AnimatedSprite2D
 
 var MOVE_SPEED := 60.0
-var ROTATION_SPEED := PI
+var ROTATION_SPEED := PI / 2
 
 
 func _process(delta):
