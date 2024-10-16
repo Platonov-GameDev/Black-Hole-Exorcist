@@ -5,7 +5,7 @@ extends CharacterBody2D
 @onready var collection_area_2d = $CollectionArea2D
 
 var ACCELERATION = 200
-var DRIFT_SPEED = 2
+var DRIFT_SPEED = 20
 var DRIFT_END_DISTANCE = 50
 
 var previous_speed := 30.0
