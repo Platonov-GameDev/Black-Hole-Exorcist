@@ -12,7 +12,7 @@ extends Node2D
 @onready var spawn_waves = $SpawnWaves
 @onready var spawn_timer_circle_sprite_2d = $SpawnTimerCircleSprite2D
 
-var SPAWN_DISTANCE_FROM_CENTER = 1100
+var SPAWN_DISTANCE_FROM_CENTER = 600
 
 var spawn_time_counter := 0.0
 var black_hole_shader_time := 0.0
