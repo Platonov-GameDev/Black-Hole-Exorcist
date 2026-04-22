@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://culobjeq3sdrk"]
+[gd_scene load_steps=13 format=3 uid="uid://culobjeq3sdrk"]
 
 [ext_resource type="Script" path="res://scenes/SphericalSpaceView/SphericalSpaceView.gd" id="1_hp3th"]
 [ext_resource type="PackedScene" uid="uid://haquppmebf34" path="res://scenes/SphericalMap/SphericalMap.tscn" id="2_lysbx"]
@@ -28,6 +28,11 @@ resource_local_to_scene = true
 font = ExtResource("4_v021y")
 font_size = 26
 font_color = Color(0, 0.784314, 0.960784, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_77jrg"]
+resource_local_to_scene = true
+font = ExtResource("4_v021y")
+font_size = 24
 
 [sub_resource type="Gradient" id="Gradient_qoqgh"]
 offsets = PackedFloat32Array(0)
@@ -89,6 +94,49 @@ label_settings = SubResource("LabelSettings_tanem")
 layout_mode = 2
 text = "0"
 label_settings = SubResource("LabelSettings_8qinm")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="UI"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 36.0
+offset_top = -140.0
+offset_right = 302.0
+offset_bottom = -32.9998
+grow_vertical = 0
+alignment = 2
+
+[node name="HintControls" type="Label" parent="UI/VBoxContainer2"]
+layout_mode = 2
+text = "{ WASD }
+move
+
+{ arrow keys }
+hold - rapid
+tap - rail"
+label_settings = SubResource("LabelSettings_77jrg")
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="UI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -138.0
+offset_right = -34.0
+offset_bottom = -30.9998
+grow_horizontal = 0
+grow_vertical = 0
+alignment = 2
+
+[node name="HintControls" type="Label" parent="UI/VBoxContainer3"]
+layout_mode = 2
+text = "{ R }
+restart"
+label_settings = SubResource("LabelSettings_77jrg")
+horizontal_alignment = 2
+vertical_alignment = 2
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
