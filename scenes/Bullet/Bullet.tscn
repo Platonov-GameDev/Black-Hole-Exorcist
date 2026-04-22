@@ -7,7 +7,6 @@ _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.098901), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [node name="Bullet" type="CharacterBody2D"]
-z_index = -1
 collision_layer = 32
 collision_mask = 4
 script = ExtResource("1_lc7sa")
